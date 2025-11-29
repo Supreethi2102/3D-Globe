@@ -1,7 +1,7 @@
-import '../style.css';
+import './examples/style.css';
 
-import type {LayerProps, MarkerProps} from '../../src';
-import {RenderMode, WebGlGlobe} from '../../src';
+import type {LayerProps, MarkerProps} from './src';
+import {RenderMode, WebGlGlobe} from './src';
 
 const distance = 20_000_000;
 

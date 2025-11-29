@@ -8,6 +8,8 @@ export class InteractionController {
   private renderer: Renderer;
   private controlsInteractionEnabled = false;
   private spinAbortController: AbortController | null = null;
+  private autoSpinSpeed: number = 1;
+  private shouldAutoSpin: boolean = false;
 
   private targetCameraView?: CameraView;
   private isAnimatingCamera: boolean = false;
@@ -24,17 +26,36 @@ export class InteractionController {
   public setAutoSpin(isEnabled: boolean, speed: number = 1): void {
     this.abortCurrentSpin();
 
+    this.shouldAutoSpin = isEnabled;
+    this.autoSpinSpeed = speed;
+
     this.renderer.globeControls.autoRotate = isEnabled;
     this.renderer.globeControls.autoRotateSpeed = speed;
 
     if (isEnabled && this.controlsInteractionEnabled) {
       this.spinAbortController = new AbortController();
-      const stopAutoSpin = () => this.setAutoSpin(false);
+      
+      // Temporarily pause auto-spin when user starts interacting
+      const pauseAutoSpin = () => {
+        this.renderer.globeControls.autoRotate = false;
+      };
+      
+      // Resume auto-spin when user stops interacting
+      const resumeAutoSpin = () => {
+        if (this.shouldAutoSpin) {
+          this.renderer.globeControls.autoRotate = true;
+        }
+      };
 
-      const options = {once: true, signal: this.spinAbortController.signal};
-      this.container.addEventListener('mousedown', stopAutoSpin, options);
-      this.container.addEventListener('wheel', stopAutoSpin, options);
-      this.container.addEventListener('touchstart', stopAutoSpin, options);
+      const options = {signal: this.spinAbortController.signal};
+      this.container.addEventListener('mousedown', pauseAutoSpin, options);
+      this.container.addEventListener('touchstart', pauseAutoSpin, options);
+      this.container.addEventListener('wheel', pauseAutoSpin, options);
+      
+      // Resume on mouseup/touchend
+      this.container.addEventListener('mouseup', resumeAutoSpin, options);
+      this.container.addEventListener('touchend', resumeAutoSpin, options);
+      this.container.addEventListener('mouseleave', resumeAutoSpin, options);
     }
   }
 

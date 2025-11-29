@@ -132,6 +132,11 @@ export class WebGlGlobe extends EventTarget {
     this.interactionController.setControlsInteractionEnabled(enabled);
   }
 
+  public setZoomEnabled(enabled: boolean) {
+    this.renderer.getGlobeControls().enableZoom = enabled;
+    this.renderer.getMapControls().enableZoom = enabled;
+  }
+
   private setLayers(layers: LayerProps[]) {
     // remove layers that are no longer needeed
     const newLayerIds = layers.map(l => l.id);

@@ -1,4 +1,4 @@
-import {Clock, OrthographicCamera, PerspectiveCamera, Scene, Vector2, WebGLRenderer} from 'three';
+import {Color, Clock, Mesh, MeshBasicMaterial, OrthographicCamera, PerspectiveCamera, RawShaderMaterial, Scene, SphereGeometry, Vector2, WebGLRenderer} from 'three';
 
 import {OrbitControls} from './vendor/orbit-controls';
 import {MapControls} from 'three/examples/jsm/controls/MapControls';
@@ -37,6 +37,7 @@ export class Renderer extends EventTarget {
 
   private rendererSize: Vector2 = new Vector2();
   private atmosphere: Atmosphere = new Atmosphere();
+  private globeOutline: Mesh<SphereGeometry, RawShaderMaterial>;
   private clock = new Clock();
 
   constructor(container?: HTMLElement) {
@@ -70,6 +71,61 @@ export class Renderer extends EventTarget {
 
     this.scene.add(this.atmosphere);
 
+    // Create globe outline stroke - single clean border with visible edge
+    const outlineGeometry = new SphereGeometry(1.015, 128, 64);
+    const outlineMaterial = new RawShaderMaterial({
+      vertexShader: `
+        attribute vec3 position;
+        attribute vec3 normal;
+        uniform mat4 modelViewMatrix;
+        uniform mat4 projectionMatrix;
+        uniform mat3 normalMatrix;
+        varying vec3 vNormal;
+        varying vec3 vViewPosition;
+        varying vec3 vWorldPosition;
+        
+        void main() {
+          vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
+          vViewPosition = -mvPosition.xyz;
+          vWorldPosition = position;
+          vNormal = normalize(normalMatrix * normal);
+          gl_Position = projectionMatrix * mvPosition;
+        }
+      `,
+      fragmentShader: `
+        precision highp float;
+        uniform vec3 color;
+        varying vec3 vNormal;
+        varying vec3 vViewPosition;
+        varying vec3 vWorldPosition;
+        
+        void main() {
+          vec3 normal = normalize(vNormal);
+          vec3 viewDir = normalize(vViewPosition);
+          
+          // Calculate how perpendicular the normal is to view direction
+          // At the silhouette edge, this will be close to 0
+          float edgeFactor = abs(dot(normal, viewDir));
+          
+          // Create a visible border line with wider range for better visibility
+          float border = 1.0 - smoothstep(0.0, 0.12, edgeFactor);
+          
+          // Reduced opacity for lighter stroke
+          gl_FragColor = vec4(color, border * 0.5);
+        }
+      `,
+      uniforms: {
+        color: {value: new Color(0x76797F)}
+      },
+      transparent: true,
+      side: 2, // DoubleSide
+      depthWrite: false,
+      depthTest: true
+    });
+    this.globeOutline = new Mesh(outlineGeometry, outlineMaterial);
+    this.globeOutline.visible = this.renderMode === RenderMode.GLOBE;
+    this.scene.add(this.globeOutline);
+
     this.configureControls();
 
     const {width, height} = this.container.getBoundingClientRect();
@@ -91,6 +147,7 @@ export class Renderer extends EventTarget {
     this.globeControls.enabled = this.renderMode === RenderMode.GLOBE;
     this.mapControls.enabled = this.renderMode === RenderMode.MAP;
     this.atmosphere.visible = this.renderMode === RenderMode.GLOBE;
+    this.globeOutline.visible = this.renderMode === RenderMode.GLOBE;
 
     this.tileManager.setRenderMode(renderMode);
   }

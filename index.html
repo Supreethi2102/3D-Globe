@@ -2,81 +2,62 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>webgl-globe</title>
+    <title>Example Marker</title>
     <style>
-      html {
-        height: 100%;
-      }
       body {
-        font-family: 'Helvetica Neue', Arial, sans-serif;
-        display: grid;
-        grid-template-rows: 1fr auto auto auto 1fr;
-        place-items: center;
-        height: 100%;
-        margin: 0;
+        background: white;
       }
-      h1 {
-        font-size: 3em;
+
+      #globe {
+        position: absolute;
+        width: 100vw;
+        height: 100vh;
       }
-      ul {
-        font-size: 1.2em;
+
+      @keyframes marker-pulse {
+        0% {
+          transform: scale(1);
+          opacity: 1;
+        }
+        100% {
+          transform: scale(1.2);
+          opacity: 0.8;
+        }
       }
-      li {
-        padding: 0.2em;
+
+      .myMarker {
+        cursor: pointer;
+        user-select: none;
+        width: 50px;
+        height: 50px;
+        margin: -25px;
+      }
+
+      .myMarker svg {
+        animation: marker-pulse 2s ease-out infinite;
+        transition: 0.1s ease-in-out;
+      }
+
+      .myMarker:hover > div:first-child > svg {
+        transform: scale(1.3);
+      }
+
+      .myMarker svg > circle {
+        transition: all 0.2s;
+        transform-origin: center center;
+      }
+
+      .myMarker:hover svg > circle {
+        transition-delay: 0.05s;
+        transform: scale(1.1);
       }
     </style>
   </head>
   <body>
-    <div></div>
-    <h1>🌍 webgl-globe 🌎</h1>
-    <ul>
-      <li><a href="./examples/basic-debug/index.html">Basic (Debug Tiles)</a></li>
-      <li><a href="./examples/basic-network/index.html">Basic (Network Tiles)</a></li>
-      <li><a href="./examples/basic-menu/index.html">Basic (Menu)</a></li>
-      <li><a href="./examples/renderer-only/index.html">Renderer only</a></li>
-      <li>
-        <a href="./examples/inside-container/index.html">Inside Container</a>
-      </li>
-      <li>
-        <a href="./examples/renderer-only-layers/index.html">Renderer only (multiple layers)</a>
-      </li>
-      <li>
-        <a href="./examples/renderer-only-fade/index.html">Renderer only (fade textures)</a>
-      </li>
-      <li>
-        <a href="./examples/renderer-fullsize/index.html">Renderer only (fullsize image)</a>
-      </li>
-      <li>
-        <a href="./examples/marker/index.html">Marker</a>
-      </li>
-      <li>
-        <a href="./examples/layer/index.html">Layer</a>
-      </li>
-      <li>
-        <a href="./examples/globe/index.html">WebGlGlobe</a>
-      </li>
-      <li>
-        <a href="./examples/globe-timeslider/index.html">WebGlGlobe with Timeslider</a>
-      </li>
-      <li>
-        <a href="./examples/globe-timeslider-fullsize/index.html"
-          >WebGlGlobe with Timeslider (fullsize image)</a
-        >
-      </li>
-      <li>
-        <a href="./examples/globe-all-datasets/index.html">Globe – selectable datasets</a>
-      </li>
-      <li>
-        <a href="./examples/spinning/index.html">Spinning</a>
-      </li>
-      <li>
-        <a href="./examples/synced/index.html">Synced</a>
-      </li>
-      <li>
-        <a href="./examples/camera-fly-to/index.html">Camera Fly To</a>
-      </li>
-    </ul>
-    <div></div>
+    <div id="globe"></div>
+
+    <script type="module" src="./main.ts"></script>
   </body>
 </html>

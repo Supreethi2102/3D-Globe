@@ -38,7 +38,8 @@
     "lru-cache": "^7.14.1",
     "rollup": "^3.21.5",
     "three": "^0.152.2",
-    "tweakpane": "^3.1.4"
+    "tweakpane": "^3.1.4",
+    "lil-gui": "^0.18.0"
   },
   "devDependencies": {
     "@babel/preset-modules": "^0.1.6",
