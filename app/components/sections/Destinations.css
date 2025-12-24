@@ -1,0 +1,358 @@
+/* Destinations Section - Following same max-width pattern as other sections */
+/* From Figma: px-[112px] py-[88px], grid gap-[56px], CTA pt-[88px] gap-[56px] */
+
+.destinations {
+  background: #f7f9fa;
+  padding-top: 88px; /* Figma vertical padding */
+  padding-bottom: 188px; /* Figma bottom padding from CTA section */
+  /* Dynamic padding: grows on screens larger than 1440px */
+  padding-left: max(var(--padding-x, 112px), calc((100vw - var(--content-max-width, 1220px)) / 2));
+  padding-right: max(var(--padding-x, 112px), calc((100vw - var(--content-max-width, 1220px)) / 2));
+  width: 100%;
+}
+
+/* Header */
+.destinations__header {
+  max-width: var(--content-max-width, 1220px);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 4px; /* Figma gap */
+}
+
+.destinations__title {
+  font-family: 'Romie Trial', Georgia, serif;
+  font-size: 32px;
+  font-weight: 500;
+  line-height: 41px;
+  letter-spacing: 1.28px;
+  color: #111213;
+  margin: 0;
+}
+
+.destinations__subtitle {
+  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  color: #3c3f43;
+  margin: 0;
+}
+
+/* Grid Container - CSS Grid for masonry-like layout */
+.destinations__grid {
+  max-width: var(--content-max-width, 1220px);
+  margin: 24px auto 0; /* Figma pt-[24px] */
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: 530px; /* Fixed row height for alignment */
+  gap: 56px; /* Figma gap */
+  align-items: stretch; /* Stretch cards to fill grid area */
+}
+
+/* Destination Card */
+.destination-card {
+  display: flex;
+  flex-direction: column;
+  gap: 16px; /* Gap between image and text */
+  height: 100%; /* Fill the grid cell */
+}
+
+.destination-card__image-wrapper {
+  border: 1px solid #b0b3b8;
+  border-radius: 12px; /* Figma radius-xl */
+  overflow: hidden;
+  /* No padding - image fills entire box */
+  background: #fff;
+  flex: 1; /* Fill available space */
+  min-height: 0; /* Allow shrinking */
+}
+
+.destination-card__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.destination-card__info {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding-left: 5px; /* Figma left offset */
+}
+
+.destination-card__country {
+  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 24px;
+  color: #111213;
+  margin: 0;
+}
+
+.destination-card__city {
+  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  color: #3c3f43;
+  margin: 0;
+}
+
+/* Card Size Variants */
+
+/* Wide card - spans 2 columns */
+.destination-card--wide {
+  grid-column: span 2;
+}
+
+/* Tall card - spans 2 rows */
+.destination-card--tall {
+  grid-row: span 2;
+}
+
+/* Image fills available space via flex:1 on wrapper */
+
+/* CTA Section - From Figma: pt-[88px] pb-[188px] gap-[56px] */
+.destinations__cta {
+  max-width: var(--content-max-width, 1220px);
+  margin: 200px auto 0; /* Large gap from grid to CTA - from Figma calculation */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 56px; /* Figma gap */
+  padding: 0 118px; /* Figma horizontal padding */
+}
+
+.destinations__cta-text {
+  font-family: 'Romie Trial', Georgia, serif;
+  font-size: 32px;
+  font-weight: 500;
+  line-height: 52px; /* Figma line height */
+  letter-spacing: 1.28px;
+  color: #111213;
+  text-align: center;
+  margin: 0;
+  max-width: 968px; /* Figma width */
+}
+
+.destinations__share-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 198px; /* Figma width */
+  height: 48px; /* Figma height */
+  padding: 16px 24px;
+  background: #7150e5;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.destinations__share-btn:hover {
+  background: #5238a8;
+}
+
+.destinations__share-icon {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+.destinations__share-btn span {
+  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  color: #fbfbfb;
+  white-space: nowrap;
+}
+
+/* ================================
+   Responsive - Same breakpoints as other sections
+   ================================ */
+
+/* Large Desktop - 1400px */
+@media (max-width: 1400px) {
+  .destinations {
+    padding-top: 72px;
+    padding-bottom: 150px;
+  }
+
+  .destinations__grid {
+    gap: 40px;
+    grid-auto-rows: 440px;
+  }
+
+  .destinations__cta {
+    margin-top: 150px;
+    gap: 40px;
+    padding: 0 80px;
+  }
+
+  .destinations__cta-text {
+    font-size: 28px;
+    line-height: 44px;
+  }
+}
+
+/* Desktop - 1200px */
+@media (max-width: 1200px) {
+  .destinations {
+    padding-top: 64px;
+    padding-bottom: 120px;
+  }
+
+  .destinations__title {
+    font-size: 28px;
+    line-height: 36px;
+  }
+
+  .destinations__grid {
+    gap: 32px;
+    grid-auto-rows: 380px;
+  }
+
+  .destinations__cta {
+    margin-top: 120px;
+    gap: 32px;
+    padding: 0 48px;
+  }
+
+  .destinations__cta-text {
+    font-size: 24px;
+    line-height: 40px;
+  }
+}
+
+/* Tablet Landscape - 1024px */
+@media (max-width: 1024px) {
+  .destinations {
+    padding-top: 56px;
+    padding-bottom: 100px;
+    padding-left: var(--padding-x);
+    padding-right: var(--padding-x);
+  }
+
+  .destinations__grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+    grid-auto-rows: 340px;
+  }
+
+  /* Reset spanning for tablet */
+  .destination-card--wide {
+    grid-column: span 2;
+  }
+
+  .destination-card--tall {
+    grid-row: span 1;
+  }
+
+  .destinations__cta {
+    margin-top: 80px;
+    padding: 0 24px;
+  }
+
+  .destinations__cta-text {
+    font-size: 22px;
+    line-height: 36px;
+  }
+}
+
+/* Tablet Portrait - 768px */
+@media (max-width: 768px) {
+  .destinations {
+    padding-top: 48px;
+    padding-bottom: 80px;
+  }
+
+  .destinations__title {
+    font-size: 24px;
+    line-height: 32px;
+  }
+
+  .destinations__grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    grid-auto-rows: 300px;
+  }
+
+  .destination-card--wide {
+    grid-column: span 1; /* Single column on smaller screens */
+  }
+
+  .destination-card__country,
+  .destination-card__city {
+    font-size: 14px;
+  }
+
+  .destinations__cta {
+    margin-top: 64px;
+    gap: 24px;
+    padding: 0 16px;
+  }
+
+  .destinations__cta-text {
+    font-size: 20px;
+    line-height: 32px;
+  }
+
+  .destinations__share-btn {
+    width: 180px;
+    height: 44px;
+  }
+
+  .destinations__share-btn span {
+    font-size: 14px;
+  }
+}
+
+/* Mobile - 480px */
+@media (max-width: 480px) {
+  .destinations {
+    padding-top: 40px;
+    padding-bottom: 60px;
+  }
+
+  .destinations__title {
+    font-size: 22px;
+    line-height: 28px;
+  }
+
+  .destinations__subtitle {
+    font-size: 14px;
+  }
+
+  .destinations__grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    grid-auto-rows: 280px;
+  }
+
+  .destination-card--wide,
+  .destination-card--tall {
+    grid-column: span 1;
+    grid-row: span 1;
+  }
+
+  .destinations__cta {
+    margin-top: 48px;
+    gap: 20px;
+    padding: 0;
+  }
+
+  .destinations__cta-text {
+    font-size: 18px;
+    line-height: 28px;
+    letter-spacing: 0.72px;
+  }
+
+  .destinations__share-btn {
+    width: 100%;
+    max-width: 180px;
+  }
+}

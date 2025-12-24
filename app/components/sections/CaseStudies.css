@@ -1,0 +1,606 @@
+/* Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap');
+
+/* Case Studies Section */
+.case-studies {
+  background: #eceff1;
+  padding-top: var(--padding-y, 56px);
+  padding-bottom: 90px;
+  /* Dynamic padding: grows on screens larger than 1440px */
+  padding-left: max(var(--padding-x, 112px), calc((100vw - var(--content-max-width, 1220px)) / 2));
+  padding-right: max(var(--padding-x, 112px), calc((100vw - var(--content-max-width, 1220px)) / 2));
+  width: 100%;
+}
+
+.case-studies__content {
+  max-width: var(--content-max-width, 1220px);
+  margin: 0 auto;
+  width: 100%;
+}
+
+.case-studies__header {
+  margin-bottom: 24px;
+}
+
+.case-studies__title {
+  font-family: 'Romie Trial', Georgia, serif;
+  font-size: 32px;
+  font-weight: 500;
+  line-height: 36px;
+  letter-spacing: 1.28px;
+  color: #111213;
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.case-studies__subtitle {
+  font-family: 'Atkinson Hyperlegible', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  color: #3c3f43;
+  letter-spacing: 0;
+}
+
+/* Category Filter - From Figma */
+.case-studies__filter {
+  display: flex;
+  gap: 56px;
+  padding: 21px 16px;
+  margin-left: -16px;
+  margin-right: -16px;
+  margin-bottom: 40px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.category-pill {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0;
+  padding: 0;
+  min-width: 156px;
+  width: 156px;
+  height: 115px; /* Figma height */
+  background: #f7f9fa;
+  border: 1px solid #7150e5;
+  border-radius: 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.category-pill--active {
+  box-shadow: 0px 1px 2.2px 0px rgba(82, 56, 168, 0.7),
+              0px 1px 25px 0px rgba(82, 56, 168, 0.7);
+}
+
+.category-pill:hover {
+  transform: translateY(-2px);
+}
+
+.category-pill__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 20px 16px 12px; /* Adjusted for 115px height */
+}
+
+.category-pill__icon img {
+  width: 24px;
+  height: 24px;
+  /* Purple filter for icons */
+  filter: brightness(0) saturate(100%) invert(36%) sepia(68%) saturate(1352%) hue-rotate(229deg) brightness(88%) contrast(96%);
+}
+
+.category-pill__label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: calc(100% - 32px);
+  margin: 0 auto;
+  padding: 12px 0; /* Adjusted for 115px height */
+  border-top: 1px solid #d3d6da;
+  font-family: 'Atkinson Hyperlegible', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+  color: #7150e5;
+  white-space: nowrap;
+}
+
+/* Case Study Grid */
+.case-studies__grid {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  margin-bottom: 56px;
+}
+
+/* Case Study Card */
+.case-study-card {
+  display: flex;
+  background: #f7f8f9;
+  border: 1px solid #b0b3b8;
+  border-radius: 24px;
+  overflow: hidden;
+  min-height: 524px;
+}
+
+.case-study-card__content {
+  display: flex;
+  gap: 48px;
+  padding: 60px 52px;
+  flex: 0 0 55%;
+}
+
+.case-study-card__sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 148px;
+  width: 160px;
+  border-right: 1px solid #b0b3b8;
+  padding-right: 32px;
+}
+
+/* Flip Button */
+.flip-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  width: 136px;
+}
+
+.flip-button__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  background: #f7f9fa;
+  border: 1px solid #7150e5;
+  border-radius: 8px;
+}
+
+.flip-button__icon img {
+  width: 24px;
+  height: 24px;
+  filter: brightness(0) saturate(100%) invert(36%) sepia(68%) saturate(1352%) hue-rotate(229deg) brightness(88%) contrast(96%);
+}
+
+.flip-button__text {
+  font-family: 'Atkinson Hyperlegible', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+  color: #7150e5;
+  text-align: center;
+}
+
+/* Tabs */
+.case-study-card__tabs {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.tab {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 48px;
+  padding: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #3c3f43;
+  font-family: 'Atkinson Hyperlegible', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 20px;
+  transition: color 0.2s ease;
+}
+
+.tab img {
+  width: 24px;
+  height: 24px;
+  /* Gray icon for inactive */
+  filter: brightness(0) saturate(100%) invert(25%) sepia(6%) saturate(500%) hue-rotate(180deg) brightness(95%) contrast(90%);
+}
+
+.tab--active {
+  color: #111213;
+  position: relative;
+  letter-spacing: 0.32px;
+}
+
+.tab--active img {
+  /* Dark icon for active - #111213 */
+  filter: brightness(0) saturate(100%) invert(5%) sepia(5%) saturate(500%) hue-rotate(180deg) brightness(95%) contrast(95%);
+}
+
+.tab--active::after {
+  content: '';
+  position: absolute;
+  right: -32px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 4px;
+  height: 48px;
+  background: #111213;
+  border-radius: 2px;
+}
+
+/* Main Content */
+.case-study-card__main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  max-width: 320px;
+}
+
+.case-study-card__subtitle {
+  font-family: 'Atkinson Hyperlegible', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  color: #3c3f43;
+  margin-bottom: 30px; /* Figma: title at 57.5px, subtitle at 3.5px + 24px height = 30px gap */
+}
+
+.case-study-card__title {
+  font-family: 'Atkinson Hyperlegible', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 28px;
+  letter-spacing: 0.4px;
+  color: #111213;
+  margin-bottom: 12px; /* Gap to description ~12px */
+}
+
+.case-study-card__description {
+  font-family: 'Atkinson Hyperlegible', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  color: #3c3f43;
+  margin-bottom: auto;
+  max-width: 334px;
+}
+
+/* View Design Button */
+.view-design-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 16px 24px;
+  height: 48px;
+  width: 186px;
+  background: #7150e5;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: auto;
+  transition: background 0.2s ease;
+}
+
+.view-design-btn:hover {
+  background: #5238a8;
+}
+
+.view-design-btn img {
+  width: 24px;
+  height: 24px;
+  filter: brightness(0) invert(1);
+}
+
+.view-design-btn span {
+  font-family: 'Atkinson Hyperlegible', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+  color: #fbfbfb;
+  white-space: nowrap;
+}
+
+/* Image Section */
+.case-study-card__image {
+  flex: 0 0 45%;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.case-study-card__image-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  background-color: #ddd;
+}
+
+.case-study-card__duration {
+  position: absolute;
+  top: 0;
+  right: 52px;
+  background: #f7f8f9;
+  border: 1px solid #b0b3b8;
+  border-top: none;
+  border-radius: 0 0 8px 8px;
+  padding: 0 16px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 167px;
+  font-family: 'Atkinson Hyperlegible', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+  color: #3c3f43;
+  text-align: center;
+  z-index: 1;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.04);
+}
+
+/* Listen Button */
+.listen-button {
+  position: absolute;
+  bottom: 28px;
+  right: 52px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  width: 47px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: 1;
+  backdrop-filter: blur(1px);
+}
+
+.listen-button__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  background: #f7f8f9;
+  border: 1px solid #7150e5;
+  border-radius: 12px;
+}
+
+.listen-button__icon svg {
+  width: 24px;
+  height: 24px;
+}
+
+.listen-button__text {
+  font-family: 'Atkinson Hyperlegible', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+  color: #f7f8f9;
+}
+
+/* Footer */
+.case-studies__footer {
+  display: flex;
+  justify-content: center;
+  padding: 56px 0 0;
+}
+
+.view-all-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 16px 24px;
+  height: 48px;
+  background: #f7f8f9;
+  border: 1px solid #7150e5;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.view-all-btn:hover {
+  background: #7150e5;
+}
+
+.view-all-btn:hover img {
+  filter: brightness(0) invert(1);
+}
+
+.view-all-btn:hover span {
+  color: #fbfbfb;
+}
+
+.view-all-btn img {
+  width: 24px;
+  height: 24px;
+  filter: brightness(0) saturate(100%) invert(36%) sepia(68%) saturate(1352%) hue-rotate(229deg) brightness(88%) contrast(96%);
+}
+
+.view-all-btn span {
+  font-family: 'Atkinson Hyperlegible', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+  color: #7150e5;
+  white-space: nowrap;
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+  .case-studies__filter {
+    gap: 40px;
+  }
+
+  .category-pill {
+    min-width: 140px;
+    width: 140px;
+  }
+
+  .case-study-card {
+    flex-direction: column;
+    min-height: auto;
+  }
+
+  .case-study-card__content {
+    flex: 1;
+    padding: 40px 32px;
+  }
+
+  .case-study-card__sidebar {
+    gap: 80px;
+  }
+
+  .case-study-card__main {
+    width: auto;
+  }
+
+  .case-study-card__image {
+    flex: 0 0 300px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .case-studies {
+    padding: 48px var(--padding-x, 48px) 72px;
+    padding-left: var(--padding-x, 48px);
+    padding-right: var(--padding-x, 48px);
+  }
+
+  .case-study-card__content {
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .case-study-card__sidebar {
+    flex-direction: row;
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid #b0b3b8;
+    padding-right: 0;
+    padding-bottom: 24px;
+    gap: 32px;
+    justify-content: space-between;
+  }
+
+  .case-study-card__tabs {
+    flex-direction: row;
+    gap: 24px;
+  }
+
+  .tab--active::after {
+    right: auto;
+    bottom: -24px;
+    top: auto;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 48px;
+    height: 4px;
+  }
+}
+
+@media (max-width: 768px) {
+  .case-studies {
+    padding: 40px var(--padding-x, 32px) 60px;
+  }
+
+  .case-studies__title {
+    font-size: 28px;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .case-studies__filter {
+    gap: 24px;
+    margin-left: 0;
+    margin-right: 0;
+    padding: 16px 0;
+  }
+
+  .category-pill {
+    min-width: 120px;
+    width: 120px;
+  }
+
+  .category-pill__icon {
+    padding: 20px 12px 12px;
+  }
+
+  .category-pill__label {
+    font-size: 14px;
+    padding: 12px 0;
+    width: calc(100% - 24px);
+  }
+
+  .case-study-card__image {
+    flex: 0 0 250px;
+  }
+
+  .case-study-card__duration {
+    right: 24px;
+    width: auto;
+    padding: 12px;
+    font-size: 14px;
+  }
+
+  .listen-button {
+    right: 24px;
+    bottom: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .case-studies {
+    padding: 32px var(--padding-x, 24px) 48px;
+  }
+
+  .case-studies__filter {
+    gap: 16px;
+  }
+
+  .case-study-card__content {
+    padding: 24px 20px;
+  }
+
+  .case-study-card__sidebar {
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .case-study-card__tabs {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .tab--active::after {
+    display: none;
+  }
+
+  .category-pill {
+    min-width: 100px;
+    width: 100px;
+  }
+
+  .category-pill__icon {
+    padding: 16px 10px 10px;
+  }
+
+  .category-pill__label {
+    font-size: 13px;
+    padding: 10px 0;
+    width: calc(100% - 20px);
+  }
+}
+

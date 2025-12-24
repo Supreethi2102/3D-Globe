@@ -1,0 +1,307 @@
+/* Testimonials Section - From Figma */
+
+.testimonials {
+  background: #eceef2; /* Figma outer background */
+  padding: 112px; /* Figma padding */
+  /* Dynamic padding for centering on large screens */
+  padding-left: max(112px, calc((100vw - var(--content-max-width, 1220px)) / 2));
+  padding-right: max(112px, calc((100vw - var(--content-max-width, 1220px)) / 2));
+  width: 100%;
+}
+
+.testimonials__card {
+  background: #f7f9fa; /* Figma card background */
+  border: 1px solid #b0b3b8; /* Figma border */
+  border-radius: 24px; /* Figma border radius */
+  padding: 48px 108px 72px 64px; /* Figma: top right bottom left */
+  max-width: 1216px; /* Figma width */
+  min-height: 714px; /* Figma height */
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 104px; /* Figma gap */
+}
+
+.testimonials__label {
+  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 20px; /* Figma */
+  font-weight: 400;
+  line-height: normal;
+  color: #3c3f43;
+}
+
+.testimonials__content {
+  display: flex;
+  flex-direction: column;
+  padding-left: 44px; /* Figma */
+  width: 1013px; /* Figma */
+  max-width: 100%;
+}
+
+.testimonials__header {
+  padding-left: 160px; /* Align with quote text */
+  padding-right: 0;
+  margin-bottom: 48px; /* Figma gap */
+}
+
+.testimonials__title {
+  font-family: 'Romie Trial', Georgia, serif;
+  font-size: 40px; /* Figma */
+  font-weight: 500;
+  line-height: 56px; /* Figma */
+  letter-spacing: 1.6px; /* Figma */
+  color: #111213;
+  margin: 0 0 8px 0;
+}
+
+.testimonials__subtitle {
+  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 44px; /* Figma */
+  color: #3c3f43;
+  margin: 0;
+}
+
+.testimonials__carousel {
+  display: flex;
+  align-items: center;
+  gap: 108px; /* Figma */
+}
+
+.testimonials__nav {
+  width: 52px; /* 24px icon + 14px padding each side */
+  height: 52px;
+  border: 1px solid #7150e5; /* Figma */
+  border-radius: 12px; /* Figma */
+  background: #f7f9fa; /* Figma */
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  padding: 14px; /* Figma */
+  transition: all 0.2s ease;
+}
+
+.testimonials__nav:hover {
+  background: #7150e5;
+}
+
+.testimonials__nav:hover svg path {
+  stroke: #ffffff;
+}
+
+.testimonials__feedback {
+  width: 616px; /* Figma */
+  display: flex;
+  flex-direction: column;
+  gap: 28px; /* Figma */
+}
+
+.testimonials__quote {
+  flex: 1;
+  max-width: 616px; /* Figma */
+}
+
+.testimonials__quote {
+  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px; /* Figma */
+  color: #3c3f43;
+  margin: 0;
+}
+
+.testimonials__author-block {
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+  margin-left: 160px; /* Align with quote text (nav button width + gap) */
+  margin-top: 28px;
+}
+
+.testimonials__author {
+  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  color: #3c3f43;
+  margin: 0;
+}
+
+.testimonials__author strong {
+  font-weight: 600; /* SemiBold from Figma */
+}
+
+.testimonials__dots {
+  display: flex;
+  gap: 16px; /* Figma */
+  justify-content: center;
+}
+
+.testimonials__dot {
+  width: 12px; /* Figma */
+  height: 12px; /* Figma */
+  border-radius: 9999px; /* Figma full radius */
+  border: none;
+  background: #76797f; /* Figma inactive */
+  cursor: pointer;
+  padding: 0;
+  transition: background 0.2s ease;
+}
+
+.testimonials__dot--active {
+  background: #7150e5; /* Figma active */
+}
+
+.testimonials__dot:hover {
+  background: #7150e5;
+}
+
+/* Responsive - Large Desktop */
+@media (max-width: 1400px) {
+  .testimonials {
+    padding: 80px;
+    padding-left: max(80px, calc((100vw - var(--content-max-width, 1220px)) / 2));
+    padding-right: max(80px, calc((100vw - var(--content-max-width, 1220px)) / 2));
+  }
+
+  .testimonials__card {
+    padding: 40px 80px 60px 48px;
+    gap: 80px;
+  }
+
+  .testimonials__content {
+    padding-left: 24px;
+    width: 100%;
+  }
+
+  .testimonials__header {
+    padding-left: 120px;
+    padding-right: 0;
+  }
+
+  .testimonials__carousel {
+    gap: 60px;
+  }
+
+  .testimonials__author-block {
+    margin-left: 120px;
+  }
+}
+
+/* Responsive - Tablet */
+@media (max-width: 1024px) {
+  .testimonials {
+    padding: 64px var(--padding-x, 48px);
+  }
+
+  .testimonials__card {
+    padding: 40px;
+    gap: 60px;
+    min-height: auto;
+  }
+
+  .testimonials__content {
+    padding-left: 0;
+  }
+
+  .testimonials__header {
+    padding: 0;
+    text-align: left;
+  }
+
+  .testimonials__carousel {
+    gap: 32px;
+  }
+
+  .testimonials__quote {
+    max-width: 100%;
+  }
+
+  .testimonials__author-block {
+    margin-left: 84px; /* nav button + gap */
+    margin-top: 24px;
+  }
+}
+
+/* Responsive - Mobile */
+@media (max-width: 768px) {
+  .testimonials {
+    padding: 48px var(--padding-x, 32px);
+  }
+
+  .testimonials__card {
+    padding: 32px 24px;
+    gap: 40px;
+  }
+
+  .testimonials__label {
+    font-size: 18px;
+  }
+
+  .testimonials__title {
+    font-size: 32px;
+    line-height: 44px;
+  }
+
+  .testimonials__subtitle {
+    line-height: 28px;
+  }
+
+  .testimonials__carousel {
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .testimonials__nav {
+    display: none;
+  }
+
+  .testimonials__author-block {
+    gap: 32px;
+    margin-left: 0;
+    margin-top: 24px;
+  }
+}
+
+/* Responsive - Small Mobile */
+@media (max-width: 480px) {
+  .testimonials {
+    padding: 32px var(--padding-x, 24px);
+  }
+
+  .testimonials__card {
+    padding: 24px 20px;
+    gap: 32px;
+  }
+
+  .testimonials__label {
+    font-size: 16px;
+  }
+
+  .testimonials__title {
+    font-size: 28px;
+    line-height: 36px;
+    letter-spacing: 1.12px;
+  }
+
+  .testimonials__quote {
+    font-size: 14px;
+    line-height: 22px;
+  }
+
+  .testimonials__author {
+    font-size: 14px;
+  }
+
+  .testimonials__dots {
+    gap: 12px;
+  }
+
+  .testimonials__dot {
+    width: 10px;
+    height: 10px;
+  }
+}

@@ -60,7 +60,10 @@ export class MarkerHtml {
 
     let occluded = false;
     if (renderMode === RenderMode.GLOBE) {
-      occluded = this.globePosition.dot(camera.position) < 0;
+      // Normalize camera position for consistent edge detection
+      // Higher threshold (0.45) = markers only show when land is clearly in view
+      const camDir = camera.position.clone().normalize();
+      occluded = this.globePosition.dot(camDir) < 0.45;
       v3.copy(this.globePosition).project(camera);
     } else {
       v3.copy(this.mapPosition).project(camera);
@@ -78,6 +81,7 @@ export class MarkerHtml {
     this.markerEl.innerHTML = this.props.html;
 
     let {lat, lng} = this.props;
+    // Altitude of 1 meter - markers sit on the globe surface
     latLngAltitudeToGlobePosition({lng, lat, altitude: 1}, this.globePosition);
 
     this.mapPosition.set(lng / 90, lat / 90, 0);

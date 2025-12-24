@@ -1,0 +1,230 @@
+/* Publications Section - From Figma */
+
+.publications {
+  background: #f7f9fa;
+  padding-top: var(--padding-y, 56px);
+  padding-bottom: var(--padding-y, 56px);
+  /* Dynamic padding: grows on screens larger than 1440px */
+  padding-left: max(var(--padding-x, 112px), calc((100vw - var(--content-max-width, 1220px)) / 2));
+  padding-right: max(var(--padding-x, 112px), calc((100vw - var(--content-max-width, 1220px)) / 2));
+  width: 100%;
+}
+
+.publications__inner {
+  max-width: var(--content-max-width, 1220px);
+  margin: 0 auto;
+  width: 100%;
+}
+
+.publications__title {
+  font-family: 'Romie Trial', Georgia, serif;
+  font-size: 32px;
+  font-weight: 500;
+  line-height: 40px;
+  letter-spacing: 1.28px;
+  color: #111213;
+  margin: 0 0 64px 0;
+}
+
+/* Publications Grid */
+.publications__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 56px;
+  margin-bottom: 48px;
+}
+
+/* Publication Card */
+.publication-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.publication-card__image-container {
+  width: 100%;
+  height: 362px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #fff;
+}
+
+.publication-card__image {
+  width: 102%;
+  height: 102%;
+  object-fit: cover;
+  object-position: center;
+  margin: -1%;
+}
+
+.publication-card__info {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding-top: 16px;
+}
+
+.publication-card__title {
+  font-family: 'Atkinson Hyperlegible', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 16px;
+  font-weight: 600; /* SemiBold from Figma */
+  line-height: 24px;
+  letter-spacing: 0.32px;
+  color: #111213;
+  margin: 0 0 0 0;
+}
+
+.publication-card__subtitle {
+  font-family: 'Atkinson Hyperlegible', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 16px;
+  font-weight: 400; /* Regular from Figma */
+  line-height: 24px;
+  color: #3c3f43;
+  margin: 0;
+}
+
+/* Footer */
+.publications__footer {
+  display: flex;
+  justify-content: center;
+  padding-top: 48px;
+}
+
+.view-publications-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 16px 24px;
+  height: 48px;
+  width: 224px;
+  background: #f7f9fa;
+  border: 1px solid #7150e5;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.view-publications-btn:hover {
+  background: #7150e5;
+}
+
+.view-publications-btn:hover .view-publications-btn__icon {
+  filter: brightness(0) invert(1);
+}
+
+.view-publications-btn:hover span {
+  color: #fbfbfb;
+}
+
+.view-publications-btn__icon {
+  width: 24px;
+  height: 24px;
+  /* Purple filter for icon */
+  filter: brightness(0) saturate(100%) invert(36%) sepia(68%) saturate(1352%) hue-rotate(229deg) brightness(88%) contrast(96%);
+}
+
+.view-publications-btn span {
+  font-family: 'Atkinson Hyperlegible', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  color: #7150e5;
+  white-space: nowrap;
+}
+
+/* Responsive - Large Desktop */
+@media (max-width: 1400px) {
+  .publications__grid {
+    gap: 40px;
+  }
+}
+
+/* Responsive - Desktop */
+@media (max-width: 1200px) {
+  .publications__grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 40px;
+  }
+
+  .publication-card__image-container {
+    height: 320px;
+  }
+}
+
+/* Responsive - Tablet */
+@media (max-width: 1024px) {
+  .publications {
+    padding: 48px var(--padding-x, 48px);
+    padding-left: var(--padding-x, 48px);
+    padding-right: var(--padding-x, 48px);
+  }
+
+  .publications__title {
+    margin-bottom: 48px;
+  }
+
+  .publications__grid {
+    gap: 32px;
+  }
+
+  .publication-card__image-container {
+    height: 280px;
+  }
+}
+
+/* Responsive - Tablet Portrait */
+@media (max-width: 768px) {
+  .publications {
+    padding: 40px var(--padding-x, 32px);
+  }
+
+  .publications__title {
+    font-size: 28px;
+    margin-bottom: 40px;
+  }
+
+  .publications__grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+
+  .publication-card__image-container {
+    height: 240px;
+  }
+
+  .publication-card__title {
+    font-size: 14px;
+  }
+
+  .publication-card__subtitle {
+    font-size: 14px;
+  }
+}
+
+/* Responsive - Mobile */
+@media (max-width: 480px) {
+  .publications {
+    padding: 32px var(--padding-x, 24px);
+  }
+
+  .publications__title {
+    font-size: 24px;
+    margin-bottom: 32px;
+  }
+
+  .publications__grid {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .publication-card__image-container {
+    height: 300px;
+  }
+
+  .view-publications-btn {
+    width: 100%;
+    max-width: 280px;
+  }
+}
+

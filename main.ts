@@ -1,4 +1,5 @@
 import './examples/style.css';
+import './app/main.tsx';
 
 import type {LayerProps, MarkerProps} from './src';
 import {RenderMode, WebGlGlobe} from './src';
@@ -26,36 +27,32 @@ const globe = new WebGlGlobe(document.querySelector('#globe')!, {
   cameraView: {lng: 155, lat: -10, altitude: distance, isAnimated: false}
 });
 
-// Simple pin icon without text
-// Three concentric circles: main (8.07), second (24.22), third (40.37)
+// Simple pin icon without text - sized for resized globe
+// Three concentric circles scaled to 40x40
 const pinIconHtml = `
-  <div class="myMarker" style="width: 50px; height: 50px; margin: -25px;">
-    <svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <!-- Third circle (outermost): 40.37 diameter, 10% opacity -->
-      <circle cx="25" cy="25" r="20.185" fill="#7150E5" fill-opacity="0.1"/>
-      <!-- Second circle (middle): 24.22 diameter, 20% opacity -->
-      <circle cx="25" cy="25" r="12.11" fill="#7150E5" fill-opacity="0.2"/>
-      <!-- Main center circle: 8.07 diameter, 100% opacity -->
-      <circle cx="25" cy="25" r="4.035" fill="#7150E5"/>
+  <div class="myMarker" style="width: 40px; height: 40px; margin: -20px;">
+    <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- Third circle (outermost): 10% opacity -->
+      <circle cx="20" cy="20" r="16" fill="#7150E5" fill-opacity="0.1"/>
+      <!-- Second circle (middle): 20% opacity -->
+      <circle cx="20" cy="20" r="10" fill="#7150E5" fill-opacity="0.2"/>
+      <!-- Main center circle: 100% opacity -->
+      <circle cx="20" cy="20" r="3.5" fill="#7150E5"/>
     </svg>
   </div>`;
 
 const markerProps: MarkerProps[] = [
-  {id: 'ny', html: pinIconHtml, lng: -73.97, lat: 40.78},
-  {id: 'london', html: pinIconHtml, lng: -0.12, lat: 51.5},
-  {id: 'tokyo', html: pinIconHtml, lng: 139.69, lat: 35.69},
-  {id: 'dubai', html: pinIconHtml, lng: 55.27, lat: 25.2},
+  // New Zealand area
+  {id: 'newzealand', html: pinIconHtml, lng: 174.76, lat: -41.29},
+  // Jaipur, India
+  {id: 'jaipur', html: pinIconHtml, lng: 75.79, lat: 26.92},
+  // Random markers spread across the globe
   {id: 'paris', html: pinIconHtml, lng: 2.35, lat: 48.86},
-  {id: 'moscow', html: pinIconHtml, lng: 37.62, lat: 55.75},
+  {id: 'tokyo', html: pinIconHtml, lng: 139.69, lat: 35.69},
+  {id: 'capetown', html: pinIconHtml, lng: 18.42, lat: -33.93},
+  {id: 'vancouver', html: pinIconHtml, lng: -123.12, lat: 49.28},
   {id: 'rio', html: pinIconHtml, lng: -43.21, lat: -22.91},
-  {id: 'sydney', html: pinIconHtml, lng: 151.21, lat: -33.87},
-  {id: 'cairo', html: pinIconHtml, lng: 31.24, lat: 30.05},
-  {id: 'beijing', html: pinIconHtml, lng: 116.4, lat: 39.91},
-  {id: 'mumbai', html: pinIconHtml, lng: 72.87, lat: 19.07},
-  {id: 'la', html: pinIconHtml, lng: -118.24, lat: 34.05},
-  {id: 'istanbul', html: pinIconHtml, lng: 28.99, lat: 41.01},
-  {id: 'rome', html: pinIconHtml, lng: 12.49, lat: 41.9},
-  {id: 'singapore', html: pinIconHtml, lng: 103.85, lat: 1.29}
+  {id: 'sydney', html: pinIconHtml, lng: 151.21, lat: -33.87}
 ];
 
 markerProps.forEach(m => {

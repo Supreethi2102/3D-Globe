@@ -1,0 +1,447 @@
+/* Contact Section - Following same max-width pattern as other sections */
+
+.contact {
+  background: #eceef2; /* Figma outer background */
+  padding-top: 112px; /* More padding between testimonials and contact */
+  padding-bottom: 112px; /* More bottom padding */
+  /* Dynamic padding: grows on screens larger than 1440px */
+  padding-left: max(var(--padding-x, 112px), calc((100vw - var(--content-max-width, 1220px)) / 2));
+  padding-right: max(var(--padding-x, 112px), calc((100vw - var(--content-max-width, 1220px)) / 2));
+  width: 100%;
+}
+
+.contact__card {
+  background: #f7f9fa; /* Figma card background */
+  border: 1px solid #b0b3b8; /* Figma border */
+  border-radius: 24px; /* Figma border radius */
+  padding: 64px; /* Figma padding */
+  max-width: var(--content-max-width, 1220px);
+  min-height: 851px; /* Figma height */
+  margin: 0 auto;
+  display: flex;
+  gap: 84px; /* Figma gap between form and postcard */
+  align-items: center;
+}
+
+/* Left Side - Form */
+.contact__form-side {
+  flex: 0 0 539px; /* Figma width */
+  display: flex;
+  flex-direction: column;
+  gap: 54px;
+}
+
+.contact__label {
+  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 20px; /* Figma */
+  font-weight: 400;
+  line-height: normal;
+  color: #3c3f43;
+}
+
+.contact__title {
+  font-family: 'Romie Trial', Georgia, serif;
+  font-size: 32px; /* Figma */
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: 1.28px; /* Figma */
+  color: #111213;
+  margin: 0;
+}
+
+/* Form */
+.contact__form {
+  display: flex;
+  flex-direction: column;
+  gap: 32px; /* Figma gap between fields */
+}
+
+.contact__field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px; /* Figma gap between label and input */
+}
+
+.contact__field-label {
+  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 16px;
+  font-weight: 600; /* SemiBold from Figma */
+  line-height: 20px;
+  color: #111213;
+}
+
+.contact__input {
+  width: 100%;
+  height: 52px; /* Figma height */
+  padding: 12px 16px; /* Figma padding */
+  background: #f9fafb; /* gray-50 */
+  border: 1px solid #76797f; /* Figma border */
+  border-radius: 8px; /* Figma border radius */
+  box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05); /* Figma shadow */
+  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  color: #111213;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.contact__input::placeholder {
+  color: #3c3f43;
+}
+
+.contact__input:focus {
+  border-color: #7150e5;
+}
+
+.contact__textarea {
+  width: 100%;
+  height: 202px; /* Figma height */
+  padding: 12px 15px; /* Figma padding */
+  background: #f9fafb; /* gray-50 */
+  border: 1px solid #76797f; /* Figma border */
+  border-radius: 8px; /* Figma border radius */
+  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  color: #111213;
+  resize: none;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.contact__textarea::placeholder {
+  color: #3c3f43;
+}
+
+.contact__textarea:focus {
+  border-color: #7150e5;
+}
+
+/* Divider */
+.contact__divider {
+  width: 1px;
+  height: 724px; /* Figma height */
+  background: #b0b3b8;
+  flex-shrink: 0;
+}
+
+/* Right Side - Postcard */
+.contact__postcard-side {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 56px; /* Figma gap */
+  padding: 27px 0;
+}
+
+.contact__stamp-area {
+  width: 384px; /* Figma width */
+  height: 129px; /* Figma height */
+  display: flex;
+  justify-content: center;
+}
+
+.contact__stamp {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+}
+
+.contact__address-area {
+  width: 340px; /* Scaled down */
+  height: 300px; /* Scaled down */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.contact__address {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+}
+
+/* Send Button */
+.contact__submit-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 230px; /* Figma width */
+  height: 48px; /* Figma height */
+  padding: 16px 24px;
+  background: #7150e5; /* Figma purple */
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.contact__submit-btn:hover {
+  background: #5238a8;
+}
+
+.contact__submit-btn svg {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+.contact__submit-btn span {
+  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  color: #f6f7f8;
+  white-space: nowrap;
+}
+
+/* ================================
+   Responsive - Same breakpoints as other sections
+   ================================ */
+
+/* Large Desktop - 1400px */
+@media (max-width: 1400px) {
+  .contact {
+    padding-top: 96px;
+    padding-bottom: 96px;
+  }
+
+  .contact__card {
+    padding: 48px;
+    gap: 60px;
+    min-height: auto;
+  }
+
+  .contact__form-side {
+    flex: 0 0 480px;
+    gap: 40px;
+  }
+
+  .contact__divider {
+    height: 600px;
+  }
+
+  .contact__stamp-area {
+    width: 340px;
+  }
+
+  .contact__address-area {
+    width: 300px;
+    height: 260px;
+  }
+}
+
+/* Desktop - 1200px */
+@media (max-width: 1200px) {
+  .contact {
+    padding-top: 80px;
+    padding-bottom: 80px;
+  }
+
+  .contact__card {
+    padding: 40px;
+    gap: 48px;
+  }
+
+  .contact__form-side {
+    flex: 0 0 420px;
+    gap: 32px;
+  }
+
+  .contact__title {
+    font-size: 28px;
+  }
+
+  .contact__divider {
+    height: 550px;
+  }
+
+  .contact__postcard-side {
+    gap: 40px;
+  }
+
+  .contact__stamp-area {
+    width: 300px;
+  }
+
+  .contact__address-area {
+    width: 280px;
+    height: 240px;
+  }
+}
+
+/* Tablet Landscape - 1024px */
+@media (max-width: 1024px) {
+  .contact {
+    padding-top: 64px;
+    padding-bottom: 64px;
+    padding-left: var(--padding-x);
+    padding-right: var(--padding-x);
+  }
+
+  .contact__card {
+    flex-direction: column;
+    padding: 32px;
+    gap: 40px;
+  }
+
+  .contact__form-side {
+    flex: none;
+    width: 100%;
+    max-width: 540px;
+  }
+
+  .contact__divider {
+    width: 100%;
+    height: 1px;
+    max-width: 540px;
+  }
+
+  .contact__postcard-side {
+    width: 100%;
+    max-width: 540px;
+    gap: 32px;
+    padding: 0;
+  }
+
+  .contact__stamp-area {
+    width: 100%;
+    max-width: 340px;
+  }
+
+  .contact__address-area {
+    width: 100%;
+    max-width: 300px;
+    height: 240px;
+  }
+}
+
+/* Tablet Portrait - 768px */
+@media (max-width: 768px) {
+  .contact {
+    padding-top: 48px;
+    padding-bottom: 48px;
+  }
+
+  .contact__card {
+    padding: 24px;
+    gap: 32px;
+  }
+
+  .contact__form-side {
+    gap: 24px;
+  }
+
+  .contact__label {
+    font-size: 18px;
+  }
+
+  .contact__title {
+    font-size: 24px;
+    letter-spacing: 0.96px;
+  }
+
+  .contact__form {
+    gap: 24px;
+  }
+
+  .contact__input {
+    height: 48px;
+  }
+
+  .contact__textarea {
+    height: 160px;
+  }
+
+  .contact__postcard-side {
+    gap: 24px;
+  }
+
+  .contact__stamp-area {
+    height: 100px;
+  }
+
+  .contact__address-area {
+    height: 200px;
+  }
+
+  .contact__submit-btn {
+    width: 200px;
+    height: 44px;
+  }
+}
+
+/* Mobile - 480px */
+@media (max-width: 480px) {
+  .contact {
+    padding-top: 40px;
+    padding-bottom: 40px;
+  }
+
+  .contact__card {
+    padding: 20px 16px;
+    gap: 24px;
+    border-radius: 16px;
+  }
+
+  .contact__form-side {
+    gap: 20px;
+  }
+
+  .contact__label {
+    font-size: 16px;
+  }
+
+  .contact__title {
+    font-size: 22px;
+  }
+
+  .contact__form {
+    gap: 20px;
+  }
+
+  .contact__field-label {
+    font-size: 14px;
+  }
+
+  .contact__input,
+  .contact__textarea {
+    font-size: 14px;
+    padding: 10px 12px;
+  }
+
+  .contact__input {
+    height: 44px;
+  }
+
+  .contact__textarea {
+    height: 140px;
+  }
+
+  .contact__stamp-area {
+    height: 80px;
+  }
+
+  .contact__address-area {
+    height: 160px;
+  }
+
+  .contact__submit-btn {
+    width: 100%;
+    max-width: 200px;
+  }
+
+  .contact__submit-btn span {
+    font-size: 14px;
+  }
+}
+

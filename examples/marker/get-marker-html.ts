@@ -63,7 +63,7 @@ export function getMarkerHtml(title: string): string {
                 background-color: #30404d;
                 border-bottom-right-radius: 25px;
                 border-top-right-radius: 25px;
-                overflow: hidden;
+                overflow: visible;
                 text-overflow: ellipsis;
                 white-space: nowrap;
                 box-shadow: 0 2px 4px rgba(0, 0, 0, 0.14), 0 3px 4px rgba(0, 0, 0, 0.12), 0 1px 5px rgba(0, 0, 0, 0.2);"

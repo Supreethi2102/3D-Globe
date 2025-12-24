@@ -50,7 +50,8 @@ export class Renderer extends EventTarget {
       alpha: true,
       preserveDrawingBuffer: true
     });
-    renderer.setClearColor(0xffffff, 0);
+    // Match hero section background color #F7F8F9
+    renderer.setClearColor(0xF7F8F9, 1);
     renderer.setAnimationLoop(this.animationLoopUpdate.bind(this));
 
     // for rendering performance, we don't use a pixel-ratio above 2
@@ -60,7 +61,7 @@ export class Renderer extends EventTarget {
 
     this.container.appendChild(this.webglRenderer.domElement);
     this.container.style.position = 'relative';
-    this.container.style.overflow = 'hidden';
+    this.container.style.overflow = 'visible';
 
     this.tileManager = new TileManager(this.scene);
 
@@ -188,8 +189,9 @@ export class Renderer extends EventTarget {
 
     // Ensure the globe fits vertically, especially on wide aspect ratios.
     // For wider aspect ratios (smaller heights), we increase the padding.
-    const basePadding = 1.1;
-    const dynamicPadding = 0.2 * Math.max(0, aspectRatio - 1.5);
+    // Increased padding to prevent clipping on all sides
+    const basePadding = 1.25;
+    const dynamicPadding = 0.25 * Math.max(0, aspectRatio - 1.5);
     const PADDING = basePadding + dynamicPadding;
 
     // The minimum FOV to fit the globe with atmosphere at the reference distance.

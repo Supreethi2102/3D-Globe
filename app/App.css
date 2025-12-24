@@ -1,0 +1,205 @@
+/* App Layout - 4pt Grid */
+
+/* Fonts */
+@font-face {
+  font-family: 'Romie Trial';
+  src: url('/Fonts/ROMIE MEDIUM + ITALIC PACK/Romie Medium/Romie-Medium.woff2') format('woff2'),
+       url('/Fonts/ROMIE MEDIUM + ITALIC PACK/Romie Medium/Romie-Medium.woff') format('woff');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Global constants - matching Figma (1440px design) */
+:root {
+  --content-max-width: 1220px;  /* Figma content width */
+  --design-width: 1440px;       /* Figma design width */
+  --padding-x: 112px;           /* Desktop horizontal padding */
+  --padding-y: 56px;            /* Desktop vertical padding */
+}
+
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: visible;
+}
+
+/* Hero Section Wrapper */
+.hero-section {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: #F7F8F9;
+  /* Dynamic padding: grows on screens larger than 1440px */
+  padding-top: var(--padding-y);
+  padding-bottom: var(--padding-y);
+  padding-left: max(var(--padding-x), calc((100vw - var(--content-max-width)) / 2));
+  padding-right: max(var(--padding-x), calc((100vw - var(--content-max-width)) / 2));
+}
+
+.main {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 400px;
+  padding-top: 64px;
+  overflow: visible;
+  max-width: var(--content-max-width);
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* Left Side - Hero */
+.main__left {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  overflow: visible;
+  width: 480px;
+}
+
+/* Right Side - Globe + Footer */
+.main__right {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 140px;
+  overflow: visible;
+}
+
+.main__globe {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: visible;
+  width: 100%;
+  max-width: 700px;
+}
+
+/* Responsive - Large Desktop (1400px and below) */
+@media (max-width: 1400px) {
+  :root {
+    --padding-x: 80px;
+    --padding-y: 48px;
+  }
+
+  .main {
+    gap: 360px;
+  }
+
+  .main__left {
+    width: 450px;
+  }
+
+  .main__globe {
+    max-width: 650px;
+  }
+}
+
+/* Responsive - Desktop (1200px and below) */
+@media (max-width: 1200px) {
+  :root {
+    --padding-x: 64px;
+    --padding-y: 40px;
+  }
+
+  .main {
+    gap: 320px;
+    padding-top: 56px;
+  }
+
+  .main__left {
+    width: 400px;
+  }
+
+  .main__right {
+    gap: 110px;
+  }
+
+  .main__globe {
+    max-width: 620px;
+  }
+}
+
+/* Responsive - Tablet Landscape (1024px and below) */
+@media (max-width: 1024px) {
+  :root {
+    --padding-x: 48px;
+    --padding-y: 32px;
+  }
+
+  .hero-section {
+    padding-left: var(--padding-x);
+    padding-right: var(--padding-x);
+  }
+
+  .main {
+    flex-direction: column;
+    gap: 60px;
+    padding-top: 48px;
+    align-items: center;
+  }
+
+  .main__left {
+    justify-content: center;
+    text-align: center;
+    width: 100%;
+    max-width: 520px;
+  }
+
+  .main__right {
+    width: 100%;
+    gap: 80px;
+  }
+
+  .main__globe {
+    max-width: 580px;
+  }
+}
+
+/* Responsive - Tablet Portrait (768px and below) */
+@media (max-width: 768px) {
+  :root {
+    --padding-x: 32px;
+    --padding-y: 24px;
+  }
+
+  .main {
+    gap: 32px;
+    padding-top: 40px;
+  }
+
+  .main__left {
+    max-width: 100%;
+  }
+
+  .main__right {
+    gap: 64px;
+  }
+
+  .main__globe {
+    max-width: 500px;
+  }
+}
+
+/* Responsive - Mobile (480px and below) */
+@media (max-width: 480px) {
+  :root {
+    --padding-x: 24px;
+    --padding-y: 20px;
+  }
+
+  .main {
+    gap: 28px;
+    padding-top: 32px;
+  }
+
+  .main__globe {
+    max-width: 440px;
+  }
+}

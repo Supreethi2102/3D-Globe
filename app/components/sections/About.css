@@ -1,0 +1,346 @@
+/* About Section - Exact Figma replica */
+
+.about {
+  background: #f7f9fa;
+  padding-top: 79px;
+  padding-bottom: 80px;
+  padding-left: max(var(--padding-x, 112px), calc((100vw - var(--content-max-width, 1220px)) / 2));
+  padding-right: max(var(--padding-x, 112px), calc((100vw - var(--content-max-width, 1220px)) / 2));
+  width: 100%;
+}
+
+.about__label {
+  max-width: var(--content-max-width, 1220px);
+  margin: 0 auto;
+  display: block;
+  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 24px;
+  font-weight: 400;
+  line-height: normal;
+  color: #3c3f43;
+  margin-bottom: 52px;
+}
+
+/* BLOCK 1 - with bottom spacing */
+.about-block1 {
+  max-width: var(--content-max-width, 1220px);
+  margin: 0 auto 48px;
+  display: flex;
+  gap: 109px;
+  align-items: center;
+}
+
+.about-block1__illustration {
+  flex-shrink: 0;
+  width: 636px;
+  height: 636px;
+  background: #e3e6e9;
+  border-radius: 318px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 86px 62px;
+  overflow: hidden;
+}
+
+.about-block1__illustration img {
+  width: 441px;
+  height: 530px;
+  object-fit: contain;
+}
+
+.about-block1__content {
+  width: 468px;
+}
+
+.about-block1__title {
+  font-family: 'Romie', Georgia, serif;
+  font-size: 32px;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: 1.28px;
+  color: #111213;
+  margin: 0 0 24px 0;
+}
+
+.about-block1__text {
+  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  letter-spacing: 0.64px;
+  color: #3c3f43;
+}
+
+.about-block1__text p {
+  margin: 0;
+}
+
+.about-block1__spacer {
+  line-height: 32px;
+}
+
+.about-block1__subtitle {
+  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 24px;
+  letter-spacing: 0.4px;
+  color: #111213;
+}
+
+/* Expandable content for Creative Influences */
+.about-block1__expandable {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.4s ease, opacity 0.3s ease;
+}
+
+.about-block1__expandable--expanded {
+  max-height: 1000px;
+  opacity: 1;
+}
+
+.about-block1__read-more {
+  display: inline-block;
+  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  letter-spacing: 0.64px;
+  color: #5238a8;
+  cursor: pointer;
+  margin-top: 16px;
+}
+
+.about-block1__read-more:hover {
+  text-decoration: underline;
+}
+
+/* BLOCK 2 - Quote with bottom spacing */
+.about-block2 {
+  max-width: var(--content-max-width, 1220px);
+  margin: 0 auto 48px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 24px;
+  padding: 24px 0;
+}
+
+.about-block2__quote {
+  font-family: 'Romie', Georgia, serif;
+  font-size: 28px;
+  font-weight: 500;
+  line-height: 48px;
+  letter-spacing: 1.12px;
+  color: #111213;
+  margin: 0;
+  width: 931px;
+  text-align: left;
+  padding-left: 34px;
+}
+
+/* BLOCK 3 */
+.about-block3 {
+  max-width: var(--content-max-width, 1220px);
+  margin: 0 auto;
+  display: flex;
+  gap: 93px;
+  align-items: center;
+}
+
+.about-block3__cards {
+  flex-shrink: 0;
+  width: 652px;
+  height: 848px;
+  position: relative;
+}
+
+/* Color Card - NO shadow */
+.about-color-card {
+  position: absolute;
+  top: var(--card-top, 0);
+  left: var(--card-left, 0);
+  width: 256px;
+  height: 440px;
+  background: #f9fafb;
+  border: 1px solid #76797f;
+  border-radius: 16px;
+  padding: 28px;
+  transform: rotate(var(--card-rotation, 0deg)) translateY(-300px);
+  opacity: 0;
+  overflow: clip;
+}
+
+.about-color-card--animate {
+  animation: aboutCardFallIn 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation-delay: var(--animation-delay, 0ms);
+}
+
+@keyframes aboutCardFallIn {
+  0% {
+    opacity: 0;
+    transform: rotate(var(--card-rotation, 0deg)) translateY(-300px) scale(0.95);
+  }
+  60% {
+    opacity: 1;
+    transform: rotate(var(--card-rotation, 0deg)) translateY(15px) scale(1);
+  }
+  80% {
+    transform: rotate(var(--card-rotation, 0deg)) translateY(-8px) scale(1);
+  }
+  100% {
+    opacity: 1;
+    transform: rotate(var(--card-rotation, 0deg)) translateY(0) scale(1);
+  }
+}
+
+.about-color-card__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 376px;
+  gap: 64px;
+  padding-bottom: 28px;
+}
+
+.about-color-card__swatch {
+  width: 198px;
+  height: 180px;
+  border-radius: 8px 8px 0 0;
+  flex-shrink: 0;
+}
+
+.about-color-card__text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.about-color-card__name {
+  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 24px;
+  letter-spacing: 0.32px;
+  color: #111213;
+  text-align: center;
+  margin: 0;
+}
+
+.about-color-card__hex-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.about-color-card__hex {
+  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  letter-spacing: 0.64px;
+  color: #3c3f43;
+  text-transform: uppercase;
+}
+
+.about-color-card__link {
+  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 21px;
+  letter-spacing: 0.64px;
+  color: #5238a8;
+  text-align: center;
+}
+
+/* Block 3 Content */
+.about-block3__content {
+  width: 468px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 38px;
+}
+
+.about-block3__text-block {
+  width: 464px;
+  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  letter-spacing: 0.64px;
+  color: #3c3f43;
+}
+
+.about-block3__text-block p {
+  margin: 0;
+}
+
+.about-block3__title {
+  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 24px;
+  letter-spacing: 0.4px;
+  color: #111213;
+}
+
+.about-block3__spacer {
+  line-height: 16px;
+}
+
+.about-block3__signature {
+  width: 263px;
+  height: 156px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 1400px) {
+  .about-block1 { gap: 60px; }
+  .about-block1__illustration { width: 500px; height: 500px; padding: 30px 60px 50px; }
+  .about-block1__illustration img { width: 350px; height: 420px; }
+  .about-block2__quote { width: 100%; max-width: 931px; }
+  .about-block3 { gap: 60px; }
+  .about-block3__cards { width: 520px; height: 750px; }
+}
+
+@media (max-width: 1200px) {
+  .about-block1 { flex-direction: column; align-items: center; gap: 40px; }
+  .about-block1__content { width: 100%; max-width: 600px; }
+  .about-block2 { align-items: center; }
+  .about-block2__quote { width: 100%; text-align: center; padding-left: 0; }
+  .about-block3 { flex-direction: column; align-items: center; gap: 60px; }
+  .about-block3__cards { width: 100%; max-width: 560px; height: 700px; }
+  .about-block3__content { width: 100%; max-width: 600px; align-items: center; }
+  .about-block3__text-block { width: 100%; }
+}
+
+@media (max-width: 900px) {
+  .about { padding-top: 60px; padding-bottom: 60px; padding-left: var(--padding-x, 48px); padding-right: var(--padding-x, 48px); }
+}
+
+@media (max-width: 768px) {
+  .about__label { font-size: 20px; margin-bottom: 32px; }
+  .about-block1__illustration { width: 320px; height: 320px; padding: 20px 40px 30px; }
+  .about-block1__illustration img { width: 220px; height: 260px; }
+  .about-block1__title { font-size: 28px; line-height: 36px; }
+  .about-block1__text { font-size: 14px; line-height: 22px; }
+  .about-block2__quote { font-size: 22px; line-height: 36px; }
+  .about-block3__cards { height: 600px; transform: scale(0.7); transform-origin: top center; }
+  .about-block3__title { font-size: 18px; }
+  .about-block3__text-block { font-size: 14px; line-height: 22px; }
+}
+
+@media (max-width: 480px) {
+  .about { padding-left: var(--padding-x, 24px); padding-right: var(--padding-x, 24px); }
+  .about-block1__illustration { width: 260px; height: 260px; }
+  .about-block1__illustration img { width: 180px; height: 210px; }
+  .about-block1__title { font-size: 24px; line-height: 32px; }
+  .about-block2__quote { font-size: 18px; line-height: 30px; }
+  .about-block3__cards { transform: scale(0.55); height: 480px; }
+  .about-block3__signature { width: 200px; height: auto; }
+}
