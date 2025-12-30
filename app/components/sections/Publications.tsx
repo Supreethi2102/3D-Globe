@@ -88,19 +88,24 @@ interface PublicationCardProps {
 
 const PublicationCard: React.FC<PublicationCardProps> = ({ publication }) => {
   return (
-    <div className="publication-card">
-      <div className="publication-card__image-container">
+    <article 
+      className="publication-card"
+      tabIndex={0}
+      role="button"
+      aria-label={`View ${publication.title} - ${publication.subtitle}`}
+    >
+      <figure className="publication-card__image-container">
         <img 
           src={publication.image} 
-          alt={publication.title}
+          alt={`${publication.title} cover`}
           className="publication-card__image"
         />
-      </div>
+      </figure>
       <div className="publication-card__info">
         <h3 className="publication-card__title">{publication.title}</h3>
         <p className="publication-card__subtitle">{publication.subtitle}</p>
       </div>
-    </div>
+    </article>
   );
 };
 
@@ -108,25 +113,34 @@ export const Publications: React.FC = () => {
   const [isViewHovered, setIsViewHovered] = useState(false);
 
   return (
-    <section className="publications">
-      <h2 className="publications__title">Publications</h2>
+    <section 
+      className="publications"
+      aria-labelledby="publications-title"
+    >
+      <h2 id="publications-title" className="publications__title">Publications</h2>
       
-      <div className="publications__grid">
+      <div 
+        className="publications__grid"
+        role="list"
+        aria-label="Publication portfolio"
+      >
         {publications.map(pub => (
           <PublicationCard key={pub.id} publication={pub} />
         ))}
       </div>
 
-      <div className="publications__footer">
+      <footer className="publications__footer">
         <button 
+          type="button"
           className="view-publications-btn"
           onMouseEnter={() => setIsViewHovered(true)}
           onMouseLeave={() => setIsViewHovered(false)}
+          aria-label="View all publications in portfolio"
         >
-          <BookOpen size={24} weight={isViewHovered ? 'fill' : 'regular'} color="#7150E5" className="view-publications-btn__icon" />
+          <BookOpen size={24} weight={isViewHovered ? 'fill' : 'regular'} color="#7150E5" className="view-publications-btn__icon" aria-hidden="true" />
           <span>View all publications</span>
         </button>
-      </div>
+      </footer>
     </section>
   );
 };

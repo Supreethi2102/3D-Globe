@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useId } from 'react';
 import { 
   SelectionAll, 
   PaintBrush, 
@@ -71,28 +71,41 @@ interface CaseStudyCardProps {
 const CaseStudyCard: React.FC<CaseStudyCardProps> = ({ study }) => {
   const [activeTab, setActiveTab] = useState('challenge');
   const [hoveredBtn, setHoveredBtn] = useState<string | null>(null);
+  const tabPanelId = useId();
+  const cardTitleId = useId();
 
   return (
-    <div className="case-study-card">
+    <article className="case-study-card" aria-labelledby={cardTitleId}>
       {/* Left Content */}
       <div className="case-study-card__content">
         {/* Sidebar */}
-        <div className="case-study-card__sidebar">
+        <aside className="case-study-card__sidebar" aria-label="Case study options">
           {/* Flip Button */}
           <button 
+            type="button"
             className="flip-button"
             onMouseEnter={() => setHoveredBtn('flip')}
             onMouseLeave={() => setHoveredBtn(null)}
+            aria-label="Flip card for design inspiration"
           >
             <div className="flip-button__icon">
-              <ArrowsClockwise size={24} weight={hoveredBtn === 'flip' ? 'fill' : 'regular'} color="#7150E5" />
+              <ArrowsClockwise size={24} weight={hoveredBtn === 'flip' ? 'fill' : 'regular'} color="#7150E5" aria-hidden="true" />
             </div>
             <span className="flip-button__text">Flip for inspiration</span>
           </button>
 
           {/* Tabs */}
-          <div className="case-study-card__tabs">
+          <div 
+            className="case-study-card__tabs" 
+            role="tablist" 
+            aria-label="Case study details"
+          >
             <button 
+              type="button"
+              role="tab"
+              id={`tab-challenge-${study.id}`}
+              aria-selected={activeTab === 'challenge'}
+              aria-controls={tabPanelId}
               className={`tab ${activeTab === 'challenge' ? 'tab--active' : ''}`}
               onClick={() => setActiveTab('challenge')}
               onMouseEnter={() => setHoveredBtn('challenge')}
@@ -101,11 +114,17 @@ const CaseStudyCard: React.FC<CaseStudyCardProps> = ({ study }) => {
               <PuzzlePiece 
                 size={24} 
                 weight={activeTab === 'challenge' || hoveredBtn === 'challenge' ? 'fill' : 'regular'} 
-                color={activeTab === 'challenge' ? '#111213' : '#3c3f43'} 
+                color={activeTab === 'challenge' ? '#111213' : '#3c3f43'}
+                aria-hidden="true"
               />
               <span>Challenge</span>
             </button>
             <button 
+              type="button"
+              role="tab"
+              id={`tab-focus-${study.id}`}
+              aria-selected={activeTab === 'focus'}
+              aria-controls={tabPanelId}
               className={`tab ${activeTab === 'focus' ? 'tab--active' : ''}`}
               onClick={() => setActiveTab('focus')}
               onMouseEnter={() => setHoveredBtn('focus')}
@@ -114,11 +133,17 @@ const CaseStudyCard: React.FC<CaseStudyCardProps> = ({ study }) => {
               <Target 
                 size={24} 
                 weight={activeTab === 'focus' || hoveredBtn === 'focus' ? 'fill' : 'regular'} 
-                color={activeTab === 'focus' ? '#111213' : '#3c3f43'} 
+                color={activeTab === 'focus' ? '#111213' : '#3c3f43'}
+                aria-hidden="true"
               />
               <span>Focus</span>
             </button>
             <button 
+              type="button"
+              role="tab"
+              id={`tab-impact-${study.id}`}
+              aria-selected={activeTab === 'impact'}
+              aria-controls={tabPanelId}
               className={`tab ${activeTab === 'impact' ? 'tab--active' : ''}`}
               onClick={() => setActiveTab('impact')}
               onMouseEnter={() => setHoveredBtn('impact')}
@@ -127,51 +152,63 @@ const CaseStudyCard: React.FC<CaseStudyCardProps> = ({ study }) => {
               <ChartLineUp 
                 size={24} 
                 weight={activeTab === 'impact' || hoveredBtn === 'impact' ? 'fill' : 'regular'} 
-                color={activeTab === 'impact' ? '#111213' : '#3c3f43'} 
+                color={activeTab === 'impact' ? '#111213' : '#3c3f43'}
+                aria-hidden="true"
               />
               <span>Impact</span>
             </button>
           </div>
-        </div>
+        </aside>
 
         {/* Main Content */}
-        <div className="case-study-card__main">
+        <div 
+          className="case-study-card__main"
+          id={tabPanelId}
+          role="tabpanel"
+          aria-labelledby={`tab-${activeTab}-${study.id}`}
+        >
           <p className="case-study-card__subtitle">{study.subtitle}</p>
-          <h3 className="case-study-card__title">{study.title}</h3>
+          <h3 id={cardTitleId} className="case-study-card__title">{study.title}</h3>
           <p className="case-study-card__description">{study.description}</p>
           <button 
+            type="button"
             className="view-design-btn"
             onMouseEnter={() => setHoveredBtn('viewDesign')}
             onMouseLeave={() => setHoveredBtn(null)}
+            aria-label={`View the design for ${study.subtitle}`}
           >
-            <Ruler size={24} weight={hoveredBtn === 'viewDesign' ? 'fill' : 'regular'} color="#fbfbfb" />
+            <Ruler size={24} weight={hoveredBtn === 'viewDesign' ? 'fill' : 'regular'} color="#fbfbfb" aria-hidden="true" />
             <span>View the design</span>
           </button>
         </div>
       </div>
 
       {/* Right Image */}
-      <div className="case-study-card__image">
-        <div className="case-study-card__duration">
+      <figure className="case-study-card__image">
+        <div className="case-study-card__duration" aria-label={`Project duration: ${study.duration}`}>
           Duration: {study.duration}
         </div>
         <div 
           className="case-study-card__image-bg"
           style={{ backgroundImage: `url(${study.image})` }}
+          role="img"
+          aria-label={`${study.subtitle} project preview`}
         />
         <button 
+          type="button"
           className="listen-button"
           onMouseEnter={() => setHoveredBtn('listen')}
           onMouseLeave={() => setHoveredBtn(null)}
+          aria-label={`Listen to audio description of ${study.subtitle}`}
         >
           <div className="listen-button__icon">
-            <SpeakerHigh size={24} weight={hoveredBtn === 'listen' ? 'fill' : 'regular'} color="#7150E5" />
+            <SpeakerHigh size={24} weight={hoveredBtn === 'listen' ? 'fill' : 'regular'} color="#7150E5" aria-hidden="true" />
           </div>
-          <div className="listen-button__divider"></div>
+          <div className="listen-button__divider" aria-hidden="true"></div>
           <span className="listen-button__text">Listen</span>
         </button>
-      </div>
-    </div>
+      </figure>
+    </article>
   );
 };
 
@@ -190,25 +227,38 @@ export const CaseStudies: React.FC = () => {
   };
 
   return (
-    <section className="case-studies" id="work">
+    <section 
+      className="case-studies" 
+      id="work"
+      aria-labelledby="case-studies-title"
+      tabIndex={-1}
+    >
       {/* Header */}
-      <div className="case-studies__header">
-        <h2 className="case-studies__title">
+      <header className="case-studies__header">
+        <h2 id="case-studies-title" className="case-studies__title">
           Case studies <span className="case-studies__subtitle">Browse by design category</span>
         </h2>
-      </div>
+      </header>
 
       {/* Category Filter */}
-      <div className="case-studies__filter">
+      <nav 
+        className="case-studies__filter" 
+        role="tablist" 
+        aria-label="Filter case studies by category"
+      >
         {categories.map(cat => (
           <button
             key={cat.id}
+            type="button"
+            role="tab"
+            aria-selected={activeCategory === cat.id}
+            aria-controls="case-studies-grid"
             className={`category-pill ${activeCategory === cat.id ? 'category-pill--active' : ''}`}
             onClick={() => setActiveCategory(cat.id)}
             onMouseEnter={() => setHoveredCategory(cat.id)}
             onMouseLeave={() => setHoveredCategory(null)}
           >
-            <div className="category-pill__icon">
+            <div className="category-pill__icon" aria-hidden="true">
               {cat.Icon ? (
                 <cat.Icon size={24} weight={getIconWeight(cat.id)} color="#7150E5" />
               ) : cat.svgPath ? (
@@ -218,26 +268,34 @@ export const CaseStudies: React.FC = () => {
             <span className="category-pill__label">{cat.label}</span>
           </button>
         ))}
-      </div>
+      </nav>
 
       {/* Case Study Cards */}
-      <div className="case-studies__grid">
+      <div 
+        id="case-studies-grid"
+        className="case-studies__grid"
+        role="tabpanel"
+        aria-label={`Showing ${activeCategory === 'all' ? 'all' : activeCategory} case studies`}
+        aria-live="polite"
+      >
         {filteredStudies.map(study => (
           <CaseStudyCard key={study.id} study={study} />
         ))}
       </div>
 
       {/* View All Button */}
-      <div className="case-studies__footer">
+      <footer className="case-studies__footer">
         <button 
+          type="button"
           className={`view-all-btn ${hoveredViewAll ? 'view-all-btn--hovered' : ''}`}
           onMouseEnter={() => setHoveredViewAll(true)}
           onMouseLeave={() => setHoveredViewAll(false)}
+          aria-label="View all case studies"
         >
-          <Folders size={24} weight={hoveredViewAll ? 'fill' : 'regular'} color={hoveredViewAll ? '#ffffff' : '#7150E5'} />
+          <Folders size={24} weight={hoveredViewAll ? 'fill' : 'regular'} color={hoveredViewAll ? '#ffffff' : '#7150E5'} aria-hidden="true" />
           <span>View all cases</span>
         </button>
-      </div>
+      </footer>
     </section>
   );
 };

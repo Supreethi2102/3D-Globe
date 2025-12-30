@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useId } from 'react';
 import { ArrowSquareOut, X } from '@phosphor-icons/react';
 import './Destinations.css';
 
@@ -142,44 +142,44 @@ interface DestinationCardProps {
   layoutDirection?: 'image-left' | 'image-right';
 }
 
-const ExpandedContent: React.FC<{ destination: Destination }> = ({ destination }) => (
-  <div className="destination-expanded__content">
+const ExpandedContent: React.FC<{ destination: Destination; titleId: string }> = ({ destination, titleId }) => (
+  <div className="destination-expanded__content" role="article">
     <div className="destination-expanded__header">
-      <h3 className="destination-expanded__title">{destination.title}</h3>
+      <h3 id={titleId} className="destination-expanded__title">{destination.title}</h3>
       <p className="destination-expanded__location">{destination.city}, {destination.country}</p>
     </div>
     
     <div className="destination-expanded__sections">
-      <div className="destination-expanded__section">
-        <h4>Why {destination.city}?</h4>
+      <section className="destination-expanded__section" aria-labelledby={`${titleId}-why`}>
+        <h4 id={`${titleId}-why`}>Why {destination.city}?</h4>
         <p>{destination.whyCity}</p>
-      </div>
+      </section>
       
-      <div className="destination-expanded__section">
-        <h4>What draws me to {destination.title}?</h4>
+      <section className="destination-expanded__section" aria-labelledby={`${titleId}-draws`}>
+        <h4 id={`${titleId}-draws`}>What draws me to {destination.title}?</h4>
         <p>{destination.whatDrawsMe}</p>
-      </div>
+      </section>
       
-      <div className="destination-expanded__section">
-        <h4>How it influences my design?</h4>
+      <section className="destination-expanded__section" aria-labelledby={`${titleId}-influences`}>
+        <h4 id={`${titleId}-influences`}>How it influences my design?</h4>
         <p>{destination.howInfluences}</p>
-      </div>
+      </section>
     </div>
   </div>
 );
 
 const ExpandedImage: React.FC<{ destination: Destination }> = ({ destination }) => (
-  <div className="destination-expanded__image-wrapper">
+  <figure className="destination-expanded__image-wrapper">
     <img 
       src={destination.expandedImage} 
-      alt={destination.title}
+      alt={`${destination.title} in ${destination.city}, ${destination.country}`}
       className="destination-expanded__image"
     />
-    <div className="destination-expanded__credit">
+    <figcaption className="destination-expanded__credit">
       <p className="destination-expanded__artist">{destination.artist}</p>
       <p className="destination-expanded__photographer">{destination.photographer}</p>
-    </div>
-  </div>
+    </figcaption>
+  </figure>
 );
 
 const DestinationCard: React.FC<DestinationCardProps> = ({ 
@@ -188,9 +188,15 @@ const DestinationCard: React.FC<DestinationCardProps> = ({
   onToggle,
   layoutDirection = 'image-left'
 }) => {
+  const titleId = useId();
+  
   if (isExpanded) {
     return (
-      <div className={`destination-expanded destination-expanded--${layoutDirection}`}>
+      <article 
+        className={`destination-expanded destination-expanded--${layoutDirection}`}
+        aria-labelledby={titleId}
+        aria-expanded="true"
+      >
         <button 
           type="button"
           className="destination-expanded__close" 
@@ -199,27 +205,28 @@ const DestinationCard: React.FC<DestinationCardProps> = ({
             e.stopPropagation();
             onToggle();
           }}
+          aria-label={`Close ${destination.city} details`}
         >
-          Close <X size={16} weight="bold" />
+          Close <X size={16} weight="bold" aria-hidden="true" />
         </button>
         
         {layoutDirection === 'image-left' ? (
           <>
             <ExpandedImage destination={destination} />
-            <ExpandedContent destination={destination} />
+            <ExpandedContent destination={destination} titleId={titleId} />
           </>
         ) : (
           <>
-            <ExpandedContent destination={destination} />
+            <ExpandedContent destination={destination} titleId={titleId} />
             <ExpandedImage destination={destination} />
           </>
         )}
-      </div>
+      </article>
     );
   }
 
   return (
-    <div 
+    <article 
       className={`destination-card destination-card--${destination.size}`}
       onClick={(e) => {
         e.preventDefault();
@@ -234,11 +241,13 @@ const DestinationCard: React.FC<DestinationCardProps> = ({
           onToggle();
         }
       }}
+      aria-label={`${destination.city}, ${destination.country}. Click to expand for more details`}
+      aria-expanded="false"
     >
       <div className="destination-card__image-wrapper">
         <img 
           src={destination.image} 
-          alt={`${destination.city}, ${destination.country}`}
+          alt={`Photo of ${destination.city}, ${destination.country}`}
           className="destination-card__image"
         />
       </div>
@@ -246,7 +255,7 @@ const DestinationCard: React.FC<DestinationCardProps> = ({
         <p className="destination-card__city">{destination.city}</p>
         <p className="destination-card__country">{destination.country}</p>
       </div>
-    </div>
+    </article>
   );
 };
 
@@ -257,7 +266,7 @@ interface SmallCardProps {
 }
 
 const SmallCard: React.FC<SmallCardProps> = ({ destination, onClick }) => (
-  <div 
+  <article 
     className="destination-small" 
     onClick={(e) => {
       e.preventDefault();
@@ -272,11 +281,12 @@ const SmallCard: React.FC<SmallCardProps> = ({ destination, onClick }) => (
         onClick();
       }
     }}
+    aria-label={`${destination.city}, ${destination.country}. Click to view details`}
   >
     <div className="destination-small__image-wrapper">
       <img 
         src={destination.image} 
-        alt={`${destination.city}, ${destination.country}`}
+        alt={`Photo of ${destination.city}, ${destination.country}`}
         className="destination-small__image"
       />
     </div>
@@ -284,7 +294,7 @@ const SmallCard: React.FC<SmallCardProps> = ({ destination, onClick }) => (
       <p className="destination-small__city">{destination.city}</p>
       <p className="destination-small__country">{destination.country}</p>
     </div>
-  </div>
+  </article>
 );
 
 export const Destinations: React.FC = () => {
@@ -347,14 +357,17 @@ export const Destinations: React.FC = () => {
   };
 
   return (
-    <section className="destinations">
+    <section 
+      className="destinations"
+      aria-labelledby="destinations-title"
+    >
       {/* Header */}
-      <div className="destinations__header">
-        <h2 className="destinations__title">Design destinations on my radar</h2>
+      <header className="destinations__header">
+        <h2 id="destinations-title" className="destinations__title">Design destinations on my radar</h2>
         <p className="destinations__subtitle">
           Places I haven't explored yet, but they keep turning up in my moodboards and design thinking.
         </p>
-      </div>
+      </header>
 
       {/* Content Area */}
       <div className="destinations__content">
@@ -534,7 +547,7 @@ export const Destinations: React.FC = () => {
       </div>
 
       {/* CTA Section */}
-      <div className="destinations__cta">
+      <footer className="destinations__cta" role="contentinfo">
         <p className="destinations__cta-text">
           Been to any of these places? Spotted great design?
           <br />
@@ -545,11 +558,12 @@ export const Destinations: React.FC = () => {
           className="destinations__share-btn"
           onMouseEnter={() => setIsShareHovered(true)}
           onMouseLeave={() => setIsShareHovered(false)}
+          aria-label="Share your design inspiration with me"
         >
-          <ArrowSquareOut size={24} weight={isShareHovered ? 'fill' : 'regular'} color="#fbfbfb" className="destinations__share-icon" />
+          <ArrowSquareOut size={24} weight={isShareHovered ? 'fill' : 'regular'} color="#fbfbfb" className="destinations__share-icon" aria-hidden="true" />
           <span>Share inspiration</span>
         </button>
-      </div>
+      </footer>
     </section>
   );
 };

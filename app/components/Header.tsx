@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Palette, User, ChatCircleDots, Sun, Phone } from '@phosphor-icons/react';
 import './Header.css';
 
@@ -16,8 +16,20 @@ export const Header: React.FC = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Close mobile menu on escape key
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && isMobileMenuOpen) {
+        setIsMobileMenuOpen(false);
+      }
+    };
+
+    document.addEventListener('keydown', handleEscape);
+    return () => document.removeEventListener('keydown', handleEscape);
+  }, [isMobileMenuOpen]);
+
   // Smooth scroll to section
-  const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, sectionId: string) => {
+  const scrollToSection = useCallback((e: React.MouseEvent<HTMLAnchorElement>, sectionId: string) => {
     e.preventDefault();
     const element = document.querySelector(sectionId);
     if (element) {
@@ -29,19 +41,50 @@ export const Header: React.FC = () => {
         top: offsetPosition,
         behavior: 'smooth'
       });
+      
+      // Set focus to the section for screen readers
+      (element as HTMLElement).focus();
     }
     setIsMobileMenuOpen(false);
-  };
+  }, []);
+
+  // Handle keyboard navigation in mobile menu
+  const handleMobileMenuKeyDown = useCallback((e: React.KeyboardEvent) => {
+    if (e.key === 'Tab' && isMobileMenuOpen) {
+      // Trap focus within mobile menu when open
+      const menu = e.currentTarget;
+      const focusableElements = menu.querySelectorAll<HTMLElement>(
+        'a, button:not([disabled])'
+      );
+      const firstElement = focusableElements[0];
+      const lastElement = focusableElements[focusableElements.length - 1];
+
+      if (e.shiftKey && document.activeElement === firstElement) {
+        e.preventDefault();
+        lastElement.focus();
+      } else if (!e.shiftKey && document.activeElement === lastElement) {
+        e.preventDefault();
+        firstElement.focus();
+      }
+    }
+  }, [isMobileMenuOpen]);
 
   return (
-    <header className={`header ${isScrolled ? 'header--scrolled' : ''}`}>
+    <header 
+      className={`header ${isScrolled ? 'header--scrolled' : ''}`}
+      role="banner"
+    >
       {/* Logo */}
-      <a href="/" className="header__logo">
+      <a 
+        href="/" 
+        className="header__logo"
+        aria-label="Samantha Jane Smith - Home"
+      >
         sjs
       </a>
       
       {/* Desktop Navigation */}
-      <nav className="header__nav">
+      <nav className="header__nav" aria-label="Main navigation">
         <a 
           href="#work" 
           className="header__nav-link"
@@ -49,7 +92,7 @@ export const Header: React.FC = () => {
           onMouseEnter={() => setHoveredLink('work')}
           onMouseLeave={() => setHoveredLink(null)}
         >
-          <Palette size={24} weight={hoveredLink === 'work' ? 'fill' : 'regular'} className="header__nav-icon" />
+          <Palette size={24} weight={hoveredLink === 'work' ? 'fill' : 'regular'} className="header__nav-icon" aria-hidden="true" />
           <span>Work</span>
         </a>
         <a 
@@ -59,7 +102,7 @@ export const Header: React.FC = () => {
           onMouseEnter={() => setHoveredLink('about')}
           onMouseLeave={() => setHoveredLink(null)}
         >
-          <User size={24} weight={hoveredLink === 'about' ? 'fill' : 'regular'} className="header__nav-icon" />
+          <User size={24} weight={hoveredLink === 'about' ? 'fill' : 'regular'} className="header__nav-icon" aria-hidden="true" />
           <span>About</span>
         </a>
         <a 
@@ -69,15 +112,17 @@ export const Header: React.FC = () => {
           onMouseEnter={() => setHoveredLink('testimonials')}
           onMouseLeave={() => setHoveredLink(null)}
         >
-          <ChatCircleDots size={24} weight={hoveredLink === 'testimonials' ? 'fill' : 'regular'} className="header__nav-icon" />
+          <ChatCircleDots size={24} weight={hoveredLink === 'testimonials' ? 'fill' : 'regular'} className="header__nav-icon" aria-hidden="true" />
           <span>Testimonials</span>
         </a>
         <button 
+          type="button"
           className="header__nav-link header__theme-toggle"
           onMouseEnter={() => setHoveredLink('theme')}
           onMouseLeave={() => setHoveredLink(null)}
+          aria-label="Toggle light mode"
         >
-          <Sun size={24} weight={hoveredLink === 'theme' ? 'fill' : 'regular'} className="header__nav-icon" />
+          <Sun size={24} weight={hoveredLink === 'theme' ? 'fill' : 'regular'} className="header__nav-icon" aria-hidden="true" />
           <span>Light</span>
         </button>
       </nav>
@@ -90,39 +135,58 @@ export const Header: React.FC = () => {
         onMouseEnter={() => setHoveredLink('contact')}
         onMouseLeave={() => setHoveredLink(null)}
       >
-        <Phone size={24} weight={hoveredLink === 'contact' ? 'fill' : 'regular'} className="header__contact-icon" />
+        <Phone size={24} weight={hoveredLink === 'contact' ? 'fill' : 'regular'} className="header__contact-icon" aria-hidden="true" />
         <span>Contact</span>
       </a>
 
       {/* Mobile Menu Button */}
       <button 
+        type="button"
         className="header__mobile-toggle"
         onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-        aria-label="Toggle menu"
+        aria-label={isMobileMenuOpen ? 'Close menu' : 'Open menu'}
+        aria-expanded={isMobileMenuOpen}
+        aria-controls="mobile-navigation"
       >
-        <span className={`header__hamburger ${isMobileMenuOpen ? 'header__hamburger--open' : ''}`}></span>
+        <span className={`header__hamburger ${isMobileMenuOpen ? 'header__hamburger--open' : ''}`} aria-hidden="true"></span>
       </button>
 
       {/* Mobile Navigation */}
-      <nav className={`header__mobile-nav ${isMobileMenuOpen ? 'header__mobile-nav--open' : ''}`}>
-        <a href="#work" className="header__mobile-link" onClick={(e) => scrollToSection(e, '#work')}>
-          <Palette size={24} weight="regular" className="header__nav-icon" />
+      <nav 
+        id="mobile-navigation"
+        className={`header__mobile-nav ${isMobileMenuOpen ? 'header__mobile-nav--open' : ''}`}
+        aria-label="Mobile navigation"
+        aria-hidden={!isMobileMenuOpen}
+        onKeyDown={handleMobileMenuKeyDown}
+      >
+        <a href="#work" className="header__mobile-link" onClick={(e) => scrollToSection(e, '#work')} tabIndex={isMobileMenuOpen ? 0 : -1}>
+          <Palette size={24} weight="regular" className="header__nav-icon" aria-hidden="true" />
           <span>Work</span>
         </a>
-        <a href="#about" className="header__mobile-link" onClick={(e) => scrollToSection(e, '#about')}>
-          <User size={24} weight="regular" className="header__nav-icon" />
+        <a href="#about" className="header__mobile-link" onClick={(e) => scrollToSection(e, '#about')} tabIndex={isMobileMenuOpen ? 0 : -1}>
+          <User size={24} weight="regular" className="header__nav-icon" aria-hidden="true" />
           <span>About</span>
         </a>
-        <a href="#testimonials" className="header__mobile-link" onClick={(e) => scrollToSection(e, '#testimonials')}>
-          <ChatCircleDots size={24} weight="regular" className="header__nav-icon" />
+        <a href="#testimonials" className="header__mobile-link" onClick={(e) => scrollToSection(e, '#testimonials')} tabIndex={isMobileMenuOpen ? 0 : -1}>
+          <ChatCircleDots size={24} weight="regular" className="header__nav-icon" aria-hidden="true" />
           <span>Testimonials</span>
         </a>
-        <button className="header__mobile-link">
-          <Sun size={24} weight="regular" className="header__nav-icon" />
+        <button 
+          type="button" 
+          className="header__mobile-link"
+          aria-label="Toggle light mode"
+          tabIndex={isMobileMenuOpen ? 0 : -1}
+        >
+          <Sun size={24} weight="regular" className="header__nav-icon" aria-hidden="true" />
           <span>Light Mode</span>
         </button>
-        <a href="#contact" className="header__contact-btn header__contact-btn--mobile" onClick={(e) => scrollToSection(e, '#contact')}>
-          <Phone size={24} weight="regular" className="header__contact-icon" />
+        <a 
+          href="#contact" 
+          className="header__contact-btn header__contact-btn--mobile" 
+          onClick={(e) => scrollToSection(e, '#contact')}
+          tabIndex={isMobileMenuOpen ? 0 : -1}
+        >
+          <Phone size={24} weight="regular" className="header__contact-icon" aria-hidden="true" />
           <span>Contact</span>
         </a>
       </nav>

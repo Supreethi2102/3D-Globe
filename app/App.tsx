@@ -15,11 +15,16 @@ export const App: React.FC = () => {
 
   return (
     <div className="app">
+      {/* Skip to main content link for keyboard users */}
+      <a href="#main-content" className="skip-to-content">
+        Skip to main content
+      </a>
+      
       <Header />
       
       {/* Hero Section with Globe */}
-      <section className="hero-section">
-        <main className="main">
+      <section className="hero-section" aria-label="Introduction">
+        <main id="main-content" className="main" role="main">
           {/* Left Side - Hero */}
           <div className="main__left">
             <Hero />
@@ -27,7 +32,12 @@ export const App: React.FC = () => {
           
           {/* Right Side - Globe + Footer */}
           <div className="main__right">
-            <div className="main__globe" ref={globeContainerRef}>
+            <div 
+              className="main__globe" 
+              ref={globeContainerRef}
+              role="img"
+              aria-label="Interactive 3D globe showing design inspiration locations around the world"
+            >
               {/* Globe will be moved here */}
             </div>
             <Footer />

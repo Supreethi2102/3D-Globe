@@ -76,27 +76,41 @@ export const Testimonials: React.FC = () => {
   const currentTestimonial = testimonials[currentIndex];
 
   return (
-    <section className="testimonials" id="testimonials">
+    <section 
+      className="testimonials" 
+      id="testimonials"
+      aria-labelledby="testimonials-title"
+      tabIndex={-1}
+    >
       <div 
         className="testimonials__card"
         onMouseEnter={() => setIsPaused(true)}
         onMouseLeave={() => setIsPaused(false)}
+        role="region"
+        aria-roledescription="carousel"
+        aria-label="Testimonials carousel"
       >
         <span className="testimonials__label">Testimonials</span>
 
         <div className="testimonials__content">
           {/* Header */}
-          <div className="testimonials__header">
-            <h2 className="testimonials__title">Global shoutout</h2>
+          <header className="testimonials__header">
+            <h2 id="testimonials-title" className="testimonials__title">Global shoutout</h2>
             <p className="testimonials__subtitle">
               Here's what collaborators and colleagues say — near and far.
             </p>
-          </div>
+          </header>
 
           {/* Carousel - buttons aligned with quote */}
-          <div className="testimonials__carousel">
+          <div 
+            className="testimonials__carousel"
+            role="group"
+            aria-roledescription="slide"
+            aria-label={`Testimonial ${currentIndex + 1} of ${testimonials.length}`}
+          >
             {/* Left Arrow */}
             <button 
+              type="button"
               className="testimonials__nav" 
               onClick={handlePrev}
               onMouseEnter={() => setHoveredNav('prev')}
@@ -104,18 +118,23 @@ export const Testimonials: React.FC = () => {
               aria-label="Previous testimonial"
               disabled={isAnimating}
             >
-              <CaretLeft size={24} weight={hoveredNav === 'prev' ? 'bold' : 'regular'} color={hoveredNav === 'prev' ? '#ffffff' : '#7150E5'} />
+              <CaretLeft size={24} weight={hoveredNav === 'prev' ? 'bold' : 'regular'} color={hoveredNav === 'prev' ? '#ffffff' : '#7150E5'} aria-hidden="true" />
             </button>
 
             {/* Testimonial Quote with animation */}
-            <div className="testimonials__quote-wrapper">
+            <blockquote 
+              className="testimonials__quote-wrapper"
+              aria-live="polite"
+              aria-atomic="true"
+            >
               <p className={`testimonials__quote ${isAnimating ? 'testimonials__quote--animating' : ''}`} key={currentIndex}>
                 {currentTestimonial.quote}
               </p>
-            </div>
+            </blockquote>
 
             {/* Right Arrow */}
             <button 
+              type="button"
               className="testimonials__nav" 
               onClick={handleNext}
               onMouseEnter={() => setHoveredNav('next')}
@@ -123,28 +142,35 @@ export const Testimonials: React.FC = () => {
               aria-label="Next testimonial"
               disabled={isAnimating}
             >
-              <CaretRight size={24} weight={hoveredNav === 'next' ? 'bold' : 'regular'} color={hoveredNav === 'next' ? '#ffffff' : '#7150E5'} />
+              <CaretRight size={24} weight={hoveredNav === 'next' ? 'bold' : 'regular'} color={hoveredNav === 'next' ? '#ffffff' : '#7150E5'} aria-hidden="true" />
             </button>
           </div>
 
           {/* Author and Dots - below carousel */}
-          <div className={`testimonials__author-block ${isAnimating ? 'testimonials__author-block--animating' : ''}`}>
-            <p className="testimonials__author" key={`author-${currentIndex}`}>
+          <footer className={`testimonials__author-block ${isAnimating ? 'testimonials__author-block--animating' : ''}`}>
+            <cite className="testimonials__author" key={`author-${currentIndex}`}>
               <strong>{currentTestimonial.author}</strong> - {currentTestimonial.role}
-            </p>
+            </cite>
             
             {/* Pagination Dots */}
-            <div className="testimonials__dots">
-              {testimonials.map((_, index) => (
+            <nav 
+              className="testimonials__dots"
+              role="tablist"
+              aria-label="Testimonial navigation"
+            >
+              {testimonials.map((testimonial, index) => (
                 <button
                   key={index}
+                  type="button"
+                  role="tab"
                   className={`testimonials__dot ${index === currentIndex ? 'testimonials__dot--active' : ''}`}
                   onClick={() => handleDotClick(index)}
-                  aria-label={`Go to testimonial ${index + 1}`}
+                  aria-label={`Go to testimonial from ${testimonial.author}`}
+                  aria-selected={index === currentIndex}
                 />
               ))}
-            </div>
-          </div>
+            </nav>
+          </footer>
         </div>
       </div>
     </section>

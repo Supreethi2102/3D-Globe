@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useId, useRef, useEffect } from 'react';
 import { PaperPlaneTilt, CheckCircle, WarningCircle } from '@phosphor-icons/react';
 import './Contact.css';
 
@@ -14,6 +14,16 @@ export const Contact: React.FC = () => {
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [touched, setTouched] = useState<Record<string, boolean>>({});
+  
+  // Generate unique IDs for form fields
+  const nameId = useId();
+  const emailId = useId();
+  const countryId = useId();
+  const messageId = useId();
+  const nameErrorId = useId();
+  const emailErrorId = useId();
+  const messageErrorId = useId();
+  const statusAnnouncementRef = useRef<HTMLDivElement>(null);
 
   const validateEmail = (email: string) => {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -88,20 +98,46 @@ export const Contact: React.FC = () => {
   };
 
   return (
-    <section className="contact" id="contact">
+    <section 
+      className="contact" 
+      id="contact"
+      aria-labelledby="contact-title"
+      tabIndex={-1}
+    >
+      {/* Screen reader announcements for form status */}
+      <div 
+        ref={statusAnnouncementRef}
+        className="sr-only" 
+        role="status" 
+        aria-live="polite"
+        aria-atomic="true"
+      >
+        {submitStatus === 'success' && 'Message sent successfully!'}
+        {submitStatus === 'error' && 'Failed to send message. Please try again.'}
+        {isSubmitting && 'Sending message...'}
+      </div>
+
       <div className="contact__card">
         {/* Left Side - Form */}
         <div className="contact__form-side">
           <span className="contact__label">Contact</span>
           
-          <h2 className="contact__title">Say hello from anywhere</h2>
+          <h2 id="contact-title" className="contact__title">Say hello from anywhere</h2>
           
-          <form className="contact__form" onSubmit={handleSubmit}>
+          <form 
+            className="contact__form" 
+            onSubmit={handleSubmit}
+            aria-label="Contact form"
+            noValidate
+          >
             <div className={`contact__field ${errors.name && touched.name ? 'contact__field--error' : ''}`}>
-              <label className="contact__field-label" htmlFor="name">Name</label>
+              <label className="contact__field-label" htmlFor={nameId}>
+                Name
+                <span className="sr-only"> (required)</span>
+              </label>
               <input
                 type="text"
-                id="name"
+                id={nameId}
                 name="name"
                 className="contact__input"
                 placeholder="Enter your name here"
@@ -109,17 +145,26 @@ export const Contact: React.FC = () => {
                 onChange={handleChange}
                 onBlur={handleBlur}
                 disabled={isSubmitting}
+                aria-required="true"
+                aria-invalid={errors.name && touched.name ? 'true' : 'false'}
+                aria-describedby={errors.name && touched.name ? nameErrorId : undefined}
+                autoComplete="name"
               />
               {errors.name && touched.name && (
-                <span className="contact__error">{errors.name}</span>
+                <span id={nameErrorId} className="contact__error" role="alert">
+                  {errors.name}
+                </span>
               )}
             </div>
 
             <div className={`contact__field ${errors.email && touched.email ? 'contact__field--error' : ''}`}>
-              <label className="contact__field-label" htmlFor="email">Email</label>
+              <label className="contact__field-label" htmlFor={emailId}>
+                Email
+                <span className="sr-only"> (required)</span>
+              </label>
               <input
                 type="email"
-                id="email"
+                id={emailId}
                 name="email"
                 className="contact__input"
                 placeholder="Enter your email address"
@@ -127,30 +172,43 @@ export const Contact: React.FC = () => {
                 onChange={handleChange}
                 onBlur={handleBlur}
                 disabled={isSubmitting}
+                aria-required="true"
+                aria-invalid={errors.email && touched.email ? 'true' : 'false'}
+                aria-describedby={errors.email && touched.email ? emailErrorId : undefined}
+                autoComplete="email"
               />
               {errors.email && touched.email && (
-                <span className="contact__error">{errors.email}</span>
+                <span id={emailErrorId} className="contact__error" role="alert">
+                  {errors.email}
+                </span>
               )}
             </div>
 
             <div className="contact__field">
-              <label className="contact__field-label" htmlFor="country">Country</label>
+              <label className="contact__field-label" htmlFor={countryId}>
+                Country
+                <span className="sr-only"> (optional)</span>
+              </label>
               <input
                 type="text"
-                id="country"
+                id={countryId}
                 name="country"
                 className="contact__input"
                 placeholder="Enter your country"
                 value={formData.country}
                 onChange={handleChange}
                 disabled={isSubmitting}
+                autoComplete="country-name"
               />
             </div>
 
             <div className={`contact__field ${errors.message && touched.message ? 'contact__field--error' : ''}`}>
-              <label className="contact__field-label" htmlFor="message">Message</label>
+              <label className="contact__field-label" htmlFor={messageId}>
+                Message
+                <span className="sr-only"> (required)</span>
+              </label>
               <textarea
-                id="message"
+                id={messageId}
                 name="message"
                 className="contact__textarea"
                 placeholder="Type your message..."
@@ -158,36 +216,42 @@ export const Contact: React.FC = () => {
                 onChange={handleChange}
                 onBlur={handleBlur}
                 disabled={isSubmitting}
+                aria-required="true"
+                aria-invalid={errors.message && touched.message ? 'true' : 'false'}
+                aria-describedby={errors.message && touched.message ? messageErrorId : undefined}
               />
               {errors.message && touched.message && (
-                <span className="contact__error">{errors.message}</span>
+                <span id={messageErrorId} className="contact__error" role="alert">
+                  {errors.message}
+                </span>
               )}
             </div>
           </form>
         </div>
 
         {/* Divider */}
-        <div className="contact__divider" />
+        <div className="contact__divider" aria-hidden="true" />
 
         {/* Right Side - Postcard */}
-        <div className="contact__postcard-side">
+        <aside className="contact__postcard-side" aria-label="Postcard decoration">
           {/* Postage Stamp */}
           <div className="contact__stamp-area">
             <img 
               src="/about/postage-stamp-textured 2.png" 
-              alt="Postage stamp" 
+              alt="" 
               className="contact__stamp"
+              role="presentation"
             />
           </div>
 
           {/* Address */}
-          <div className="contact__address-area">
+          <address className="contact__address-area">
             <img 
               src="/about/postal address 6.png" 
-              alt="Samantha Smith, 123 Pixel Parade, Design District, Imagination NZ" 
+              alt="Contact address: Samantha Smith, 123 Pixel Parade, Design District, Imagination NZ" 
               className="contact__address"
             />
-          </div>
+          </address>
 
           {/* Send Button */}
           <button 
@@ -197,32 +261,40 @@ export const Contact: React.FC = () => {
             onMouseEnter={() => setIsSendHovered(true)}
             onMouseLeave={() => setIsSendHovered(false)}
             disabled={isSubmitting}
+            aria-busy={isSubmitting}
+            aria-label={
+              isSubmitting 
+                ? 'Sending message...' 
+                : submitStatus === 'success' 
+                  ? 'Message sent successfully' 
+                  : 'Send message'
+            }
           >
             {isSubmitting ? (
               <>
-                <span className="contact__spinner" />
+                <span className="contact__spinner" aria-hidden="true" />
                 <span>Sending...</span>
               </>
             ) : submitStatus === 'success' ? (
               <>
-                <CheckCircle size={24} weight="fill" color="#F6F7F8" />
+                <CheckCircle size={24} weight="fill" color="#F6F7F8" aria-hidden="true" />
                 <span>Message sent!</span>
               </>
             ) : (
               <>
-                <PaperPlaneTilt size={24} weight={isSendHovered ? 'fill' : 'regular'} color="#F6F7F8" />
+                <PaperPlaneTilt size={24} weight={isSendHovered ? 'fill' : 'regular'} color="#F6F7F8" aria-hidden="true" />
                 <span>Send message</span>
               </>
             )}
           </button>
           
           {submitStatus === 'error' && (
-            <p className="contact__submit-error">
-              <WarningCircle size={16} weight="fill" />
+            <p className="contact__submit-error" role="alert">
+              <WarningCircle size={16} weight="fill" aria-hidden="true" />
               Something went wrong. Please try again.
             </p>
           )}
-        </div>
+        </aside>
       </div>
     </section>
   );
