@@ -6,9 +6,9 @@ export const Footer: React.FC = () => {
     <footer className="footer">
       <div className="footer__row">
         <div className="footer__gestures">
-          <img src="/HandSwipeLeft.svg" alt="" className="footer__gesture-icon" />
-          <img src="/HandGrabbing.svg" alt="" className="footer__gesture-icon" />
-          <img src="/HandSwipeRight.svg" alt="" className="footer__gesture-icon" />
+<img src="/icons/HandSwipeLeft.svg" alt="" className="footer__gesture-icon" />
+<img src="/icons/HandGrabbing.svg" alt="" className="footer__gesture-icon" />
+<img src="/icons/HandSwipeRight.svg" alt="" className="footer__gesture-icon" />
         </div>
         
         <a href="#reduce-motion" className="footer__link">

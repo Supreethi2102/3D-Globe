@@ -39,33 +39,86 @@
   margin: 0;
 }
 
-/* Grid Container - CSS Grid for masonry-like layout */
+/* Grid Container - Figma exact layout: 1216px width, 56px gap */
 .destinations__grid {
-  max-width: var(--content-max-width, 1220px);
-  margin: 24px auto 0; /* Figma pt-[24px] */
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-auto-rows: 530px; /* Fixed row height for alignment */
-  gap: 56px; /* Figma gap */
-  align-items: stretch; /* Stretch cards to fill grid area */
+  max-width: 1216px;
+  margin: 24px auto 0;
+  display: flex;
+  flex-direction: column;
+  gap: 56px;
+}
+
+/* Compact grid - keeps row in original layout when other row is expanded */
+.destinations__grid--compact {
+  margin-bottom: 40px;
+  margin-top: 0;
+  animation: row1Fade 0.4s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+/* When Row 1 is expanded, Row 2 compact grid needs no top margin */
+.destinations__small-grid--row1 + .destinations__grid--compact {
+  margin-top: 0;
+}
+
+@keyframes row1Fade {
+  0% {
+    opacity: 0.8;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* Grid Rows */
+.destinations__row {
+  display: flex;
+  gap: 56px;
+  align-items: flex-start;
+}
+
+/* Column containers for stacked cards */
+.destinations__column {
+  display: flex;
+  flex-direction: column;
+  gap: 56px;
+}
+
+.destinations__column--stacked {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 56px;
+  width: 792px; /* Same as wide card */
 }
 
 /* Destination Card */
 .destination-card {
   display: flex;
   flex-direction: column;
-  gap: 16px; /* Gap between image and text */
-  height: 100%; /* Fill the grid cell */
+  gap: 16px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.destination-card:hover {
+  transform: translateY(-4px);
 }
 
 .destination-card__image-wrapper {
-  border: 1px solid #b0b3b8;
-  border-radius: 12px; /* Figma radius-xl */
+  border: 0 !important;
+  border-width: 0 !important;
+  border-style: none !important;
+  border-color: transparent !important;
+  border-radius: 12px;
   overflow: hidden;
-  /* No padding - image fills entire box */
-  background: #fff;
-  flex: 1; /* Fill available space */
-  min-height: 0; /* Allow shrinking */
+  position: relative;
+  outline: 0 !important;
+  box-shadow: none !important;
+  background: #f7f9fa; /* Match section background */
+}
+
+.destination-card__image-wrapper::before,
+.destination-card__image-wrapper::after {
+  display: none !important;
 }
 
 .destination-card__image {
@@ -73,16 +126,43 @@
   height: 100%;
   object-fit: cover;
   display: block;
+  transition: transform 0.4s ease;
+  border: 0 !important;
+  border-width: 0 !important;
+  outline: 0 !important;
+  box-shadow: none !important;
+}
+
+.destination-card:hover .destination-card__image {
+  transform: scale(1.02);
+}
+
+/* Card Size Variants - Figma exact dimensions */
+/* Wide card: 792px × 428px */
+.destination-card--wide .destination-card__image-wrapper {
+  width: 792px;
+  height: 428px;
+}
+
+/* Normal card: 368px × 228px */
+.destination-card--normal .destination-card__image-wrapper {
+  width: 368px;
+  height: 228px;
+}
+
+/* Tall card: 368px × 772px */
+.destination-card--tall .destination-card__image-wrapper {
+  width: 368px;
+  height: 772px;
 }
 
 .destination-card__info {
   display: flex;
   flex-direction: column;
   gap: 0;
-  padding-left: 5px; /* Figma left offset */
 }
 
-.destination-card__country {
+.destination-card__city {
   font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   font-size: 16px;
   font-weight: 600;
@@ -91,7 +171,7 @@
   margin: 0;
 }
 
-.destination-card__city {
+.destination-card__country {
   font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   font-size: 16px;
   font-weight: 400;
@@ -100,19 +180,322 @@
   margin: 0;
 }
 
-/* Card Size Variants */
-
-/* Wide card - spans 2 columns */
-.destination-card--wide {
-  grid-column: span 2;
+/* Inner row for stacked normal cards */
+.destinations__row--inner {
+  display: flex;
+  gap: 56px;
 }
 
-/* Tall card - spans 2 rows */
-.destination-card--tall {
-  grid-row: span 2;
+/* Content wrapper */
+.destinations__content {
+  max-width: 1216px;
+  margin: 24px auto 0;
 }
 
-/* Image fills available space via flex:1 on wrapper */
+/* ================================
+   EXPANDED CARD VIEW - Figma Design
+   ================================ */
+
+.destination-expanded {
+  background: #eeeeee;
+  border-radius: 16px;
+  display: flex;
+  align-items: flex-start;
+  position: relative;
+  width: 100%;
+  max-width: 1216px;
+  margin-bottom: 56px;
+  padding: 44px;
+  gap: 56px;
+  animation: expandCard 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  transform-origin: center top;
+}
+
+@keyframes expandCard {
+  0% {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.destination-expanded--image-left {
+  flex-direction: row;
+}
+
+.destination-expanded--image-right {
+  flex-direction: row-reverse;
+}
+
+.destination-expanded__close {
+  position: absolute;
+  top: 48px;
+  right: 48px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  color: #3c3f43;
+  padding: 4px;
+  transition: all 0.2s ease;
+  z-index: 10;
+  animation: fadeInClose 0.4s ease 0.3s both;
+}
+
+@keyframes fadeInClose {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.destination-expanded__close:hover {
+  color: #111213;
+}
+
+.destination-expanded__image-wrapper {
+  flex: 0 0 auto;
+  width: 580px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  animation: slideInImage 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.1s both;
+}
+
+@keyframes slideInImage {
+  0% {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.destination-expanded--image-right .destination-expanded__image-wrapper {
+  animation-name: slideInImageRight;
+}
+
+@keyframes slideInImageRight {
+  0% {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.destination-expanded__image {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 580 / 488;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.destination-expanded__credit {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.destination-expanded__artist {
+  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 24px;
+  color: #111213;
+  margin: 0;
+}
+
+.destination-expanded__photographer {
+  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  color: #3c3f43;
+  margin: 0;
+}
+
+.destination-expanded__content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+  padding-top: 20px;
+  animation: slideInContent 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.15s both;
+}
+
+@keyframes slideInContent {
+  0% {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.destination-expanded__header {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.destination-expanded__title {
+  font-family: 'Romie Trial', Georgia, serif;
+  font-size: 32px;
+  font-weight: 500;
+  line-height: 40px;
+  letter-spacing: 1.28px;
+  color: #111213;
+  margin: 0;
+}
+
+.destination-expanded__location {
+  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  color: #3c3f43;
+  margin: 0;
+}
+
+.destination-expanded__sections {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.destination-expanded__section {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.destination-expanded__section h4 {
+  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 24px;
+  color: #111213;
+  margin: 0;
+}
+
+.destination-expanded__section p {
+  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  color: #3c3f43;
+  margin: 0;
+}
+
+/* ================================
+   SMALL CARDS GRID - When expanded
+   ================================ */
+
+.destinations__small-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 56px;
+  margin-top: 56px;
+}
+
+/* Row 1 small grid - only 3 cards, add margin bottom for Row 2 */
+.destinations__small-grid--row1 {
+  margin-bottom: 56px;
+}
+
+.destination-small {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  cursor: pointer;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  animation: cardFadeIn 0.5s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+/* Staggered animation for each card - gentle cascade */
+.destination-small:nth-child(1) { animation-delay: 0.1s; }
+.destination-small:nth-child(2) { animation-delay: 0.15s; }
+.destination-small:nth-child(3) { animation-delay: 0.2s; }
+.destination-small:nth-child(4) { animation-delay: 0.25s; }
+.destination-small:nth-child(5) { animation-delay: 0.3s; }
+.destination-small:nth-child(6) { animation-delay: 0.35s; }
+.destination-small:nth-child(7) { animation-delay: 0.4s; }
+
+/* Smooth fade in with subtle movement */
+@keyframes cardFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.destination-small:hover {
+  transform: translateY(-4px);
+}
+
+.destination-small__image-wrapper {
+  border-radius: 12px;
+  overflow: hidden;
+  aspect-ratio: 368 / 228;
+}
+
+.destination-small__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.destination-small:hover .destination-small__image {
+  transform: scale(1.05);
+}
+
+.destination-small__info {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.destination-small__city {
+  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 24px;
+  color: #111213;
+  margin: 0;
+}
+
+.destination-small__country {
+  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  color: #3c3f43;
+  margin: 0;
+}
 
 /* CTA Section - From Figma: pt-[88px] pb-[188px] gap-[56px] */
 .destinations__cta {
@@ -184,7 +567,28 @@
 
   .destinations__grid {
     gap: 40px;
-    grid-auto-rows: 440px;
+  }
+
+  .destinations__row,
+  .destinations__row--inner,
+  .destinations__column {
+    gap: 40px;
+  }
+
+  /* Scale down card sizes proportionally */
+  .destination-card--wide .destination-card__image-wrapper {
+    width: 650px;
+    height: 350px;
+  }
+
+  .destination-card--normal .destination-card__image-wrapper {
+    width: 300px;
+    height: 190px;
+  }
+
+  .destination-card--tall .destination-card__image-wrapper {
+    width: 300px;
+    height: 630px;
   }
 
   .destinations__cta {
@@ -213,7 +617,28 @@
 
   .destinations__grid {
     gap: 32px;
-    grid-auto-rows: 380px;
+  }
+
+  .destinations__row,
+  .destinations__row--inner,
+  .destinations__column {
+    gap: 32px;
+  }
+
+  /* Scale down further */
+  .destination-card--wide .destination-card__image-wrapper {
+    width: 540px;
+    height: 290px;
+  }
+
+  .destination-card--normal .destination-card__image-wrapper {
+    width: 250px;
+    height: 155px;
+  }
+
+  .destination-card--tall .destination-card__image-wrapper {
+    width: 250px;
+    height: 530px;
   }
 
   .destinations__cta {
@@ -238,18 +663,65 @@
   }
 
   .destinations__grid {
+    gap: 24px;
+  }
+
+  .destinations__row {
+    flex-wrap: wrap;
+    gap: 24px;
+  }
+
+  .destinations__row--inner,
+  .destinations__column {
+    gap: 24px;
+  }
+
+  /* All cards same size on tablet */
+  .destination-card--wide .destination-card__image-wrapper,
+  .destination-card--normal .destination-card__image-wrapper,
+  .destination-card--tall .destination-card__image-wrapper {
+    width: 100%;
+    height: 280px;
+  }
+
+  .destinations__column {
+    flex: 1;
+    min-width: 280px;
+  }
+
+  /* Expanded view responsive */
+  .destination-expanded {
+    flex-direction: column !important;
+    padding: 32px !important;
+    gap: 32px;
+  }
+
+  .destination-expanded__close {
+    top: 24px;
+    right: 24px;
+  }
+
+  .destination-expanded__image-wrapper {
+    width: 100%;
+  }
+
+  .destination-expanded__image {
+    aspect-ratio: 16 / 10;
+  }
+
+  .destination-expanded__content {
+    padding-top: 0;
+    gap: 32px;
+  }
+
+  .destination-expanded__title {
+    font-size: 28px;
+    line-height: 36px;
+  }
+
+  .destinations__small-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 24px;
-    grid-auto-rows: 340px;
-  }
-
-  /* Reset spanning for tablet */
-  .destination-card--wide {
-    grid-column: span 2;
-  }
-
-  .destination-card--tall {
-    grid-row: span 1;
   }
 
   .destinations__cta {
@@ -276,13 +748,20 @@
   }
 
   .destinations__grid {
-    grid-template-columns: repeat(2, 1fr);
     gap: 20px;
-    grid-auto-rows: 300px;
   }
 
-  .destination-card--wide {
-    grid-column: span 1; /* Single column on smaller screens */
+  .destinations__row,
+  .destinations__row--inner,
+  .destinations__column {
+    gap: 20px;
+  }
+
+  .destination-card--wide .destination-card__image-wrapper,
+  .destination-card--normal .destination-card__image-wrapper,
+  .destination-card--tall .destination-card__image-wrapper {
+    width: 100%;
+    height: 220px;
   }
 
   .destination-card__country,
@@ -328,15 +807,62 @@
   }
 
   .destinations__grid {
-    grid-template-columns: 1fr;
     gap: 20px;
-    grid-auto-rows: 280px;
   }
 
-  .destination-card--wide,
-  .destination-card--tall {
-    grid-column: span 1;
-    grid-row: span 1;
+  .destinations__row,
+  .destinations__column {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .destinations__row--inner {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .destination-card--wide .destination-card__image-wrapper,
+  .destination-card--normal .destination-card__image-wrapper,
+  .destination-card--tall .destination-card__image-wrapper {
+    width: 100%;
+    height: 200px;
+  }
+
+  /* Expanded view mobile */
+  .destination-expanded {
+    padding: 20px !important;
+    gap: 24px;
+  }
+
+  .destination-expanded__close {
+    top: 16px;
+    right: 16px;
+    font-size: 14px;
+  }
+
+  .destination-expanded__image {
+    aspect-ratio: 4 / 3;
+  }
+
+  .destination-expanded__title {
+    font-size: 24px;
+    line-height: 32px;
+  }
+
+  .destination-expanded__content {
+    gap: 24px;
+    padding-top: 0;
+  }
+
+  .destination-expanded__section h4,
+  .destination-expanded__section p {
+    font-size: 14px;
+    line-height: 22px;
+  }
+
+  .destinations__small-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
   }
 
   .destinations__cta {

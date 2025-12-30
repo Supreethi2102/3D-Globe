@@ -39,6 +39,12 @@
   display: flex;
   flex-direction: column;
   gap: 0;
+  cursor: pointer;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.publication-card:hover {
+  transform: translateY(-8px);
 }
 
 .publication-card__image-container {
@@ -47,6 +53,12 @@
   border-radius: 12px;
   overflow: hidden;
   background: #fff;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  transition: box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.publication-card:hover .publication-card__image-container {
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
 }
 
 .publication-card__image {
@@ -55,6 +67,11 @@
   object-fit: cover;
   object-position: center;
   margin: -1%;
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.publication-card:hover .publication-card__image {
+  transform: scale(1.05);
 }
 
 .publication-card__info {

@@ -18,6 +18,60 @@
   --padding-y: 56px;            /* Desktop vertical padding */
 }
 
+/* Smooth scroll behavior */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Global focus styles for keyboard navigation */
+*:focus {
+  outline: none;
+}
+
+*:focus-visible {
+  outline: 2px solid #7150e5;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Better focus for buttons and interactive elements */
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid #7150e5;
+  outline-offset: 2px;
+}
+
+/* Skip to content link for accessibility */
+.skip-to-content {
+  position: absolute;
+  top: -100%;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 12px 24px;
+  background: #7150e5;
+  color: #ffffff;
+  text-decoration: none;
+  border-radius: 8px;
+  z-index: 9999;
+  transition: top 0.2s ease;
+}
+
+.skip-to-content:focus {
+  top: 16px;
+}
+
+/* Reduced motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
 .app {
   min-height: 100vh;
   display: flex;

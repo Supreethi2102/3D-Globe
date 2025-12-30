@@ -22,9 +22,9 @@ export const ColorSwatches: React.FC = () => {
       {/* Header - Instructions */}
       <div className="color-swatches__header">
         <div className="color-swatches__icons">
-          <img src="/HandSwipeLeft.svg" alt="" className="color-swatches__icon" />
-          <img src="/HandGrabbing.svg" alt="" className="color-swatches__icon" />
-          <img src="/HandSwipeRight.svg" alt="" className="color-swatches__icon" />
+<img src="/icons/HandSwipeLeft.svg" alt="" className="color-swatches__icon" />
+<img src="/icons/HandGrabbing.svg" alt="" className="color-swatches__icon" />
+<img src="/icons/HandSwipeRight.svg" alt="" className="color-swatches__icon" />
         </div>
         <p className="color-swatches__text">
           Tap, click, or drag the colour swatches to discover my travel colour moods.
@@ -37,15 +37,15 @@ export const ColorSwatches: React.FC = () => {
 
         {/* Back to Top */}
         <div className="color-swatches__back-to-top">
-        <button 
-          className={`back-to-top__btn ${isBackToTopHovered ? 'back-to-top__btn--hovered' : ''}`}
-          onClick={scrollToTop}
-          onMouseEnter={() => setIsBackToTopHovered(true)}
-          onMouseLeave={() => setIsBackToTopHovered(false)}
-        >
-          <CaretUp size={24} weight={isBackToTopHovered ? 'bold' : 'regular'} color={isBackToTopHovered ? '#ffffff' : '#7150E5'} />
-        </button>
-        <span className="back-to-top__text">Back to top</span>
+          <button 
+            className={`back-to-top__btn ${isBackToTopHovered ? 'back-to-top__btn--hovered' : ''}`}
+            onClick={scrollToTop}
+            onMouseEnter={() => setIsBackToTopHovered(true)}
+            onMouseLeave={() => setIsBackToTopHovered(false)}
+          >
+            <CaretUp size={24} weight={isBackToTopHovered ? 'bold' : 'regular'} color={isBackToTopHovered ? '#ffffff' : '#7150E5'} />
+          </button>
+          <span className="back-to-top__text">Back to top</span>
         </div>
       </div>
 
@@ -53,7 +53,7 @@ export const ColorSwatches: React.FC = () => {
       <footer className="site-footer">
         <div className="site-footer__inner">
           <div className="site-footer__left">
-            <img src="/Brand logo.svg" alt="SJS" className="site-footer__logo" />
+            <img src="/icons/Brand logo.svg" alt="SJS" className="site-footer__logo" />
             <span className="site-footer__copyright">© 2026 Samantha jane Smith, All rights reserved.</span>
           </div>
           <div className="site-footer__right">

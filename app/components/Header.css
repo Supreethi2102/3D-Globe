@@ -93,11 +93,13 @@
   border: none;
   border-radius: 8px;
   cursor: pointer;
+  text-decoration: none;
   transition: background-color 0.2s ease;
 }
 
 .header__contact-btn:hover {
   background: #5E3EC9;
+  text-decoration: none;
 }
 
 .header__contact-icon {

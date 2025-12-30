@@ -84,12 +84,17 @@
   transition: all 0.2s ease;
 }
 
-.testimonials__nav:hover {
+.testimonials__nav:hover:not(:disabled) {
   background: #7150e5;
 }
 
-.testimonials__nav:hover svg path {
+.testimonials__nav:hover:not(:disabled) svg path {
   stroke: #ffffff;
+}
+
+.testimonials__nav:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 .testimonials__feedback {
@@ -99,9 +104,10 @@
   gap: 28px; /* Figma */
 }
 
-.testimonials__quote {
+.testimonials__quote-wrapper {
   flex: 1;
   max-width: 616px; /* Figma */
+  overflow: hidden;
 }
 
 .testimonials__quote {
@@ -111,6 +117,33 @@
   line-height: 24px; /* Figma */
   color: #3c3f43;
   margin: 0;
+  animation: fadeSlideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.testimonials__quote--animating {
+  animation: fadeSlideOut 0.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes fadeSlideIn {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeSlideOut {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
 }
 
 .testimonials__author-block {
@@ -121,6 +154,10 @@
   margin-top: 28px;
 }
 
+.testimonials__author-block--animating .testimonials__author {
+  animation: fadeSlideOut 0.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
 .testimonials__author {
   font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   font-size: 16px;
@@ -128,6 +165,7 @@
   line-height: 24px;
   color: #3c3f43;
   margin: 0;
+  animation: fadeSlideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1) 0.1s both;
 }
 
 .testimonials__author strong {

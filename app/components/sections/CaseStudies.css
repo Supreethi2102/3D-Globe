@@ -351,32 +351,30 @@
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.04);
 }
 
-/* Listen Button */
+/* Listen Button - Figma design: icon + divider + text inside bordered container */
 .listen-button {
   position: absolute;
-  bottom: 28px;
-  right: 52px;
+  bottom: 24px;
+  right: 24px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
-  width: 47px;
-  background: none;
-  border: none;
+  gap: 0;
+  width: 77px;
+  padding: 16px 16px 0;
+  background: #f7f9fa;
+  border: 1px solid #7150e5;
+  border-radius: 8px;
   cursor: pointer;
   z-index: 1;
-  backdrop-filter: blur(1px);
 }
 
 .listen-button__icon {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 48px;
-  height: 48px;
-  background: #f7f8f9;
-  border: 1px solid #7150e5;
-  border-radius: 12px;
+  width: 24px;
+  height: 24px;
 }
 
 .listen-button__icon svg {
@@ -384,11 +382,20 @@
   height: 24px;
 }
 
+.listen-button__divider {
+  width: 100%;
+  height: 1px;
+  background: #d3d6da;
+  margin-top: 16px;
+}
+
 .listen-button__text {
   font-family: 'Atkinson Hyperlegible', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   font-size: 16px;
   line-height: 24px;
-  color: #f7f8f9;
+  color: #7150e5;
+  padding: 16px 0;
+  text-align: center;
 }
 
 /* Footer */
@@ -556,8 +563,19 @@
   }
 
   .listen-button {
-    right: 24px;
-    bottom: 20px;
+    right: 16px;
+    bottom: 16px;
+    width: 70px;
+    padding: 12px 12px 0;
+  }
+
+  .listen-button__divider {
+    margin-top: 12px;
+  }
+
+  .listen-button__text {
+    padding: 12px 0;
+    font-size: 14px;
   }
 }
 

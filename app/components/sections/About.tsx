@@ -11,7 +11,7 @@ const AboutBlock1: React.FC = () => {
   return (
     <div className="about-block1">
       <div className="about-block1__illustration">
-        <img src="/Illustration-Sam.png" alt="Samantha illustration" />
+        <img src="/about/Illustration-Sam.png" alt="Samantha illustration" />
       </div>
 
       <div className="about-block1__content">
@@ -151,16 +151,16 @@ const AboutBlock3: React.FC = () => {
   return (
     <div className="about-block3" ref={block3Ref}>
       <div className="about-block3__cards">
-        {colorCards.map((card, index) => (
-          <ColorCard 
-            key={card.id} 
-            card={card}
-            isVisible={isVisible}
+          {colorCards.map((card, index) => (
+            <ColorCard 
+              key={card.id} 
+              card={card} 
+              isVisible={isVisible}
             animationDelay={index * 200}
-          />
-        ))}
-      </div>
-
+            />
+          ))}
+        </div>
+        
       <div className="about-block3__content">
         <div className="about-block3__text-block">
           <p className="about-block3__title">Design in Practice</p>
@@ -173,7 +173,7 @@ const AboutBlock3: React.FC = () => {
           <p>This site is mostly black and white by intention. I wanted the work to speak for itself, with a few sneaky pops of colour if you switch modes.</p>
           <p>And if I'm deep in Figma or nudging paragraph styles into place, chances are there's a stash of Natural Confectionery Co. lollies nearby. Fruity chews are my colour-coded reward system — one lolly at a time.</p>
         </div>
-        <img src="/Samantha signature 3.png" alt="Samantha" className="about-block3__signature" />
+        <img src="/about/Samantha signature 3.png" alt="Samantha" className="about-block3__signature" />
       </div>
     </div>
   );
@@ -184,7 +184,7 @@ const AboutBlock3: React.FC = () => {
    ========================================= */
 export const About: React.FC = () => {
   return (
-    <section className="about">
+    <section className="about" id="about">
       <span className="about__label">About</span>
       <AboutBlock1 />
       <AboutBlock2 />

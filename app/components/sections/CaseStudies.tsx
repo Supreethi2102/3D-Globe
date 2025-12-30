@@ -9,7 +9,7 @@ import {
   PuzzlePiece,
   Target,
   ChartLineUp,
-  Microphone,
+  SpeakerHigh,
   Folders,
   IconWeight,
   Icon
@@ -30,7 +30,7 @@ const categories: CategoryType[] = [
   { id: 'campaigns', label: 'Campaigns', Icon: Megaphone },
   { id: 'packaging', label: 'Packaging', Icon: Package },
   { id: 'ui', label: 'UI', Icon: Ruler },
-  { id: 'ux', label: 'UX', svgPath: '/user-pencil.svg' },
+  { id: 'ux', label: 'UX', svgPath: '/icons/user-pencil.svg' },
 ];
 
 // Case study data with actual images from public folder
@@ -42,7 +42,7 @@ const caseStudies = [
     description: `Palmy is a fictional challenger bank I created to reimagine what trust, clarity and playfulness could feel like in everyday banking. It's designed for those too often excluded, including Pacific peoples, Māori and women. A warm, human-centred experience. Welcoming. Maybe even smile-worthy.`,
     duration: '7 months',
     category: 'ui',
-    image: '/47acc09551b581ea0204690ee9c9bf854e3a5309.png',
+    image: '/misc/47acc09551b581ea0204690ee9c9bf854e3a5309.png',
   },
   {
     id: 2,
@@ -51,7 +51,7 @@ const caseStudies = [
     description: `Palmy is a fictional challenger bank I created to reimagine what trust, clarity and playfulness could feel like in everyday banking. It's designed for those too often excluded, including Pacific peoples, Māori and women. A warm, human-centred experience. Welcoming. Maybe even smile-worthy.`,
     duration: '7 months',
     category: 'ui',
-    image: '/eb063b7647d2bb7897c12e3ac9acb89080d8a3d6.png',
+    image: '/misc/eb063b7647d2bb7897c12e3ac9acb89080d8a3d6.png',
   },
   {
     id: 3,
@@ -60,7 +60,7 @@ const caseStudies = [
     description: `Palmy is a fictional challenger bank I created to reimagine what trust, clarity and playfulness could feel like in everyday banking. It's designed for those too often excluded, including Pacific peoples, Māori and women. A warm, human-centred experience. Welcoming. Maybe even smile-worthy.`,
     duration: '7 months',
     category: 'ui',
-    image: '/junior-VRjbcJSINVc-unsplash%201.png',
+    image: '/misc/junior-VRjbcJSINVc-unsplash-1.png',
   },
 ];
 
@@ -165,8 +165,9 @@ const CaseStudyCard: React.FC<CaseStudyCardProps> = ({ study }) => {
           onMouseLeave={() => setHoveredBtn(null)}
         >
           <div className="listen-button__icon">
-            <Microphone size={24} weight={hoveredBtn === 'listen' ? 'fill' : 'regular'} color="#7150E5" />
+            <SpeakerHigh size={24} weight={hoveredBtn === 'listen' ? 'fill' : 'regular'} color="#7150E5" />
           </div>
+          <div className="listen-button__divider"></div>
           <span className="listen-button__text">Listen</span>
         </button>
       </div>
@@ -189,7 +190,7 @@ export const CaseStudies: React.FC = () => {
   };
 
   return (
-    <section className="case-studies">
+    <section className="case-studies" id="work">
       {/* Header */}
       <div className="case-studies__header">
         <h2 className="case-studies__title">

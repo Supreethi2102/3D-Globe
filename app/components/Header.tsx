@@ -16,6 +16,23 @@ export const Header: React.FC = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Smooth scroll to section
+  const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, sectionId: string) => {
+    e.preventDefault();
+    const element = document.querySelector(sectionId);
+    if (element) {
+      const headerOffset = 80;
+      const elementPosition = element.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.scrollY - headerOffset;
+      
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
+    }
+    setIsMobileMenuOpen(false);
+  };
+
   return (
     <header className={`header ${isScrolled ? 'header--scrolled' : ''}`}>
       {/* Logo */}
@@ -28,6 +45,7 @@ export const Header: React.FC = () => {
         <a 
           href="#work" 
           className="header__nav-link"
+          onClick={(e) => scrollToSection(e, '#work')}
           onMouseEnter={() => setHoveredLink('work')}
           onMouseLeave={() => setHoveredLink(null)}
         >
@@ -37,6 +55,7 @@ export const Header: React.FC = () => {
         <a 
           href="#about" 
           className="header__nav-link"
+          onClick={(e) => scrollToSection(e, '#about')}
           onMouseEnter={() => setHoveredLink('about')}
           onMouseLeave={() => setHoveredLink(null)}
         >
@@ -46,6 +65,7 @@ export const Header: React.FC = () => {
         <a 
           href="#testimonials" 
           className="header__nav-link"
+          onClick={(e) => scrollToSection(e, '#testimonials')}
           onMouseEnter={() => setHoveredLink('testimonials')}
           onMouseLeave={() => setHoveredLink(null)}
         >
@@ -63,14 +83,16 @@ export const Header: React.FC = () => {
       </nav>
 
       {/* Contact Button */}
-      <button 
+      <a 
+        href="#contact"
         className="header__contact-btn"
+        onClick={(e) => scrollToSection(e, '#contact')}
         onMouseEnter={() => setHoveredLink('contact')}
         onMouseLeave={() => setHoveredLink(null)}
       >
         <Phone size={24} weight={hoveredLink === 'contact' ? 'fill' : 'regular'} className="header__contact-icon" />
         <span>Contact</span>
-      </button>
+      </a>
 
       {/* Mobile Menu Button */}
       <button 
@@ -83,15 +105,15 @@ export const Header: React.FC = () => {
 
       {/* Mobile Navigation */}
       <nav className={`header__mobile-nav ${isMobileMenuOpen ? 'header__mobile-nav--open' : ''}`}>
-        <a href="#work" className="header__mobile-link" onClick={() => setIsMobileMenuOpen(false)}>
+        <a href="#work" className="header__mobile-link" onClick={(e) => scrollToSection(e, '#work')}>
           <Palette size={24} weight="regular" className="header__nav-icon" />
           <span>Work</span>
         </a>
-        <a href="#about" className="header__mobile-link" onClick={() => setIsMobileMenuOpen(false)}>
+        <a href="#about" className="header__mobile-link" onClick={(e) => scrollToSection(e, '#about')}>
           <User size={24} weight="regular" className="header__nav-icon" />
           <span>About</span>
         </a>
-        <a href="#testimonials" className="header__mobile-link" onClick={() => setIsMobileMenuOpen(false)}>
+        <a href="#testimonials" className="header__mobile-link" onClick={(e) => scrollToSection(e, '#testimonials')}>
           <ChatCircleDots size={24} weight="regular" className="header__nav-icon" />
           <span>Testimonials</span>
         </a>
@@ -99,10 +121,10 @@ export const Header: React.FC = () => {
           <Sun size={24} weight="regular" className="header__nav-icon" />
           <span>Light Mode</span>
         </button>
-        <button className="header__contact-btn header__contact-btn--mobile">
+        <a href="#contact" className="header__contact-btn header__contact-btn--mobile" onClick={(e) => scrollToSection(e, '#contact')}>
           <Phone size={24} weight="regular" className="header__contact-icon" />
           <span>Contact</span>
-        </button>
+        </a>
       </nav>
     </header>
   );
