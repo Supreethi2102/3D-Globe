@@ -21,6 +21,7 @@
 /* Smooth scroll behavior */
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 100px; /* Account for fixed header */
 }
 
 /* Global focus styles for keyboard navigation */

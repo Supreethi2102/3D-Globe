@@ -28,24 +28,21 @@ export const Header: React.FC = () => {
     return () => document.removeEventListener('keydown', handleEscape);
   }, [isMobileMenuOpen]);
 
-  // Smooth scroll to section
+  // Smooth scroll to section using native browser behavior with scroll-padding
   const scrollToSection = useCallback((e: React.MouseEvent<HTMLAnchorElement>, sectionId: string) => {
     e.preventDefault();
-    const element = document.querySelector(sectionId);
-    if (element) {
-      const headerOffset = 80;
-      const elementPosition = element.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.scrollY - headerOffset;
-      
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth'
-      });
-      
-      // Set focus to the section for screen readers
-      (element as HTMLElement).focus();
-    }
     setIsMobileMenuOpen(false);
+    
+    // Update URL hash - this triggers native smooth scroll with scroll-padding-top
+    window.location.hash = sectionId;
+    
+    // Set focus for screen readers after a brief delay
+    setTimeout(() => {
+      const element = document.querySelector(sectionId);
+      if (element) {
+        (element as HTMLElement).focus();
+      }
+    }, 100);
   }, []);
 
   // Handle keyboard navigation in mobile menu

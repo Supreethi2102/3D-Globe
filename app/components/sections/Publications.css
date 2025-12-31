@@ -40,11 +40,6 @@
   flex-direction: column;
   gap: 0;
   cursor: pointer;
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.publication-card:hover {
-  transform: translateY(-8px);
 }
 
 .publication-card__image-container {
@@ -71,7 +66,11 @@
 }
 
 .publication-card:hover .publication-card__image {
-  transform: scale(1.05);
+  transform: scale(1.08);
+}
+
+.publication-card:hover .publication-card__image-container {
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.15), 0 10px 10px -5px rgba(0, 0, 0, 0.08);
 }
 
 .publication-card__info {

@@ -10,6 +10,7 @@
   padding-left: max(var(--padding-x, 112px), calc((100vw - var(--content-max-width, 1220px)) / 2));
   padding-right: max(var(--padding-x, 112px), calc((100vw - var(--content-max-width, 1220px)) / 2));
   width: 100%;
+  scroll-margin-top: 100px;
 }
 
 .case-studies__content {

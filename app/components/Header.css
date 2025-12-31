@@ -67,7 +67,12 @@
 }
 
 .header__nav-link:hover {
-  background-color: rgba(0, 0, 0, 0.05);
+  background-color: rgba(113, 80, 229, 0.1);
+  color: #7150E5;
+}
+
+.header__nav-link:hover .header__nav-icon {
+  color: #7150E5;
 }
 
 .header__nav-icon {

@@ -11,27 +11,21 @@ const testimonials = [
   },
   {
     id: 2,
-    quote: `Sam brings creativity and thoughtfulness to every project. Her attention to detail and ability to translate complex ideas into beautiful designs is remarkable.`,
-    author: 'John Smith',
-    role: 'Creative Director at Design Studio',
+    quote: `Samantha possesses excellent communication skills, and she is a pleasure to work with. She has a natural ability to collaborate with colleagues and clients, and she always seeks to understand the needs and perspectives of others. Her innovative and creative thinking has allowed her to develop unique and effective solutions that have benefited our projects immensely.`,
+    author: 'Chiquita Taala',
+    role: 'Trade Planning Manager - Home & Leisure (The Warehouse Group)',
   },
   {
     id: 3,
-    quote: `Working with Sam was an absolute pleasure. She consistently delivered high-quality work that exceeded our expectations.`,
-    author: 'Emily Chen',
-    role: 'Product Manager at Tech Company',
+    quote: `I had the privilege of working with Sam for nearly four years at TWG. Throughout this period, she orchestrated the design and art direction of numerous campaigns spanning print, TV, online, and in-store initiatives. Sam earned tremendous respect among production designers, thanks to her bubbly personality, unwavering guidance, composed demeanour, and meticulous attention to detail, making her the ideal art director. Her generosity in sharing knowledge and readiness to address inquiries further underscored her commitment. I wholeheartedly endorse Sam for any role that requires someone who can lead a team in an exciting campaign.`,
+    author: 'Deidre Kennedy',
+    role: 'Planning & Scheduling, Process Improvement (New Zealand Defence Force)',
   },
   {
     id: 4,
-    quote: `Sam's design thinking approach helped us solve complex user experience challenges. Her work had a measurable impact on our product success.`,
-    author: 'Michael Brown',
-    role: 'VP of Product at Startup Inc',
-  },
-  {
-    id: 5,
-    quote: `Collaborative, innovative, and always pushing boundaries. Sam is the kind of designer every team needs.`,
-    author: 'Sarah Wilson',
-    role: 'Head of Marketing at Brand Agency',
+    quote: `My experience working with Samantha was both synergetic and greatly enjoyable. As a graphic designer, Samantha has a wealth of knowledge and years of experience to draw upon, as well as a seemingly endless source of creativity. She can take a thread of an idea and turn it into a work of art, taking care to maintain aesthetic appeal, in-house style and a good reader/audience experience. Her attention to detail is impeccable – she takes great pride in the technical finesse of each file she works on, both from a visual consistency and digital asset management perspective.`,
+    author: 'Rachel Ramsay',
+    role: 'Social Media Manager (Envato)',
   },
 ];
 
