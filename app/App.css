@@ -170,6 +170,8 @@ a:focus-visible {
   overflow: visible;
   width: 100%;
   max-width: 700px;
+  transform: scale(1.15);
+  transform-origin: center center;
 }
 
 /* Responsive - Large Desktop (1400px and below) */
