@@ -32,7 +32,8 @@
   font-size: 14px;
   font-weight: 500;
   color: #7150E5;
-  text-decoration: none;
+  text-decoration: none !important;
+  text-decoration-line: none !important;
   /* Reset button styles to look like a link */
   background: none;
   border: none;
