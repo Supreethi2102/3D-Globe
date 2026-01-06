@@ -33,12 +33,51 @@
 
 /* Logo */
 .header__logo {
-  font-family: Georgia, serif;
-  font-size: 32px;
-  font-weight: 600;
-  color: #1F2128;
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 40px;
   text-decoration: none;
-  line-height: 40px;
+}
+
+.header__logo-short {
+  height: 32px;
+  width: auto;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 2;
+}
+
+.header__logo-expand {
+  position: absolute;
+  left: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  width: 0;
+  transition: width 0.5s cubic-bezier(0.65, 0, 0.35, 1);
+  pointer-events: none;
+}
+
+.header__logo-expand::before {
+  content: '';
+  width: 1px;
+  height: 24px;
+  background-color: #231f20;
+  flex-shrink: 0;
+  margin: 0 12px;
+}
+
+.header__logo-full {
+  height: 32px;
+  width: 210px;
+  flex-shrink: 0;
+}
+
+.header__logo:hover .header__logo-expand {
+  width: 235px;
 }
 
 /* Desktop Navigation */
@@ -262,8 +301,25 @@
   }
 
   .header__logo {
-    font-size: 28px;
-    line-height: 36px;
+    height: 36px;
+  }
+
+  .header__logo-short {
+    height: 28px;
+  }
+
+  .header__logo-expand::before {
+    height: 20px;
+    margin: 0 10px;
+  }
+
+  .header__logo-full {
+    height: 28px;
+    width: 185px;
+  }
+
+  .header__logo:hover .header__logo-expand {
+    width: 206px;
   }
 
   .header__nav,
@@ -289,8 +345,25 @@
   }
 
   .header__logo {
-    font-size: 24px;
-    line-height: 32px;
+    height: 32px;
+  }
+
+  .header__logo-short {
+    height: 24px;
+  }
+
+  .header__logo-expand::before {
+    height: 16px;
+    margin: 0 8px;
+  }
+
+  .header__logo-full {
+    height: 24px;
+    width: 160px;
+  }
+
+  .header__logo:hover .header__logo-expand {
+    width: 177px;
   }
 
   .header__mobile-toggle {

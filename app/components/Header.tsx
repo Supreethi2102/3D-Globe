@@ -77,7 +77,18 @@ export const Header: React.FC = () => {
         className="header__logo"
         aria-label="Samantha Jane Smith - Home"
       >
-        sjs
+        <img 
+          src="/about/SJS Illustrator logo.svg" 
+          alt="SJS" 
+          className="header__logo-short"
+        />
+        <span className="header__logo-expand">
+          <img 
+            src="/about/my name brand.svg" 
+            alt="Samantha Jane Smith" 
+            className="header__logo-full"
+          />
+        </span>
       </a>
       
       {/* Desktop Navigation */}
