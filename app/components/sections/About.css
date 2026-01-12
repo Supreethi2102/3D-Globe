@@ -396,22 +396,23 @@
 
 /* Block 3 Content */
 .about-block3__content {
-  width: 468px;
+  width: 464px; /* Match Block 1 content width */
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
+  align-items: flex-start;
   gap: 38px;
-  margin-left: 60px; /* Align with Block 1 text (588px - 484px) */
+  margin-left: 40px; /* Align with Block 1 text: 588 - 420 (cards) - 64 (gap) - 64 (adjustment) */
 }
 
 .about-block3__text-block {
-  width: 464px;
+  width: 100%;
+  max-width: 464px;
   font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 16px;
   font-weight: 400;
   line-height: 24px;
   letter-spacing: 0.64px;
-  color: #3c3f43;
+  color: rgba(0, 0, 0, 0.7);
 }
 
 .about-block3__text-block p {

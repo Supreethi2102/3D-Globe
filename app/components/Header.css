@@ -138,7 +138,7 @@
   left: 0;
   right: 0;
   background: #f7f8f9;
-  border-radius: 0 0 24px 24px;
+  border-radius: 0;
   padding: 48px 112px;
   opacity: 0;
   visibility: hidden;
