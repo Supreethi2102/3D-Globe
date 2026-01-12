@@ -120,6 +120,108 @@
   flex-shrink: 0;
 }
 
+/* Nav Item Container (for mega menu) */
+.header__nav-item {
+  position: relative;
+}
+
+.header__nav-item--has-mega {
+  position: static;
+}
+
+/* ===================================
+   Mega Menu
+   =================================== */
+.mega-menu {
+  position: fixed;
+  top: 96px;
+  left: 0;
+  right: 0;
+  background: #f7f8f9;
+  border-radius: 0 0 24px 24px;
+  padding: 48px 112px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
+  z-index: 99;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+}
+
+.mega-menu--open {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.mega-menu__content {
+  display: flex;
+  gap: 78px;
+  max-width: 1220px;
+  margin: 0 auto;
+}
+
+.mega-menu__category {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.mega-menu__category--publications {
+  min-width: 272px;
+}
+
+.mega-menu__category-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.mega-menu__icon {
+  width: 24px;
+  height: 24px;
+  color: #3c3f43;
+  flex-shrink: 0;
+}
+
+.mega-menu__category-title {
+  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 24px;
+  letter-spacing: 0.4px;
+  color: #3c3f43;
+}
+
+.mega-menu__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.mega-menu__list li {
+  line-height: 24px;
+}
+
+.mega-menu__list a {
+  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  color: #3c3f43;
+  text-decoration: none;
+  transition: color 0.2s ease;
+  display: block;
+  padding: 4px 0;
+}
+
+.mega-menu__list a:hover {
+  color: #7150e5;
+}
+
 /* Contact Button */
 .header__contact-btn {
   display: flex;
@@ -263,12 +365,37 @@
   .header {
     gap: 400px;
   }
+  
+  .mega-menu {
+    padding: 40px 80px;
+  }
+  
+  .mega-menu__content {
+    gap: 48px;
+  }
 }
 
 /* Desktop */
 @media (max-width: 1200px) {
   .header {
     gap: 280px;
+  }
+  
+  .mega-menu {
+    padding: 32px 48px;
+  }
+  
+  .mega-menu__content {
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+  
+  .mega-menu__category-title {
+    font-size: 18px;
+  }
+  
+  .mega-menu__list a {
+    font-size: 14px;
   }
 }
 
@@ -289,6 +416,10 @@
 
   .header__nav-link {
     padding: 12px;
+  }
+  
+  .mega-menu {
+    display: none;
   }
 }
 

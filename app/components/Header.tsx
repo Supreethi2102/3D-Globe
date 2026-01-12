@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Palette, User, ChatCircleDots, Sun, Phone } from '@phosphor-icons/react';
+import { Palette, User, ChatCircleDots, Sun, Phone, PaintBrush, Megaphone, Package, BookOpen, Ruler, UserCircle } from '@phosphor-icons/react';
 import './Header.css';
 
 export const Header: React.FC = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [hoveredLink, setHoveredLink] = useState<string | null>(null);
+  const [isMegaMenuOpen, setIsMegaMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -93,16 +94,101 @@ export const Header: React.FC = () => {
       
       {/* Desktop Navigation */}
       <nav className="header__nav" aria-label="Main navigation">
-        <a 
-          href="#work" 
-          className="header__nav-link"
-          onClick={(e) => scrollToSection(e, '#work')}
-          onMouseEnter={() => setHoveredLink('work')}
-          onMouseLeave={() => setHoveredLink(null)}
+        <div 
+          className="header__nav-item header__nav-item--has-mega"
+          onMouseEnter={() => setIsMegaMenuOpen(true)}
+          onMouseLeave={() => setIsMegaMenuOpen(false)}
         >
-          <Palette size={24} weight={hoveredLink === 'work' ? 'fill' : 'regular'} className="header__nav-icon" aria-hidden="true" />
-          <span>Work</span>
-        </a>
+          <a 
+            href="#work" 
+            className="header__nav-link"
+            onClick={(e) => scrollToSection(e, '#work')}
+            onMouseEnter={() => setHoveredLink('work')}
+            onMouseLeave={() => setHoveredLink(null)}
+          >
+            <Palette size={24} weight={hoveredLink === 'work' || isMegaMenuOpen ? 'fill' : 'regular'} className="header__nav-icon" aria-hidden="true" />
+            <span>Work</span>
+          </a>
+          
+          {/* Mega Menu */}
+          <div className={`mega-menu ${isMegaMenuOpen ? 'mega-menu--open' : ''}`}>
+            <div className="mega-menu__content">
+              {/* Branding */}
+              <div className="mega-menu__category">
+                <div className="mega-menu__category-header">
+                  <PaintBrush size={24} weight="regular" className="mega-menu__icon" aria-hidden="true" />
+                  <span className="mega-menu__category-title">Branding</span>
+                </div>
+              </div>
+
+              {/* Campaigns */}
+              <div className="mega-menu__category">
+                <div className="mega-menu__category-header">
+                  <Megaphone size={24} weight="regular" className="mega-menu__icon" aria-hidden="true" />
+                  <span className="mega-menu__category-title">Campaigns</span>
+                </div>
+                <ul className="mega-menu__list">
+                  <li><a href="#work" onClick={(e) => scrollToSection(e, '#work')}>The Warehouse<br />Mega Toy Month</a></li>
+                  <li><a href="#work" onClick={(e) => scrollToSection(e, '#work')}>The Warehouse<br />Summer Campaign</a></li>
+                </ul>
+              </div>
+
+              {/* Packaging */}
+              <div className="mega-menu__category">
+                <div className="mega-menu__category-header">
+                  <Package size={24} weight="regular" className="mega-menu__icon" aria-hidden="true" />
+                  <span className="mega-menu__category-title">Packaging</span>
+                </div>
+                <ul className="mega-menu__list">
+                  <li><a href="#work" onClick={(e) => scrollToSection(e, '#work')}>Green Cross bags</a></li>
+                </ul>
+              </div>
+
+              {/* Publications */}
+              <div className="mega-menu__category mega-menu__category--publications">
+                <div className="mega-menu__category-header">
+                  <BookOpen size={24} weight="regular" className="mega-menu__icon" aria-hidden="true" />
+                  <span className="mega-menu__category-title">Publications</span>
+                </div>
+                <ul className="mega-menu__list">
+                  <li><a href="#publications" onClick={(e) => scrollToSection(e, '#publications')}>Architecture New Zealand Magazine</a></li>
+                  <li><a href="#publications" onClick={(e) => scrollToSection(e, '#publications')}>Houses Magazine</a></li>
+                  <li><a href="#publications" onClick={(e) => scrollToSection(e, '#publications')}>Life Pharmacy Lookbook</a></li>
+                  <li><a href="#publications" onClick={(e) => scrollToSection(e, '#publications')}>Life Pharmacy Mailer</a></li>
+                  <li><a href="#publications" onClick={(e) => scrollToSection(e, '#publications')}>NZW Grooms Guide Booklet</a></li>
+                  <li><a href="#publications" onClick={(e) => scrollToSection(e, '#publications')}>New Zealand Weddings Magazine</a></li>
+                  <li><a href="#publications" onClick={(e) => scrollToSection(e, '#publications')}>New Zealand Weddings Planner</a></li>
+                  <li><a href="#publications" onClick={(e) => scrollToSection(e, '#publications')}>Pumpkin Patch Catalogue</a></li>
+                  <li><a href="#publications" onClick={(e) => scrollToSection(e, '#publications')}>Superlife Booklet</a></li>
+                  <li><a href="#publications" onClick={(e) => scrollToSection(e, '#publications')}>Little Treasures Magazine</a></li>
+                  <li><a href="#publications" onClick={(e) => scrollToSection(e, '#publications')}>The Warehouse - Big Toy Month Mailer</a></li>
+                </ul>
+              </div>
+
+              {/* UI */}
+              <div className="mega-menu__category">
+                <div className="mega-menu__category-header">
+                  <Ruler size={24} weight="regular" className="mega-menu__icon" aria-hidden="true" />
+                  <span className="mega-menu__category-title">UI</span>
+                </div>
+                <ul className="mega-menu__list">
+                  <li><a href="#work" onClick={(e) => scrollToSection(e, '#work')}>Palmy Bank</a></li>
+                </ul>
+              </div>
+
+              {/* UX */}
+              <div className="mega-menu__category">
+                <div className="mega-menu__category-header">
+                  <UserCircle size={24} weight="regular" className="mega-menu__icon" aria-hidden="true" />
+                  <span className="mega-menu__category-title">UX</span>
+                </div>
+                <ul className="mega-menu__list">
+                  <li><a href="#work" onClick={(e) => scrollToSection(e, '#work')}>Āmio Airways</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
         <a 
           href="#about" 
           className="header__nav-link"
