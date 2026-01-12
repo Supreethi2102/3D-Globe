@@ -216,6 +216,7 @@
   transition: color 0.2s ease;
   display: block;
   padding: 4px 0;
+  white-space: nowrap;
 }
 
 .mega-menu__list a:hover {
