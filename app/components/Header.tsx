@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Palette, User, ChatCircleDots, Sun, Phone, PaintBrush, Megaphone, Package, BookOpen, Ruler, UserCircle } from '@phosphor-icons/react';
+import { Palette, User, ChatCircleDots, Sun, SunHorizon, MoonStars, CloudMoon, Moon, Phone, PaintBrush, Megaphone, Package, BookOpen, Ruler, UserCircle } from '@phosphor-icons/react';
 import './Header.css';
 
 export const Header: React.FC = () => {
@@ -7,6 +7,8 @@ export const Header: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [hoveredLink, setHoveredLink] = useState<string | null>(null);
   const [isMegaMenuOpen, setIsMegaMenuOpen] = useState(false);
+  const [isThemeMenuOpen, setIsThemeMenuOpen] = useState(false);
+  const [activeTheme, setActiveTheme] = useState('light');
 
   useEffect(() => {
     const handleScroll = () => {
@@ -209,16 +211,78 @@ export const Header: React.FC = () => {
           <ChatCircleDots size={24} weight={hoveredLink === 'testimonials' ? 'fill' : 'regular'} className="header__nav-icon" aria-hidden="true" />
           <span>Testimonials</span>
         </a>
-        <button 
-          type="button"
-          className="header__nav-link header__theme-toggle"
-          onMouseEnter={() => setHoveredLink('theme')}
-          onMouseLeave={() => setHoveredLink(null)}
-          aria-label="Toggle light mode"
+        <div 
+          className="header__nav-item header__nav-item--has-mega"
+          onMouseEnter={() => setIsThemeMenuOpen(true)}
+          onMouseLeave={() => setIsThemeMenuOpen(false)}
         >
-          <Sun size={24} weight={hoveredLink === 'theme' ? 'fill' : 'regular'} className="header__nav-icon" aria-hidden="true" />
-          <span>Light</span>
-        </button>
+          <button 
+            type="button"
+            className="header__nav-link header__theme-toggle"
+            onMouseEnter={() => setHoveredLink('theme')}
+            onMouseLeave={() => setHoveredLink(null)}
+            aria-label="Toggle theme"
+          >
+            <Sun size={24} weight={hoveredLink === 'theme' || isThemeMenuOpen ? 'fill' : 'regular'} className="header__nav-icon" aria-hidden="true" />
+            <span>Light</span>
+          </button>
+
+          {/* Theme Menu */}
+          <div className={`theme-menu ${isThemeMenuOpen ? 'theme-menu--open' : ''}`}>
+            <div className="theme-menu__container" data-active-theme={activeTheme}>
+              {/* Sliding indicator */}
+              <div className="theme-menu__slider" />
+              <button 
+                type="button"
+                className={`theme-menu__option ${activeTheme === 'light' ? 'theme-menu__option--active' : ''}`}
+                onClick={() => setActiveTheme('light')}
+              >
+                <Sun size={24} weight="regular" aria-hidden="true" />
+                <span>Light</span>
+              </button>
+              <button 
+                type="button"
+                className={`theme-menu__option ${activeTheme === 'dawn' ? 'theme-menu__option--active' : ''}`}
+                onClick={() => setActiveTheme('dawn')}
+              >
+                <SunHorizon size={24} weight="regular" aria-hidden="true" />
+                <span>Dawn</span>
+              </button>
+              <button 
+                type="button"
+                className={`theme-menu__option ${activeTheme === 'aurora' ? 'theme-menu__option--active' : ''}`}
+                onClick={() => setActiveTheme('aurora')}
+              >
+                <MoonStars size={24} weight="regular" aria-hidden="true" />
+                <span>Aurora</span>
+              </button>
+              <button 
+                type="button"
+                className={`theme-menu__option ${activeTheme === 'nebula' ? 'theme-menu__option--active' : ''}`}
+                onClick={() => setActiveTheme('nebula')}
+              >
+                <CloudMoon size={24} weight="regular" aria-hidden="true" />
+                <span>Nebula</span>
+              </button>
+              <button 
+                type="button"
+                className={`theme-menu__option ${activeTheme === 'eclipse' ? 'theme-menu__option--active' : ''}`}
+                onClick={() => setActiveTheme('eclipse')}
+              >
+                <MoonStars size={24} weight="regular" aria-hidden="true" />
+                <span>Eclipse</span>
+              </button>
+              <button 
+                type="button"
+                className={`theme-menu__option ${activeTheme === 'dark' ? 'theme-menu__option--active' : ''}`}
+                onClick={() => setActiveTheme('dark')}
+              >
+                <Moon size={24} weight="regular" aria-hidden="true" />
+                <span>Dark</span>
+              </button>
+            </div>
+          </div>
+        </div>
       </nav>
 
       {/* Contact Button */}
