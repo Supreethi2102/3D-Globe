@@ -21,6 +21,7 @@
 
 .case-studies__header {
   margin-bottom: 24px;
+  padding-top: 20px;
 }
 
 .case-studies__title {
@@ -81,7 +82,7 @@
 }
 
 .category-pill:hover {
-  transform: translateY(-2px);
+  /* Removed jumping movement */
 }
 
 .category-pill__icon {
@@ -116,10 +117,25 @@
 
 /* Case Study Grid */
 .case-studies__grid {
+  margin-bottom: 56px;
+  padding-top: 40px;
+}
+
+/* Stacking Container */
+.case-studies__stack {
+  position: relative;
   display: flex;
   flex-direction: column;
-  gap: 40px;
-  margin-bottom: 56px;
+}
+
+.case-studies__stack-item {
+  position: sticky;
+  top: 140px; /* Below header */
+  margin-bottom: 100px; /* Scroll distance between cards */
+}
+
+.case-studies__stack-item:last-child {
+  margin-bottom: 0;
 }
 
 /* Case Study Card */

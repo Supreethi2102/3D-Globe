@@ -32,7 +32,6 @@ const testimonials = [
 export const Testimonials: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [hoveredNav, setHoveredNav] = useState<'prev' | 'next' | null>(null);
-  const [isAnimating, setIsAnimating] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
 
   // Auto-advance testimonials
@@ -40,31 +39,23 @@ export const Testimonials: React.FC = () => {
     if (isPaused) return;
     
     const interval = setInterval(() => {
-      handleNext();
+      setCurrentIndex((prev) => (prev === testimonials.length - 1 ? 0 : prev + 1));
     }, 8000); // 8 seconds per testimonial
     
     return () => clearInterval(interval);
   }, [currentIndex, isPaused]);
 
   const handlePrev = () => {
-    if (isAnimating) return;
-    setIsAnimating(true);
     setCurrentIndex((prev) => (prev === 0 ? testimonials.length - 1 : prev - 1));
-    setTimeout(() => setIsAnimating(false), 400);
   };
 
   const handleNext = () => {
-    if (isAnimating) return;
-    setIsAnimating(true);
     setCurrentIndex((prev) => (prev === testimonials.length - 1 ? 0 : prev + 1));
-    setTimeout(() => setIsAnimating(false), 400);
   };
 
   const handleDotClick = (index: number) => {
-    if (isAnimating || index === currentIndex) return;
-    setIsAnimating(true);
+    if (index === currentIndex) return;
     setCurrentIndex(index);
-    setTimeout(() => setIsAnimating(false), 400);
   };
 
   const currentTestimonial = testimonials[currentIndex];
@@ -110,18 +101,17 @@ export const Testimonials: React.FC = () => {
               onMouseEnter={() => setHoveredNav('prev')}
               onMouseLeave={() => setHoveredNav(null)}
               aria-label="Previous testimonial"
-              disabled={isAnimating}
             >
               <CaretLeft size={24} weight={hoveredNav === 'prev' ? 'bold' : 'regular'} color={hoveredNav === 'prev' ? '#ffffff' : '#7150E5'} aria-hidden="true" />
             </button>
 
-            {/* Testimonial Quote with animation */}
+            {/* Testimonial Quote */}
             <blockquote 
               className="testimonials__quote-wrapper"
               aria-live="polite"
               aria-atomic="true"
             >
-              <p className={`testimonials__quote ${isAnimating ? 'testimonials__quote--animating' : ''}`} key={currentIndex}>
+              <p className="testimonials__quote">
                 {currentTestimonial.quote}
               </p>
             </blockquote>
@@ -134,16 +124,16 @@ export const Testimonials: React.FC = () => {
               onMouseEnter={() => setHoveredNav('next')}
               onMouseLeave={() => setHoveredNav(null)}
               aria-label="Next testimonial"
-              disabled={isAnimating}
             >
               <CaretRight size={24} weight={hoveredNav === 'next' ? 'bold' : 'regular'} color={hoveredNav === 'next' ? '#ffffff' : '#7150E5'} aria-hidden="true" />
             </button>
           </div>
 
           {/* Author and Dots - below carousel */}
-          <footer className={`testimonials__author-block ${isAnimating ? 'testimonials__author-block--animating' : ''}`}>
-            <cite className="testimonials__author" key={`author-${currentIndex}`}>
-              <strong>{currentTestimonial.author}</strong> - {currentTestimonial.role}
+          <footer className="testimonials__author-block">
+            <cite className="testimonials__author">
+              <strong className="testimonials__author-name">{currentTestimonial.author}</strong>
+              <span className="testimonials__author-role">{currentTestimonial.role}</span>
             </cite>
             
             {/* Pagination Dots */}

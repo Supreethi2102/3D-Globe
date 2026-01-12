@@ -2,7 +2,7 @@
 .footer {
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
+  align-items: center;
   gap: 12px;
   width: 100%;
   max-width: 520px;
@@ -11,8 +11,8 @@
 .footer__row {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  width: 100%;
+  justify-content: center;
+  gap: 312px;
 }
 
 .footer__gestures {
@@ -57,7 +57,7 @@
   line-height: 20px;
   color: #6B7280;
   margin: 0;
-  text-align: right;
+  text-align: center;
 }
 
 /* Responsive */

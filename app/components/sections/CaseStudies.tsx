@@ -26,7 +26,7 @@ type CategoryType = {
 
 const categories: CategoryType[] = [
   { id: 'all', label: 'All', Icon: SelectionAll },
-  { id: 'branding', label: 'Branding', Icon: PaintBrush },
+  // { id: 'branding', label: 'Branding', Icon: PaintBrush },
   { id: 'campaigns', label: 'Campaigns', Icon: Megaphone },
   { id: 'packaging', label: 'Packaging', Icon: Package },
   { id: 'ui', label: 'UI', Icon: Ruler },
@@ -270,7 +270,7 @@ export const CaseStudies: React.FC = () => {
         ))}
       </nav>
 
-      {/* Case Study Cards */}
+      {/* Case Study Cards - Stacking */}
       <div 
         id="case-studies-grid"
         className="case-studies__grid"
@@ -278,9 +278,17 @@ export const CaseStudies: React.FC = () => {
         aria-label={`Showing ${activeCategory === 'all' ? 'all' : activeCategory} case studies`}
         aria-live="polite"
       >
-        {filteredStudies.map(study => (
-          <CaseStudyCard key={study.id} study={study} />
-        ))}
+        <div className="case-studies__stack">
+          {filteredStudies.map((study, index) => (
+            <div 
+              key={study.id} 
+              className="case-studies__stack-item"
+              style={{ zIndex: index + 1 }}
+            >
+              <CaseStudyCard study={study} />
+            </div>
+          ))}
+        </div>
       </div>
 
       {/* View All Button */}

@@ -68,6 +68,7 @@
   display: flex;
   align-items: center;
   gap: 108px; /* Figma */
+  min-height: 200px; /* Fixed height to keep arrows stable */
 }
 
 .testimonials__nav {
@@ -107,44 +108,23 @@
 
 .testimonials__quote-wrapper {
   flex: 1;
-  max-width: 616px; /* Figma */
+  max-width: 65ch; /* Optimal reading width: 50-75 chars, sweet spot ~66 */
+  min-height: 180px; /* Fixed height to prevent layout shift */
+  display: flex;
+  align-items: center;
   overflow: hidden;
+  font-style: normal; /* Override blockquote default italics */
+  margin: 0;
 }
 
 .testimonials__quote {
   font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   font-size: 16px;
   font-weight: 400;
+  font-style: normal; /* No italics */
   line-height: 24px; /* Figma */
   color: #3c3f43;
   margin: 0;
-  animation: fadeSlideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-}
-
-.testimonials__quote--animating {
-  animation: fadeSlideOut 0.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-}
-
-@keyframes fadeSlideIn {
-  0% {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes fadeSlideOut {
-  0% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  100% {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
 }
 
 .testimonials__author-block {
@@ -158,21 +138,28 @@
   margin-left: 160px; /* Align with quote text (nav button width + gap) */
 }
 
-.testimonials__author-block--animating .testimonials__author {
-  animation: fadeSlideOut 0.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-}
-
 .testimonials__author {
   font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   font-size: 16px;
   font-weight: 400;
+  font-style: normal; /* Override cite default italics */
   line-height: 24px;
   color: #3c3f43;
-  animation: fadeSlideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1) 0.1s both;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  max-width: 65ch;
 }
 
-.testimonials__author strong {
+.testimonials__author-name {
   font-weight: 600; /* SemiBold from Figma */
+  display: block;
+}
+
+.testimonials__author-role {
+  display: block;
+  color: #5c5f63;
+  max-width: 45ch; /* Slightly narrower for role text */
 }
 
 .testimonials__dots {
@@ -186,19 +173,20 @@
   width: 12px; /* Figma */
   height: 12px; /* Figma */
   border-radius: 9999px; /* Figma full radius */
-  border: none;
-  background: #76797f; /* Figma inactive */
+  border: 1.5px solid #76797f; /* Outline style */
+  background: transparent; /* Empty/outline */
   cursor: pointer;
   padding: 0;
-  transition: background 0.2s ease;
+  transition: all 0.2s ease;
 }
 
 .testimonials__dot--active {
-  background: #7150e5; /* Figma active */
+  background: #7150e5; /* Filled purple */
+  border-color: #7150e5;
 }
 
 .testimonials__dot:hover {
-  background: #7150e5;
+  border-color: #7150e5;
 }
 
 /* Responsive - Large Desktop */
@@ -338,10 +326,15 @@
   .testimonials__quote {
     font-size: 14px;
     line-height: 22px;
+    max-width: 40ch; /* Mobile: 30-50 chars optimal */
   }
 
   .testimonials__author {
     font-size: 14px;
+  }
+
+  .testimonials__author-role {
+    max-width: 35ch;
   }
 
   .testimonials__dots {

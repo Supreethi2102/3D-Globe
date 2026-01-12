@@ -1,22 +1,16 @@
-import React, { useState, useEffect, useRef, useId } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Info } from '@phosphor-icons/react';
 import './About.css';
 
 /* =========================================
    BLOCK 1: Top Section - A World of Ideas
    ========================================= */
-const AboutBlock1: React.FC = () => {
-  const [isExpanded, setIsExpanded] = useState(false);
-  const expandableId = useId();
-  const expandedContentRef = useRef<HTMLDivElement>(null);
+interface AboutBlock1Props {
+  onMoreClick: () => void;
+  isExpanded: boolean;
+}
 
-  // Focus on expanded content when it opens
-  useEffect(() => {
-    if (isExpanded && expandedContentRef.current) {
-      expandedContentRef.current.focus();
-    }
-  }, [isExpanded]);
-
+const AboutBlock1: React.FC<AboutBlock1Props> = ({ onMoreClick, isExpanded }) => {
   return (
     <article className="about-block1" aria-labelledby="about-title-1">
       <div className="about-block1__illustration">
@@ -27,36 +21,26 @@ const AboutBlock1: React.FC = () => {
         <h2 id="about-title-1" className="about-block1__title">A world of ideas</h2>
         
         <div className="about-block1__text">
-          <p>With a background in graphic design, my work has spanned everything from campaign concepts and art-directed photoshoots to rolling out print mailers, digital banners, and editorial layouts. That foundation still shapes how I design — with clarity, storytelling, and visual impact.</p>
-          <p>Those skills now intersect with a growing UX and UI practice, where I explore how digital experiences can feel more human, inclusive, and emotionally engaging.</p>
+          <p>I'm a UX, UI, and graphic designer based in Aotearoa New Zealand. My background spans campaign concepts, art-directed photoshoots, print mailers, editorial layouts, and digital experiences. That mix taught me to design with clarity, emotion, and storytelling across any medium.</p>
           <p className="about-block1__spacer" aria-hidden="true">&nbsp;</p>
-          <h3 className="about-block1__subtitle">Creative Influences</h3>
-          <p>Travel fuels my creativity. It's where I notice the details, moods, and human moments that spark design ideas.</p>
-          <p>Like standing on Monet's bridge in Giverny, looking down at the pond and feeling like I'd stepped into a painting. Or lying on the ground floor of the Guggenheim in New York, staring up at Frank Lloyd Wright's spiral while James Turrell's light installation shifted through colour and space. The whole building became the canvas.<br />(Yes, I tried to capture it. No, the security guard wasn't thrilled. Worth it? Absolutely.)</p>
-          <p>The Christian Dior exhibition in Paris was a highlight. Every dress was stitched with emotion and craftsmanship. I was completely in my element. As someone with a long-standing love of dresses, it felt like being in a very glamorous dream. If my French had been better, I might've joined the atelier on the spot.</p>
-          
-          {/* Expandable content - hidden until "Read more" is clicked */}
-          <div 
-            id={expandableId}
-            ref={expandedContentRef}
-            className={`about-block1__expandable ${isExpanded ? 'about-block1__expandable--expanded' : ''}`}
-            aria-hidden={!isExpanded}
-            tabIndex={isExpanded ? 0 : -1}
-          >
-            <p>Barcelona's Sagrada Familia reminded me that structure and imagination can coexist. And Yayoi Kusama's polka dot show in Wellington, New Zealand? Joyful, powerful, and deeply human.<br />(I've always had a soft spot for polka dots.)</p>
-            <p>These moments stay with me. They remind me why I design<br />— to move people, even just a little.</p>
-          </div>
+          <p>I'm drawn to work that:</p>
+          <ul className="about-block1__list">
+            <li>makes complex things feel simple</li>
+            <li>blends function with beauty</li>
+            <li>designs with culture, emotion, and context in mind</li>
+          </ul>
+          <p>I'm steadily building my accessibility practice. I care about designing for everyone and know there's always more to learn. I want to approach accessibility with intention, not box-ticking.</p>
+          <p className="about-block1__spacer" aria-hidden="true">&nbsp;</p>
+          <p>Most of my time is spent in Figma and InDesign, sketching flows, building design systems, refining typographic hierarchy, or nudging layouts until everything clicks. Whether solo or collaborating with developers, marketers, or writers, I bring curiosity, empathy, and a careful eye for the details that matter.</p>
           
           {!isExpanded && (
             <button 
               type="button"
-              className="about-block1__read-more" 
-              onClick={() => setIsExpanded(true)}
+              className="about-block1__more-link"
+              onClick={onMoreClick}
               aria-expanded={isExpanded}
-              aria-controls={expandableId}
             >
-              Read more
-              <span className="sr-only"> about creative influences</span>
+              More about me
             </button>
           )}
         </div>
@@ -69,8 +53,34 @@ const AboutBlock1: React.FC = () => {
    BLOCK 2: Quote Section (Romie font, NOT bold)
    ========================================= */
 const AboutBlock2: React.FC = () => {
+  const [isVisible, setIsVisible] = useState(false);
+  const quoteRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    if (!quoteRef.current) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setIsVisible(true);
+            observer.disconnect(); // Stop observing after animation triggers
+          }
+        });
+      },
+      { threshold: 0.3 }
+    );
+
+    observer.observe(quoteRef.current);
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <aside className="about-block2" aria-label="Featured quote">
+    <aside 
+      className={`about-block2 ${isVisible ? 'about-block2--visible' : ''}`} 
+      aria-label="Featured quote"
+      ref={quoteRef}
+    >
       <blockquote className="about-block2__quote">
         <p>Travel fuels my creativity. It's where I notice the small details, the moods, and the human moments that spark how I design.</p>
       </blockquote>
@@ -115,18 +125,27 @@ const colorCards = [
 interface ColorCardProps {
   card: typeof colorCards[0];
   isVisible: boolean;
+  isExiting: boolean;
   animationDelay: number;
+  exitDelay: number;
 }
 
-const ColorCard: React.FC<ColorCardProps> = ({ card, isVisible, animationDelay }) => {
+const ColorCard: React.FC<ColorCardProps> = ({ card, isVisible, isExiting, animationDelay, exitDelay }) => {
+  const cardClasses = [
+    'about-color-card',
+    isVisible ? 'about-color-card--animate' : '',
+    isExiting ? 'about-color-card--exit' : '',
+  ].filter(Boolean).join(' ');
+
   return (
     <article 
-      className={`about-color-card ${isVisible ? 'about-color-card--animate' : ''}`}
+      className={cardClasses}
       style={{ 
         '--card-rotation': `${card.rotation}deg`,
         '--card-top': `${card.position.top}px`,
         '--card-left': `${card.position.left}px`,
         '--animation-delay': `${animationDelay}ms`,
+        '--exit-delay': `${exitDelay}ms`,
         zIndex: card.zIndex,
       } as React.CSSProperties}
       aria-label={`Color swatch: ${card.name}`}
@@ -155,10 +174,17 @@ const ColorCard: React.FC<ColorCardProps> = ({ card, isVisible, animationDelay }
   );
 };
 
-const AboutBlock3: React.FC = () => {
-  const [isVisible, setIsVisible] = useState(false);
-  const block3Ref = useRef<HTMLDivElement>(null);
+interface AboutBlock3Props {
+  onCollapseClick: () => void;
+}
 
+const AboutBlock3: React.FC<AboutBlock3Props> = ({ onCollapseClick }) => {
+  const [isVisible, setIsVisible] = useState(false);
+  const [isExiting, setIsExiting] = useState(false);
+  const block3Ref = useRef<HTMLDivElement>(null);
+  const cardsRef = useRef<HTMLDivElement>(null);
+
+  // Entry animation observer
   useEffect(() => {
     if (!block3Ref.current) return;
 
@@ -167,6 +193,7 @@ const AboutBlock3: React.FC = () => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             setIsVisible(true);
+            observer.disconnect();
           }
         });
       },
@@ -177,39 +204,89 @@ const AboutBlock3: React.FC = () => {
     return () => observer.disconnect();
   }, []);
 
+  // Exit animation - triggers when About section ends
+  useEffect(() => {
+    if (!block3Ref.current || !isVisible || isExiting) return;
+
+    const handleScroll = () => {
+      if (!block3Ref.current) return;
+      
+      const rect = block3Ref.current.getBoundingClientRect();
+      // Trigger when bottom of About block3 goes above viewport
+      if (rect.bottom < 0) {
+        setIsExiting(true);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [isVisible, isExiting]);
+
   return (
     <article className="about-block3" ref={block3Ref} aria-labelledby="about-title-3">
+      {/* Original cards - always visible */}
       <div 
-        className="about-block3__cards" 
+        className="about-block3__cards"
         role="list"
         aria-label="Travel-inspired color swatches"
+        ref={cardsRef}
       >
           {colorCards.map((card, index) => (
             <ColorCard 
               key={card.id} 
               card={card} 
               isVisible={isVisible}
-            animationDelay={index * 200}
+              isExiting={false}
+              animationDelay={index * 400}
+              exitDelay={0}
             />
           ))}
         </div>
+      
+      {/* Falling ghost cards - only appear during exit animation */}
+      {isExiting && (
+        <div 
+          className="about-block3__cards about-block3__cards--ghost"
+          aria-hidden="true"
+        >
+          {colorCards.map((card, index) => (
+            <ColorCard 
+              key={`ghost-${card.id}`} 
+              card={card} 
+              isVisible={true}
+              isExiting={true}
+              animationDelay={0}
+              exitDelay={index * 50}
+            />
+          ))}
+        </div>
+      )}
         
       <div className="about-block3__content">
         <div className="about-block3__text-block">
-          <h3 id="about-title-3" className="about-block3__title">Design in Practice</h3>
-          <p>Based in Aotearoa New Zealand, I work across UX, UI, and graphic design. Most days, I'm toggling between Figma and InDesign — sketching flows, refining kerning, building out a design system, or exploring layout directions.</p>
-          <p>Projects that sit at the intersection of creativity and clarity tend to draw me in. I'm especially interested in work that:</p>
-          <ul className="about-block3__list" aria-label="Areas of interest">
-            <li>helps people navigate complexity,</li>
-            <li>merges utility with beauty,</li>
-            <li>and reflects culture or emotion through thoughtful design.</li>
+          <h3 id="about-title-3" className="about-block3__title">Creative influences</h3>
+          <p>I find ideas in the places I wander. Like standing on Monet's bridge in Giverny, feeling I'd stepped into a painting, or lying on the Guggenheim floor, watching James Turrell's light installation shift across the spiral.</p>
+          <p className="about-block3__spacer" aria-hidden="true">&nbsp;</p>
+          <p>Other favourites:</p>
+          <ul className="about-block3__list" aria-label="Creative influences">
+            <li>Dior exhibition in Paris, pure craftsmanship and fabric magic</li>
+            <li>Barcelona's Sagrada Familia, structure and imagination in harmony</li>
+            <li>Yayoi Kusama's polka dot world in Wellington, joyful, surreal, human</li>
           </ul>
-          <p>Whether I'm solo in deep focus or collaborating with developers, marketers, writers or stakeholders, I bring curiosity, empathy, and a sharp eye for detail to every project. I'm always open to new tools, methods, or ideas — especially if they lead to better outcomes for the people on the other side.</p>
+          <p>These experiences remind me why I design. To move people, even just a little.</p>
           <p className="about-block3__spacer" aria-hidden="true">&nbsp;</p>
           <h3 className="about-block3__title">Small Joys</h3>
-          <p>Music often shapes the rhythm of how I work — each project has its own pace and mood. Moodboards are where ideas begin to form, and naming colour palettes is one of my quiet pleasures.<br />A recent favourite: Saltwater Afternoon, a cool-toned teal with a hint of escapism. (Name subject to change.)</p>
-          <p>This site is mostly black and white by intention. I wanted the work to speak for itself, with a few sneaky pops of colour if you switch modes.</p>
-          <p>And if I'm deep in Figma or nudging paragraph styles into place, chances are there's a stash of Natural Confectionery Co. lollies nearby. Fruity chews are my colour-coded reward system — one lolly at a time.</p>
+          <p>Moodboards are where ideas start to form, and I probably have too much fun naming colour palettes. One recent favourite is Nymphéas Blue, inspired by sitting in front of Monet's Water Lilies at the Musée de l'Orangerie. Watching how the blue shifted with light and space reminded me how colour, mood, and context interact, lessons I carry into my work.</p>
+          <p className="about-block3__spacer" aria-hidden="true">&nbsp;</p>
+          <p>This site stays mostly black and white so the work takes centre stage. The accent purple adds a little personality, and you can switch modes if you want a touch more colour. If I'm deep in Figma, there's probably a stash of Natural Confectionery Co lollies nearby. Fruity chews are my unofficial reward system, one lolly at a time.</p>
+          
+          <button 
+            type="button"
+            className="about-block3__collapse-link"
+            onClick={onCollapseClick}
+          >
+            Show less
+          </button>
         </div>
         <img src="/about/Samantha signature 3.png" alt="Samantha's signature" className="about-block3__signature" />
       </div>
@@ -221,6 +298,28 @@ const AboutBlock3: React.FC = () => {
    MAIN ABOUT SECTION
    ========================================= */
 export const About: React.FC = () => {
+  const [isExpanded, setIsExpanded] = useState(false);
+  const expandedRef = useRef<HTMLDivElement>(null);
+
+  const handleMoreClick = () => {
+    setIsExpanded(true);
+    // Scroll to expanded content after a brief delay
+    setTimeout(() => {
+      expandedRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
+  };
+
+  const handleLessClick = () => {
+    setIsExpanded(false);
+    // Scroll back to the About section
+    const aboutSection = document.getElementById('about');
+    if (aboutSection) {
+      setTimeout(() => {
+        aboutSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 100);
+    }
+  };
+
   return (
     <section 
       className="about" 
@@ -228,10 +327,20 @@ export const About: React.FC = () => {
       aria-labelledby="about-section-label"
       tabIndex={-1}
     >
-      <h2 id="about-section-label" className="about__label">About</h2>
-      <AboutBlock1 />
-      <AboutBlock2 />
-      <AboutBlock3 />
+      <div className="about__card">
+        <h2 id="about-section-label" className="about__label">About</h2>
+        <AboutBlock1 onMoreClick={handleMoreClick} isExpanded={isExpanded} />
+        
+        {/* Expandable content - blocks 2 and 3 */}
+        <div 
+          ref={expandedRef}
+          className={`about__expandable ${isExpanded ? 'about__expandable--visible' : ''}`}
+          aria-hidden={!isExpanded}
+        >
+          <AboutBlock2 />
+          <AboutBlock3 onCollapseClick={handleLessClick} />
+        </div>
+      </div>
     </section>
   );
 };
