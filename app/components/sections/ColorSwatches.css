@@ -18,7 +18,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 12px;
+  gap: 8px;
   flex-shrink: 0;
 }
 
@@ -33,36 +33,18 @@
   width: 24px;
   height: 24px;
   filter: brightness(0) saturate(100%) invert(25%) sepia(6%) saturate(500%) hue-rotate(180deg) brightness(95%) contrast(90%);
-  transition: transform 0.3s ease;
+  animation: none !important;
+  transform: none !important;
+  transition: none !important;
 }
 
-.color-swatches__header:hover .color-swatches__icon:nth-child(1) {
-  animation: swipeLeft 0.8s ease-in-out infinite;
-}
-
-.color-swatches__header:hover .color-swatches__icon:nth-child(2) {
-  animation: grab 0.8s ease-in-out infinite;
-  animation-delay: 0.1s;
-}
-
+.color-swatches__header:hover .color-swatches__icon,
+.color-swatches__header:hover .color-swatches__icon:nth-child(1),
+.color-swatches__header:hover .color-swatches__icon:nth-child(2),
 .color-swatches__header:hover .color-swatches__icon:nth-child(3) {
-  animation: swipeRight 0.8s ease-in-out infinite;
-  animation-delay: 0.2s;
-}
-
-@keyframes swipeLeft {
-  0%, 100% { transform: translateX(0); }
-  50% { transform: translateX(-5px); }
-}
-
-@keyframes grab {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.1); }
-}
-
-@keyframes swipeRight {
-  0%, 100% { transform: translateX(0); }
-  50% { transform: translateX(5px); }
+  animation: none !important;
+  transform: none !important;
+  transition: none !important;
 }
 
 .color-swatches__text {
@@ -73,7 +55,7 @@
   color: #3c3f43;
   text-align: center;
   margin: 0;
-  max-width: 521px;
+  max-width: 650px;
 }
 
 /* Swatches Container - Cards coming from bottom */
@@ -440,6 +422,7 @@
     font-size: 14px;
     max-width: 100%;
     padding: 0 16px;
+    white-space: normal;
   }
 
   .color-swatches__container {
