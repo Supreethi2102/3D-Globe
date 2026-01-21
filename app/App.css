@@ -10,6 +10,22 @@
   font-display: swap;
 }
 
+@font-face {
+  font-family: 'Atkinson Hyperlegible Next';
+  src: url('/Fonts/Atkinson Hyperlegible Next/For Professional Use Only/Variable/AtkinsonHyperlegibleNextVF-Variable.woff2') format('woff2');
+  font-weight: 200 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Atkinson Hyperlegible Next';
+  src: url('/Fonts/Atkinson Hyperlegible Next/For Professional Use Only/Variable/AtkinsonHyperlegibleNextVF-Variable.woff2') format('woff2');
+  font-weight: 200 800;
+  font-style: italic;
+  font-display: swap;
+}
+
 /* Global constants - matching Figma (1440px design) */
 :root {
   --content-max-width: 1220px;  /* Figma content width */

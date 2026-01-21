@@ -28,16 +28,16 @@ const globe = new WebGlGlobe(document.querySelector('#globe')!, {
 });
 
 // Simple pin icon without text - sized for resized globe
-// Three concentric circles scaled to 40x40
+// Three concentric circles scaled to 50x50
 const pinIconHtml = `
-  <div class="myMarker" style="width: 40px; height: 40px; margin: -20px;">
-    <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <div class="myMarker" style="width: 50px; height: 50px; margin: -25px;">
+    <svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
       <!-- Third circle (outermost): 10% opacity -->
-      <circle cx="20" cy="20" r="16" fill="#7150E5" fill-opacity="0.1"/>
+      <circle cx="25" cy="25" r="20" fill="#7150E5" fill-opacity="0.1"/>
       <!-- Second circle (middle): 20% opacity -->
-      <circle cx="20" cy="20" r="10" fill="#7150E5" fill-opacity="0.2"/>
+      <circle cx="25" cy="25" r="12.5" fill="#7150E5" fill-opacity="0.2"/>
       <!-- Main center circle: 100% opacity -->
-      <circle cx="20" cy="20" r="3.5" fill="#7150E5"/>
+      <circle cx="25" cy="25" r="4.5" fill="#7150E5"/>
     </svg>
   </div>`;
 

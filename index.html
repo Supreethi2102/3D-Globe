@@ -47,8 +47,12 @@
 
       /* Marker Animations */
       @keyframes marker-pulse {
-        0% { transform: scale(1); opacity: 1; }
-        100% { transform: scale(1.2); opacity: 0.8; }
+        0%, 100% { 
+          transform: scale(1);
+        }
+        50% { 
+          transform: scale(1.15);
+        }
       }
 
       .myMarker {
@@ -61,24 +65,15 @@
       }
 
       .myMarker svg {
-        animation: marker-pulse 2s ease-out infinite;
-        transition: 0.1s ease-in-out;
+        animation: marker-pulse 2.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
         width: 100%;
         height: 100%;
-      }
-
-      .myMarker:hover > div:first-child > svg {
-        transform: scale(1.2);
-      }
-
-      .myMarker svg > circle {
-        transition: all 0.2s;
         transform-origin: center center;
       }
 
-      .myMarker:hover svg > circle {
-        transition-delay: 0.05s;
-        transform: scale(1.1);
+      .myMarker:hover svg {
+        animation-play-state: paused;
+        transform: scale(1.2);
       }
 
       /* Responsive Globe - All viewports */

@@ -16,9 +16,8 @@ export const Hero: React.FC = () => {
         </h1>
         
         <p className="hero__description">
-          I craft bold, human-centred experiences that tell meaningful
-          stories through purposeful, lasting design that connects,
-          converts, and inspires across graphics, UI, and UX.
+          I craft thoughtful, people-first graphics, UI, and UX, combining
+          strategy and storytelling to turn insight into real impact.
         </p>
       </div>
     </article>

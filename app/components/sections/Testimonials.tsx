@@ -7,25 +7,29 @@ const testimonials = [
     id: 1,
     quote: `I had the privilege of working with Sam in varying degrees and across many projects in our time together at The Warehouse Group. What always stood out about Sam was her infectious enthusiasm and dedication to every project she was involved in - resulting in many successful campaigns over the years. Sam is curious, empathetic, extremely hard working and strives for excellence in everything she does.`,
     author: 'Catherine Balle',
-    role: 'International Event Retail at National Football League (NFL)',
+    role: 'International Event Retail at National Football League',
+    company: 'NFL',
   },
   {
     id: 2,
     quote: `Samantha possesses excellent communication skills, and she is a pleasure to work with. She has a natural ability to collaborate with colleagues and clients, and she always seeks to understand the needs and perspectives of others. Her innovative and creative thinking has allowed her to develop unique and effective solutions that have benefited our projects immensely.`,
     author: 'Chiquita Taala',
-    role: 'Trade Planning Manager - Home & Leisure (The Warehouse Group)',
+    role: 'Trade Planning Manager - Home & Leisure',
+    company: 'The Warehouse Group',
   },
   {
     id: 3,
     quote: `I had the privilege of working with Sam for nearly four years at TWG. Throughout this period, she orchestrated the design and art direction of numerous campaigns spanning print, TV, online, and in-store initiatives. Sam earned tremendous respect among production designers, thanks to her bubbly personality, unwavering guidance, composed demeanour, and meticulous attention to detail, making her the ideal art director. Her generosity in sharing knowledge and readiness to address inquiries further underscored her commitment. I wholeheartedly endorse Sam for any role that requires someone who can lead a team in an exciting campaign.`,
     author: 'Deidre Kennedy',
-    role: 'Planning & Scheduling, Process Improvement (New Zealand Defence Force)',
+    role: 'Planning & Scheduling, Process Improvement',
+    company: 'New Zealand Defence Force',
   },
   {
     id: 4,
     quote: `My experience working with Samantha was both synergetic and greatly enjoyable. As a graphic designer, Samantha has a wealth of knowledge and years of experience to draw upon, as well as a seemingly endless source of creativity. She can take a thread of an idea and turn it into a work of art, taking care to maintain aesthetic appeal, in-house style and a good reader/audience experience. Her attention to detail is impeccable – she takes great pride in the technical finesse of each file she works on, both from a visual consistency and digital asset management perspective.`,
     author: 'Rachel Ramsay',
-    role: 'Social Media Manager (Envato)',
+    role: 'Social Media Manager',
+    company: 'Envato',
   },
 ];
 
@@ -129,33 +133,36 @@ export const Testimonials: React.FC = () => {
             </button>
           </div>
 
-          {/* Author and Dots - below carousel */}
+          {/* Author - below carousel */}
           <footer className="testimonials__author-block">
             <cite className="testimonials__author">
               <strong className="testimonials__author-name">{currentTestimonial.author}</strong>
               <span className="testimonials__author-role">{currentTestimonial.role}</span>
+              {currentTestimonial.company && (
+                <span className="testimonials__author-company">{currentTestimonial.company}</span>
+              )}
             </cite>
-            
-            {/* Pagination Dots */}
-            <nav 
-              className="testimonials__dots"
-              role="tablist"
-              aria-label="Testimonial navigation"
-            >
-              {testimonials.map((testimonial, index) => (
-                <button
-                  key={index}
-                  type="button"
-                  role="tab"
-                  className={`testimonials__dot ${index === currentIndex ? 'testimonials__dot--active' : ''}`}
-                  onClick={() => handleDotClick(index)}
-                  aria-label={`Go to testimonial from ${testimonial.author}`}
-                  aria-selected={index === currentIndex}
-                />
-              ))}
-            </nav>
           </footer>
         </div>
+        
+        {/* Pagination Dots - Fixed position */}
+        <nav 
+          className="testimonials__dots"
+          role="tablist"
+          aria-label="Testimonial navigation"
+        >
+          {testimonials.map((testimonial, index) => (
+            <button
+              key={index}
+              type="button"
+              role="tab"
+              className={`testimonials__dot ${index === currentIndex ? 'testimonials__dot--active' : ''}`}
+              onClick={() => handleDotClick(index)}
+              aria-label={`Go to testimonial from ${testimonial.author}`}
+              aria-selected={index === currentIndex}
+            />
+          ))}
+        </nav>
       </div>
     </section>
   );
