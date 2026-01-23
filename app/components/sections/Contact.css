@@ -96,10 +96,15 @@
   border-color: #7150e5;
 }
 
+.contact__textarea-wrapper {
+  position: relative;
+  width: 100%;
+}
+
 .contact__textarea {
   width: 100%;
   height: 202px; /* Figma height */
-  padding: 12px 15px; /* Figma padding */
+  padding: 12px 15px 32px 15px; /* Extra bottom padding for character count */
   background: #f9fafb; /* gray-50 */
   border: 1px solid #76797f; /* Figma border */
   border-radius: 8px; /* Figma border radius */
@@ -121,6 +126,35 @@
   border-color: #7150e5;
 }
 
+/* Character Count - Inside textarea */
+.contact__char-count-wrapper {
+  position: absolute;
+  bottom: 8px;
+  right: 12px;
+  pointer-events: none; /* Allow clicking through to textarea */
+}
+
+.contact__char-count {
+  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: #76797f;
+  line-height: 20px;
+}
+
+.contact__char-count--warning {
+  color: #f59e0b; /* Amber/warning color */
+}
+
+.contact__char-count--error {
+  color: #dc2626; /* Red/error color */
+  font-weight: 600;
+}
+
+.contact__char-count-over {
+  margin-left: 4px;
+}
+
 /* Divider */
 .contact__divider {
   width: 1px;
@@ -135,8 +169,10 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   gap: 56px; /* Figma gap */
   padding: 27px 0;
+  width: 100%;
 }
 
 .contact__stamp-area {
@@ -144,6 +180,8 @@
   height: 129px; /* Figma height */
   display: flex;
   justify-content: center;
+  align-items: center;
+  margin: 0 auto;
 }
 
 .contact__stamp {
@@ -160,6 +198,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  margin: 0 auto;
 }
 
 .contact__address {
@@ -184,6 +223,7 @@
   border-radius: 8px;
   cursor: pointer;
   transition: background 0.2s ease;
+  margin: 0 auto;
 }
 
 .contact__submit-btn:hover {

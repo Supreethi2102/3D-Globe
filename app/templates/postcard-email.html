@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Postcard from {{from_name}}</title>
+</head>
+<body style="margin: 0; padding: 0; font-family: 'Georgia', 'Times New Roman', serif; background-color: #f5f5f5;">
+  <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f5f5f5; padding: 40px 20px;">
+    <tr>
+      <td align="center">
+        <!-- Postcard Container -->
+        <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="600" style="background-color: #ffffff; border: 1px solid #b0b3b8; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+          
+          <!-- Postcard Header/Stamp Area -->
+          <tr>
+            <td style="background: linear-gradient(135deg, #eceef2 0%, #f7f9fa 100%); padding: 30px; text-align: right; border-bottom: 2px dashed #b0b3b8;">
+              <div style="display: inline-block; background-color: #7150e5; color: #ffffff; padding: 8px 16px; border-radius: 8px; font-size: 12px; font-weight: bold; letter-spacing: 1px;">
+                POSTCARD
+              </div>
+            </td>
+          </tr>
+          
+          <!-- Postcard Content Area -->
+          <tr>
+            <td style="padding: 40px; background-color: #ffffff;">
+              
+              <!-- Greeting -->
+              <div style="margin-bottom: 30px;">
+                <h2 style="margin: 0 0 10px 0; font-size: 28px; color: #111213; font-weight: 500; letter-spacing: 0.5px;">
+                  Hello from {{from_name}}!
+                </h2>
+                <p style="margin: 0; font-size: 14px; color: #76797f; font-style: italic;">
+                  Writing from {{country}}
+                </p>
+              </div>
+              
+              <!-- Decorative Line -->
+              <div style="height: 2px; background: linear-gradient(to right, #7150e5, transparent); margin: 30px 0;"></div>
+              
+              <!-- Message Content -->
+              <div style="min-height: 200px; padding: 20px; background-color: #f9fafb; border-left: 4px solid #7150e5; border-radius: 4px;">
+                <p style="margin: 0; font-size: 16px; line-height: 28px; color: #3c3f43; white-space: pre-wrap; font-family: 'Atkinson Hyperlegible', -apple-system, BlinkMacSystemFont, sans-serif;">
+                  {{message}}
+                </p>
+              </div>
+              
+              <!-- Sender Info -->
+              <div style="margin-top: 40px; padding-top: 30px; border-top: 1px solid #e5e7eb;">
+                <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%">
+                  <tr>
+                    <td style="vertical-align: top;">
+                      <p style="margin: 0 0 8px 0; font-size: 16px; font-weight: 600; color: #111213;">
+                        {{from_name}}
+                      </p>
+                      <p style="margin: 0; font-size: 14px; color: #76797f;">
+                        <a href="mailto:{{from_email}}" style="color: #7150e5; text-decoration: none;">{{from_email}}</a>
+                      </p>
+                      <p style="margin: 8px 0 0 0; font-size: 14px; color: #76797f;">
+                        📍 {{country}}
+                      </p>
+                    </td>
+                    <td align="right" style="vertical-align: top;">
+                      <div style="display: inline-block; padding: 12px 20px; background-color: #eceef2; border-radius: 8px; text-align: center;">
+                        <div style="font-size: 24px; margin-bottom: 4px;">✉️</div>
+                        <div style="font-size: 10px; color: #76797f; text-transform: uppercase; letter-spacing: 1px;">Contact Form</div>
+                      </div>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+              
+            </td>
+          </tr>
+          
+          <!-- Postcard Footer -->
+          <tr>
+            <td style="background: linear-gradient(135deg, #eceef2 0%, #f7f9fa 100%); padding: 20px 40px; text-align: center; border-top: 2px dashed #b0b3b8;">
+              <p style="margin: 0; font-size: 12px; color: #76797f; font-style: italic;">
+                Sent via contact form • {{date}}
+              </p>
+            </td>
+          </tr>
+          
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>

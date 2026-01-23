@@ -33,6 +33,7 @@
     "deploy:examples": "npm run build && gsutil -m -h 'Cache-Control: no-cache' cp -r dist/examples/* gs://ubilabs-webgl-globe/examples/"
   },
   "dependencies": {
+    "@emailjs/browser": "^4.4.1",
     "@phosphor-icons/react": "^2.1.10",
     "@probe.gl/stats": "^4.0.3",
     "@tweakpane/core": "^1.1.4",

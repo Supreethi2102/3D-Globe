@@ -1,6 +1,11 @@
 import React, { useState, useId, useRef, useEffect } from 'react';
 import { PaperPlaneTilt, CheckCircle, WarningCircle } from '@phosphor-icons/react';
+import emailjs from '@emailjs/browser';
+import { emailjsConfig } from '../../config/emailjs';
 import './Contact.css';
+
+// Character limit for message field (generous limit)
+const MESSAGE_MAX_LENGTH = 2000;
 
 export const Contact: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -36,7 +41,13 @@ export const Contact: React.FC = () => {
       case 'email':
         return !validateEmail(value) ? 'Please enter a valid email' : '';
       case 'message':
-        return value.trim().length < 10 ? 'Message must be at least 10 characters' : '';
+        if (value.trim().length < 10) {
+          return 'Message must be at least 10 characters';
+        }
+        if (value.length > MESSAGE_MAX_LENGTH) {
+          return `Message exceeds the maximum length of ${MESSAGE_MAX_LENGTH} characters`;
+        }
+        return '';
       default:
         return '';
     }
@@ -76,13 +87,43 @@ export const Contact: React.FC = () => {
       return;
     }
 
+    // Check if EmailJS is configured
+    if (!emailjsConfig.publicKey || !emailjsConfig.serviceId || !emailjsConfig.templateId) {
+      console.error('EmailJS is not configured. Please set up your EmailJS credentials.');
+      setSubmitStatus('error');
+      return;
+    }
+
     setIsSubmitting(true);
     setSubmitStatus('idle');
 
-    // Simulate API call
     try {
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      console.log('Form submitted:', formData);
+      // Initialize EmailJS with public key
+      emailjs.init(emailjsConfig.publicKey);
+
+      // Prepare template parameters
+      const templateParams = {
+        from_name: formData.name,
+        from_email: formData.email,
+        country: formData.country.trim() || 'Somewhere in the world',
+        message: formData.message,
+        to_email: emailjsConfig.toEmail, // Recipient email: vadadasupreethi@gmail.com
+        date: new Date().toLocaleDateString('en-US', { 
+          year: 'numeric', 
+          month: 'long', 
+          day: 'numeric' 
+        }),
+      };
+
+      // Send email using EmailJS
+      const response = await emailjs.send(
+        emailjsConfig.serviceId,
+        emailjsConfig.templateId,
+        templateParams
+      );
+
+      // Success
+      console.log('Email sent successfully:', response);
       setSubmitStatus('success');
       setFormData({ name: '', email: '', country: '', message: '' });
       setTouched({});
@@ -90,7 +131,19 @@ export const Contact: React.FC = () => {
       
       // Reset success message after 5 seconds
       setTimeout(() => setSubmitStatus('idle'), 5000);
-    } catch {
+    } catch (error: any) {
+      console.error('Failed to send email:', error);
+      console.error('Error details:', {
+        status: error?.status,
+        text: error?.text,
+        message: error?.message,
+        config: {
+          serviceId: emailjsConfig.serviceId,
+          templateId: emailjsConfig.templateId,
+          hasPublicKey: !!emailjsConfig.publicKey,
+        }
+      });
+      
       setSubmitStatus('error');
     } finally {
       setIsSubmitting(false);
@@ -207,19 +260,39 @@ export const Contact: React.FC = () => {
                 Message
                 <span className="sr-only"> (required)</span>
               </label>
-              <textarea
-                id={messageId}
-                name="message"
-                className="contact__textarea"
-                placeholder="Type your message..."
-                value={formData.message}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                disabled={isSubmitting}
-                aria-required="true"
-                aria-invalid={errors.message && touched.message ? 'true' : 'false'}
-                aria-describedby={errors.message && touched.message ? messageErrorId : undefined}
-              />
+              <div className="contact__textarea-wrapper">
+                <textarea
+                  id={messageId}
+                  name="message"
+                  className="contact__textarea"
+                  placeholder="Type your message..."
+                  value={formData.message}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  disabled={isSubmitting}
+                  maxLength={MESSAGE_MAX_LENGTH}
+                  aria-required="true"
+                  aria-invalid={errors.message && touched.message ? 'true' : 'false'}
+                  aria-describedby={errors.message && touched.message ? messageErrorId : undefined}
+                />
+                <div className="contact__char-count-wrapper">
+                  <span 
+                    className={`contact__char-count ${
+                      formData.message.length > MESSAGE_MAX_LENGTH 
+                        ? 'contact__char-count--error' 
+                        : formData.message.length > MESSAGE_MAX_LENGTH * 0.9 
+                          ? 'contact__char-count--warning' 
+                          : ''
+                    }`}
+                    aria-live="polite"
+                  >
+                    {formData.message.length} / {MESSAGE_MAX_LENGTH}
+                    {formData.message.length > MESSAGE_MAX_LENGTH && (
+                      <span className="contact__char-count-over"> (over limit)</span>
+                    )}
+                  </span>
+                </div>
+              </div>
               {errors.message && touched.message && (
                 <span id={messageErrorId} className="contact__error" role="alert">
                   {errors.message}

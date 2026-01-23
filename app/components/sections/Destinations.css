@@ -99,10 +99,7 @@
 }
 
 .destination-card__image-wrapper {
-  border: 0 !important;
-  border-width: 0 !important;
-  border-style: none !important;
-  border-color: transparent !important;
+  border: 1px solid #b0b3b8; /* Border stroke for destination images */
   border-radius: 12px;
   overflow: hidden;
   position: relative;
@@ -122,8 +119,6 @@
   object-fit: cover;
   display: block;
   transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  border: 0 !important;
-  border-width: 0 !important;
   outline: 0 !important;
   box-shadow: none !important;
 }
@@ -299,6 +294,7 @@
   aspect-ratio: 580 / 488;
   object-fit: cover;
   border-radius: 12px;
+  border: 1px solid #b0b3b8; /* Border stroke for expanded destination images */
 }
 
 .destination-expanded__credit {
@@ -447,6 +443,7 @@
 
 
 .destination-small__image-wrapper {
+  border: 1px solid #b0b3b8; /* Border stroke for small destination images */
   border-radius: 12px;
   overflow: hidden;
   aspect-ratio: 368 / 228;
