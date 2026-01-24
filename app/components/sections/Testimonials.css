@@ -16,7 +16,7 @@
   background: #f7f9fa; /* Figma card background */
   border: 1px solid #b0b3b8; /* Figma border */
   border-radius: 24px; /* Figma border radius */
-  padding: 48px 108px 120px 64px; /* Reduced bottom padding from 72px to 48px */
+  padding: 48px 108px 80px 64px; /* Bottom padding after dots */
   max-width: 1216px; /* Figma width */
   min-height: auto; /* Changed from fixed 714px to auto for better spacing */
   margin: 0 auto;
@@ -136,7 +136,7 @@
   flex-direction: column;
   gap: 0;
   margin-top: 28px;
-  margin-bottom: 60px; /* Increased spacing between author details and dots */
+  margin-bottom: 44px; /* Spacing between author details and dots */
 }
 
 .testimonials__author {
@@ -179,7 +179,7 @@
   justify-content: center;
   width: 100%;
   position: absolute;
-  bottom: 120px; /* Reduced from 72px to reduce white space after dots */
+  bottom: 80px; /* Align with card bottom padding */
   left: 0;
   right: 0;
 }
