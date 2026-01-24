@@ -287,6 +287,7 @@
 
 .mega-menu__content {
   display: flex;
+  justify-content: center;
   gap: 78px;
   max-width: 1220px;
   margin: 0 auto;
