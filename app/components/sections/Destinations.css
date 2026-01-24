@@ -11,23 +11,24 @@
   width: 100%;
 }
 
-/* Header */
+/* Header - same pattern as Case studies and Publications */
 .destinations__header {
   max-width: var(--content-max-width, 1220px);
   margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  gap: 4px; /* Figma gap */
 }
 
 .destinations__title {
   font-family: 'Romie Trial', Georgia, serif;
   font-size: 32px;
   font-weight: 500;
-  line-height: 41px;
+  line-height: 36px;
   letter-spacing: 1.28px;
   color: #111213;
   margin: 0;
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  flex-wrap: wrap;
 }
 
 .destinations__subtitle {
@@ -35,8 +36,8 @@
   font-size: 16px;
   font-weight: 400;
   line-height: 24px;
-  color: #3C3F43;
-  margin: 0;
+  color: #3c3f43;
+  letter-spacing: 0;
 }
 
 /* Grid Container - Figma exact layout: 1216px width, 56px gap */
@@ -186,6 +187,15 @@
    EXPANDED CARD VIEW - Figma Design
    ================================ */
 
+.destination-expanded__scroll-anchor {
+  scroll-margin-top: 88px;
+}
+
+.destination-expanded__flip-wrapper {
+  /* FLIP transform applied via JS; transition added during grow */
+  will-change: transform;
+}
+
 .destination-expanded {
   background: #F3F5F6;
   border: 1px solid #B0B3B8;
@@ -201,6 +211,16 @@
   gap: 56px;
   animation: expandCard 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
   transform-origin: center top;
+}
+
+.destination-expanded__flip-wrapper .destination-expanded {
+  animation: none;
+}
+
+.destination-expanded__flip-wrapper .destination-expanded__close,
+.destination-expanded__flip-wrapper .destination-expanded__image-wrapper,
+.destination-expanded__flip-wrapper .destination-expanded__content {
+  animation: none;
 }
 
 @keyframes expandCard {
@@ -219,7 +239,8 @@
 }
 
 .destination-expanded--image-right {
-  flex-direction: row-reverse;
+  flex-direction: row;
+  /* Content then Image in DOM → text left, image right */
 }
 
 .destination-expanded__close {
@@ -288,6 +309,10 @@
   animation-name: slideInImageRight;
 }
 
+.destination-expanded--image-right .destination-expanded__image {
+  border: none;
+}
+
 @keyframes slideInImageRight {
   0% {
     opacity: 0;
@@ -305,6 +330,14 @@
   object-fit: cover;
   border-radius: 12px;
   border: 1px solid #B0B3B8;
+}
+
+.destination-expanded__image--no-border {
+  border: none;
+}
+
+.destination-expanded__image--stroke-top {
+  border-top: 1px solid #B0B3B8;
 }
 
 .destination-expanded__credit {
@@ -329,6 +362,16 @@
   line-height: 20px;
   color: #3C3F43;
   margin: 0;
+}
+
+.destination-expanded--image-right .destination-expanded__credit {
+  align-items: flex-end;
+  text-align: right;
+}
+
+.destination-expanded--image-right .destination-expanded__artist,
+.destination-expanded--image-right .destination-expanded__photographer {
+  text-align: right;
 }
 
 .destination-expanded__content {
@@ -438,14 +481,14 @@
   animation: cardFadeIn 0.5s cubic-bezier(0.4, 0, 0.2, 1) both;
 }
 
-/* Staggered animation for each card - gentle cascade */
-.destination-small:nth-child(1) { animation-delay: 0.1s; }
-.destination-small:nth-child(2) { animation-delay: 0.15s; }
-.destination-small:nth-child(3) { animation-delay: 0.2s; }
-.destination-small:nth-child(4) { animation-delay: 0.25s; }
-.destination-small:nth-child(5) { animation-delay: 0.3s; }
-.destination-small:nth-child(6) { animation-delay: 0.35s; }
-.destination-small:nth-child(7) { animation-delay: 0.4s; }
+/* Staggered animation - start after FLIP grow, subtle cascade */
+.destination-small:nth-child(1) { animation-delay: 0.5s; }
+.destination-small:nth-child(2) { animation-delay: 0.58s; }
+.destination-small:nth-child(3) { animation-delay: 0.66s; }
+.destination-small:nth-child(4) { animation-delay: 0.74s; }
+.destination-small:nth-child(5) { animation-delay: 0.82s; }
+.destination-small:nth-child(6) { animation-delay: 0.9s; }
+.destination-small:nth-child(7) { animation-delay: 0.98s; }
 
 /* Smooth fade in with subtle movement */
 @keyframes cardFadeIn {

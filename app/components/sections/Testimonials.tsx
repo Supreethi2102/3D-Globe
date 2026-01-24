@@ -12,7 +12,8 @@ const testimonials = [
   },
   {
     id: 2,
-    quote: `Samantha possesses excellent communication skills, and she is a pleasure to work with. She has a natural ability to collaborate with colleagues and clients, and she always seeks to understand the needs and perspectives of others. Her innovative and creative thinking has allowed her to develop unique and effective solutions that have benefited our projects immensely.`,
+    quote: `Samantha possesses excellent communication skills, and she is a pleasure to work with.
+She has a natural ability to collaborate with colleagues and clients, and she always seeks to understand the needs and perspectives of others. Her innovative and creative thinking has allowed her to develop unique and effective solutions that have benefited our projects\u00A0immensely.`,
     author: 'Chiquita Taala',
     role: 'Trade Planning Manager - Home & Leisure',
     company: 'The Warehouse Group',

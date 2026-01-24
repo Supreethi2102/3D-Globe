@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { 
   CaretUp,
   Leaf,
   Cookie,
   PersonSimpleCircle,
-  LinkedinLogo
+  LinkedinLogo,
+  X
 } from '@phosphor-icons/react';
 import { GravityPlayground } from './GravityPlayground';
 import './ColorSwatches.css';
@@ -12,6 +13,43 @@ import './ColorSwatches.css';
 export const ColorSwatches: React.FC = () => {
   const [hoveredLink, setHoveredLink] = useState<string | null>(null);
   const [isBackToTopHovered, setIsBackToTopHovered] = useState(false);
+  const [sustainabilityOpen, setSustainabilityOpen] = useState(false);
+  const [accessibilityOpen, setAccessibilityOpen] = useState(false);
+  const [motionOn, setMotionOn] = useState(true);
+  const sustainabilityBtnRef = useRef<HTMLButtonElement>(null);
+  const sustainabilityCloseRef = useRef<HTMLButtonElement>(null);
+  const accessibilityBtnRef = useRef<HTMLButtonElement>(null);
+  const accessibilityCloseRef = useRef<HTMLButtonElement>(null);
+
+  const closeSustainability = () => {
+    setSustainabilityOpen(false);
+    requestAnimationFrame(() => sustainabilityBtnRef.current?.focus());
+  };
+
+  const closeAccessibility = () => {
+    setAccessibilityOpen(false);
+    requestAnimationFrame(() => accessibilityBtnRef.current?.focus());
+  };
+
+  useEffect(() => {
+    if (!sustainabilityOpen) return;
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') closeSustainability();
+    };
+    document.addEventListener('keydown', onKeyDown);
+    sustainabilityCloseRef.current?.focus();
+    return () => document.removeEventListener('keydown', onKeyDown);
+  }, [sustainabilityOpen]);
+
+  useEffect(() => {
+    if (!accessibilityOpen) return;
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') closeAccessibility();
+    };
+    document.addEventListener('keydown', onKeyDown);
+    accessibilityCloseRef.current?.focus();
+    return () => document.removeEventListener('keydown', onKeyDown);
+  }, [accessibilityOpen]);
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -68,15 +106,20 @@ export const ColorSwatches: React.FC = () => {
             <small className="site-footer__copyright">© 2026 Samantha Jane Smith, All rights reserved.</small>
           </div>
           <nav className="site-footer__right" aria-label="Footer navigation">
-            <a 
-              href="#sustainability" 
+            <button
+              ref={sustainabilityBtnRef}
+              type="button"
               className={`site-footer__link ${hoveredLink === 'sustainability' ? 'site-footer__link--hovered' : ''}`}
               onMouseEnter={() => setHoveredLink('sustainability')}
               onMouseLeave={() => setHoveredLink(null)}
+              onClick={() => setSustainabilityOpen(true)}
+              aria-expanded={sustainabilityOpen}
+              aria-haspopup="dialog"
+              aria-label="Open Sustainability information"
             >
               <Leaf size={24} weight={hoveredLink === 'sustainability' ? 'fill' : 'regular'} color={hoveredLink === 'sustainability' ? '#7150E5' : '#3C3F43'} aria-hidden="true" />
               <span>Sustainability</span>
-            </a>
+            </button>
             <a 
               href="#privacy" 
               className={`site-footer__link ${hoveredLink === 'privacy' ? 'site-footer__link--hovered' : ''}`}
@@ -86,15 +129,20 @@ export const ColorSwatches: React.FC = () => {
               <Cookie size={24} weight={hoveredLink === 'privacy' ? 'fill' : 'regular'} color={hoveredLink === 'privacy' ? '#7150E5' : '#3C3F43'} aria-hidden="true" />
               <span>Privacy and cookies</span>
             </a>
-            <a 
-              href="#accessibility" 
+            <button
+              ref={accessibilityBtnRef}
+              type="button"
               className={`site-footer__link ${hoveredLink === 'accessibility' ? 'site-footer__link--hovered' : ''}`}
               onMouseEnter={() => setHoveredLink('accessibility')}
               onMouseLeave={() => setHoveredLink(null)}
+              onClick={() => setAccessibilityOpen(true)}
+              aria-expanded={accessibilityOpen}
+              aria-haspopup="dialog"
+              aria-label="Open Accessibility information"
             >
               <PersonSimpleCircle size={24} weight={hoveredLink === 'accessibility' ? 'fill' : 'regular'} color={hoveredLink === 'accessibility' ? '#7150E5' : '#3C3F43'} aria-hidden="true" />
               <span>Accessibility</span>
-            </a>
+            </button>
             <a 
               href="https://linkedin.com" 
               target="_blank" 
@@ -110,6 +158,114 @@ export const ColorSwatches: React.FC = () => {
           </nav>
         </div>
       </footer>
+
+      {/* Sustainability modal */}
+      {sustainabilityOpen && (
+        <div
+          className="sustainability-modal__overlay"
+          role="presentation"
+          onClick={closeSustainability}
+        >
+          <div
+            className="sustainability-modal"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="sustainability-modal-title"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              ref={sustainabilityCloseRef}
+              type="button"
+              className="sustainability-modal__close"
+              onClick={closeSustainability}
+              aria-label="Close Sustainability"
+            >
+              Close <X size={16} weight="regular" className="sustainability-modal__close-icon" aria-hidden="true" />
+            </button>
+            <div className="sustainability-modal__content">
+              <div className="sustainability-modal__text">
+                <h2 id="sustainability-modal-title" className="sustainability-modal__title">Lighter digital footprint</h2>
+                <p className="sustainability-modal__p">
+                  Sustainability shaped this site from the beginning. Performance has been optimised to reduce energy use through efficient image handling, minimal code, and fast loading times.
+                </p>
+                <p className="sustainability-modal__p">
+                  As digital standards shift, I'll keep refining. If you have tips for reducing impact even further, I'd love to hear them.
+                </p>
+              </div>
+              <div className="sustainability-modal__image-wrap">
+                <img
+                  src="/Footer images/Sustainbility Footer.png"
+                  alt=""
+                  className="sustainability-modal__image"
+                  aria-hidden="true"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Accessibility modal – Figma 1539:228 */}
+      {accessibilityOpen && (
+        <div
+          className="accessibility-modal__overlay"
+          role="presentation"
+          onClick={closeAccessibility}
+        >
+          <div
+            className="accessibility-modal"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="accessibility-modal-title"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              ref={accessibilityCloseRef}
+              type="button"
+              className="accessibility-modal__close"
+              onClick={closeAccessibility}
+              aria-label="Close Accessibility"
+            >
+              Close <X size={16} weight="regular" className="accessibility-modal__close-icon" aria-hidden="true" />
+            </button>
+            <div className="accessibility-modal__content">
+              <div className="accessibility-modal__text">
+                <h2 id="accessibility-modal-title" className="accessibility-modal__title">Accessibility commitment</h2>
+                <p className="accessibility-modal__p">
+                  Everyone should be able to navigate this site with ease. It was designed with accessibility in mind, including colour contrast, readable typography, keyboard navigation, and a clear content structure.
+                </p>
+                <p className="accessibility-modal__p">
+                  I continue to learn and improve as accessibility standards evolve. If there's anything that could be more inclusive, I'd genuinely appreciate your feedback.
+                </p>
+                <div className="accessibility-modal__motion">
+                  <span className="accessibility-modal__motion-label">Motion</span>
+                  <button
+                    type="button"
+                    role="switch"
+                    aria-checked={motionOn}
+                    aria-label="Toggle motion"
+                    className={`accessibility-modal__toggle ${motionOn ? 'accessibility-modal__toggle--on' : ''}`}
+                    onClick={() => setMotionOn(!motionOn)}
+                  >
+                    <span className="accessibility-modal__toggle-track">
+                      <span className="accessibility-modal__toggle-on-text">on</span>
+                      <span className="accessibility-modal__toggle-thumb" />
+                    </span>
+                  </button>
+                </div>
+              </div>
+              <div className="accessibility-modal__image-wrap">
+                <img
+                  src="/Footer images/Accessibilitu.png"
+                  alt=""
+                  className="accessibility-modal__image"
+                  aria-hidden="true"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 };

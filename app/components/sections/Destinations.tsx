@@ -27,6 +27,7 @@ const destinations = {
     gridImage: '/destinations/Grid Nevada.png',
     size: 'tall',
     title: 'Seven Magic Mountains',
+    imageStrokeTop: true,
     artist: 'Seven Magic Mountains by Ugo Rondinone.',
     photographer: 'Photo by Erda Estremera',
     whyCity: 'Seven Magic Mountains in Nevada brings colour and scale to the desert. Neon stacked limestone boulders, 9 to 11 metres tall, create a striking desert artwork.',
@@ -72,8 +73,9 @@ const destinations = {
     gridImage: '/destinations/Grid Creek Harbour.png',
     size: 'tall',
     title: 'Creek Harbour',
-    artist: 'Creek Harbour arches, framing the skyline beyond.',
-    photographer: 'Photo by Florian Wehde',
+    noImageBorder: true,
+    artist: 'Creek Harbour by Santiago Calatrava.',
+    photographer: 'Photo by Florian Wehde.',
     whyCity: 'Dubai treats the city as a designed composition. Its mix of Islamic geometry, futurism, and engineered spectacle makes the urban landscape intentional.',
     whatDrawsMe: 'Calatrava-inspired arches frame the skyline like living artwork. Seen through them, the city becomes the central focus.',
     howInfluences: 'I explore how framing guides attention. Layout and hierarchy help highlight content without distraction.',
@@ -88,8 +90,8 @@ const destinations = {
     gridImage: '/destinations/Grid Marrakech.png',
     size: 'wide',
     title: 'The Jardin Majorelle',
-    artist: 'The Jardin Majorelle, built by French painter Jacques Majorelle.',
-    photographer: 'Photo by Riccardo Monteleone',
+    artist: 'The Jardin Majorelle by Jacques Majorelle.',
+    photographer: 'Photo by Riccardo Monteleone.',
     whyCity: 'The Jardin Majorelle and the adjacent YSL Museum show how colour and craft shape identity. Moroccan design, modern lines, and lush planting give the spaces a vivid feel.',
     whatDrawsMe: 'Majorelle Blue contrasts with dense greenery, while the museum highlights silhouette and palette as expressive tools.',
     howInfluences: 'I consider how visual language sets tone. Hierarchy, colour, and trend-aware choices shape a clear, intentional design experience.'
@@ -103,8 +105,8 @@ const destinations = {
     gridImage: '/destinations/Grid hawa Mahal.png',
     size: 'normal',
     title: 'The Hawa Mahal',
-    artist: 'The Hawa Mahal, with its pink sandstone façade.',
-    photographer: 'Photo by Aditya Kumar',
+    artist: 'The Hawa Mahal, pink sandstone façade.',
+    photographer: 'Photo by Aditya Kumar.',
     whyCity: 'Jaipur shows how beauty, function, and colour coexist. Pink façades, natural cooling, and human-scale planning respond thoughtfully to daily life.',
     whatDrawsMe: 'Its façade and 953 jharokha windows create airflow, privacy, and rhythm. Practical needs become a defining visual identity.',
     howInfluences: 'I focus on solving multiple needs simultaneously. Structure and detail allow me to create clarity and purpose in my work.',
@@ -119,8 +121,9 @@ const destinations = {
     gridImage: '/destinations/Grid Naoshima Island.png',
     size: 'normal',
     title: 'Pumpkin',
-    artist: 'Yayoi Kusama\'s "Pumpkin" on the Benesse jetty.',
-    photographer: 'Photo by Rebecca Lam',
+    imageStrokeTop: true,
+    artist: 'Pumpkin by Yayoi Kusama.',
+    photographer: 'Photo by Rebecca Lam.',
     whyCity: 'Naoshima blends art, architecture, and landscape with precision. Underground museums and site-specific installations make the island a curated experience.',
     whatDrawsMe: 'Kusama\'s spotted sculpture is playful yet calm. Its repetition and scale stand out against the natural shoreline.',
     howInfluences: 'I use pattern, scale, and colour intentionally. This helps me craft work that is organised, approachable, and invites exploration.',
@@ -145,12 +148,16 @@ interface Destination {
   whatDrawsMe: string;
   howInfluences: string;
   drawsHeading?: string;
+  noImageBorder?: boolean;
+  imageStrokeTop?: boolean;
 }
 
 interface DestinationCardProps {
   destination: Destination;
+  destinationKey: DestinationKey;
   isExpanded: boolean;
-  onToggle: () => void;
+  onExpand: (key: DestinationKey, el: HTMLElement) => void;
+  onClose: () => void;
   layoutDirection?: 'image-left' | 'image-right';
 }
 
@@ -185,7 +192,7 @@ const ExpandedImage: React.FC<{ destination: Destination }> = ({ destination }) 
     <img 
       src={destination.expandedImage} 
       alt={`${destination.title} in ${destination.city}, ${destination.country}`}
-      className="destination-expanded__image"
+      className={`destination-expanded__image${destination.noImageBorder ? ' destination-expanded__image--no-border' : ''}${destination.imageStrokeTop ? ' destination-expanded__image--stroke-top' : ''}`}
     />
     <figcaption className="destination-expanded__credit">
       <p className="destination-expanded__artist">{destination.artist}</p>
@@ -196,8 +203,10 @@ const ExpandedImage: React.FC<{ destination: Destination }> = ({ destination }) 
 
 const DestinationCard: React.FC<DestinationCardProps> = ({ 
   destination, 
+  destinationKey,
   isExpanded, 
-  onToggle,
+  onExpand,
+  onClose,
   layoutDirection = 'image-left'
 }) => {
   const titleId = useId();
@@ -215,7 +224,7 @@ const DestinationCard: React.FC<DestinationCardProps> = ({
           onClick={(e) => {
             e.preventDefault();
             e.stopPropagation();
-            onToggle();
+            onClose();
           }}
           aria-label={`Close ${destination.city} details`}
         >
@@ -243,14 +252,15 @@ const DestinationCard: React.FC<DestinationCardProps> = ({
       onClick={(e) => {
         e.preventDefault();
         e.stopPropagation();
-        onToggle();
+        onExpand(destinationKey, e.currentTarget as HTMLElement);
       }}
       role="button"
       tabIndex={0}
       onKeyDown={(e) => {
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
-          onToggle();
+          const target = e.currentTarget as HTMLElement;
+          onExpand(destinationKey, target);
         }
       }}
       aria-label={`${destination.city}, ${destination.country}. Click to expand for more details`}
@@ -274,7 +284,7 @@ const DestinationCard: React.FC<DestinationCardProps> = ({
 // Small card component for the grid below expanded card
 interface SmallCardProps {
   destination: Destination;
-  onClick: () => void;
+  onClick: (e: React.MouseEvent<HTMLElement>) => void;
 }
 
 const SmallCard: React.FC<SmallCardProps> = ({ destination, onClick }) => (
@@ -283,14 +293,14 @@ const SmallCard: React.FC<SmallCardProps> = ({ destination, onClick }) => (
     onClick={(e) => {
       e.preventDefault();
       e.stopPropagation();
-      onClick();
+      onClick(e);
     }}
     role="button"
     tabIndex={0}
     onKeyDown={(e) => {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
-        onClick();
+        onClick({ currentTarget: e.currentTarget } as React.MouseEvent<HTMLElement>);
       }
     }}
     aria-label={`${destination.city}, ${destination.country}. Click to view details`}
@@ -309,35 +319,88 @@ const SmallCard: React.FC<SmallCardProps> = ({ destination, onClick }) => (
   </article>
 );
 
+const FLIP_DURATION_MS = 720;
+
 export const Destinations: React.FC = () => {
   const [isShareHovered, setIsShareHovered] = useState(false);
   const [expandedCard, setExpandedCard] = useState<DestinationKey | null>(null);
   const expandedCardRef = useRef<HTMLDivElement>(null);
+  const expandOriginRef = useRef<DOMRect | null>(null);
+  const flipWrapperRef = useRef<HTMLDivElement>(null);
 
-  const toggleCard = (id: DestinationKey) => {
-    setExpandedCard(expandedCard === id ? null : id);
+  const handleExpand = (id: DestinationKey, el: HTMLElement) => {
+    expandOriginRef.current = el.getBoundingClientRect();
+    setExpandedCard(id);
   };
 
-  // Scroll to expanded card when it opens
+  const handleClose = () => {
+    setExpandedCard(null);
+    expandOriginRef.current = null;
+  };
+
+  // FLIP: grow expanded card from clicked card position
   useEffect(() => {
-    if (expandedCard && expandedCardRef.current) {
-      // Delay to let the DOM update after state change
-      const timeoutId = setTimeout(() => {
-        const element = expandedCardRef.current;
-        if (element) {
-          const headerOffset = 80; // Account for fixed header
-          const elementPosition = element.getBoundingClientRect().top;
-          const offsetPosition = elementPosition + window.scrollY - headerOffset;
-          
-          window.scrollTo({
-            top: offsetPosition,
-            behavior: 'smooth'
-          });
-        }
-      }, 150);
-      
-      return () => clearTimeout(timeoutId);
-    }
+    if (!expandedCard || !expandOriginRef.current || !flipWrapperRef.current) return;
+
+    const origin = expandOriginRef.current;
+    let rafId: number | undefined;
+
+    const run = () => {
+      const w = flipWrapperRef.current;
+      if (!w) return;
+
+      const end = w.getBoundingClientRect();
+      const dx = origin.left - end.left;
+      const dy = origin.top - end.top;
+      const sx = origin.width / end.width;
+      const sy = origin.height / end.height;
+
+      w.style.transformOrigin = '0 0';
+      w.style.transition = 'none';
+      w.style.transform = `translate(${dx}px, ${dy}px) scale(${sx}, ${sy})`;
+      w.style.opacity = '0.7';
+
+      rafId = requestAnimationFrame(() => {
+        rafId = requestAnimationFrame(() => {
+          w.style.transition = `transform ${FLIP_DURATION_MS}ms cubic-bezier(0.32, 0.72, 0, 1), opacity ${FLIP_DURATION_MS}ms cubic-bezier(0.32, 0.72, 0, 1)`;
+          w.style.transform = '';
+          w.style.opacity = '';
+
+          const onEnd = () => {
+            w.removeEventListener('transitionend', onEnd);
+            w.style.transformOrigin = '';
+            w.style.transition = '';
+          };
+          w.addEventListener('transitionend', onEnd);
+        });
+      });
+    };
+
+    const t = setTimeout(run, 10);
+    return () => {
+      clearTimeout(t);
+      if (rafId) cancelAnimationFrame(rafId);
+    };
+  }, [expandedCard]);
+
+  // Scroll to expanded card only after grow animation, and only if mostly off-screen
+  useEffect(() => {
+    if (!expandedCard || !expandedCardRef.current) return;
+
+    const timeoutId = setTimeout(() => {
+      const el = expandedCardRef.current;
+      if (!el) return;
+      const rect = el.getBoundingClientRect();
+      const headerOffset = 80;
+      const padding = 24;
+      const inView = rect.top >= headerOffset - padding && rect.bottom <= window.innerHeight + padding;
+      if (inView) return;
+
+      const offsetPosition = rect.top + window.scrollY - headerOffset;
+      window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+    }, FLIP_DURATION_MS + 80);
+
+    return () => clearTimeout(timeoutId);
   }, [expandedCard]);
 
   // Define which cards belong to which row
@@ -361,8 +424,8 @@ export const Destinations: React.FC = () => {
 
   // Determine layout direction based on card
   const getLayoutDirection = (key: DestinationKey): 'image-left' | 'image-right' => {
-    // Tall cards and some normal cards have content on left
-    if (['nevada', 'dubai', 'naoshima', 'marrakech', 'jaipur'].includes(key)) {
+    // Image on right: Nevada, Naoshima, Marrakech, Jaipur. Creek Harbour (Dubai) has image on left.
+    if (['nevada', 'naoshima', 'marrakech', 'jaipur'].includes(key)) {
       return 'image-right';
     }
     return 'image-left';
@@ -375,10 +438,9 @@ export const Destinations: React.FC = () => {
     >
       {/* Header */}
       <header className="destinations__header">
-        <h2 id="destinations-title" className="destinations__title">Design destinations on my radar</h2>
-        <p className="destinations__subtitle">
-          Places I haven't explored yet, but they keep turning up in my moodboards and design thinking.
-        </p>
+        <h2 id="destinations-title" className="destinations__title">
+          Design destinations <span className="destinations__subtitle">Unvisited places inspiring me</span>
+        </h2>
       </header>
 
       {/* Content Area */}
@@ -388,13 +450,17 @@ export const Destinations: React.FC = () => {
             {/* If Row 1 card is expanded: show expanded card, other Row 1 as small cards, Row 2 intact */}
             {isRow1Card(expandedCard) && (
               <>
-                <div ref={expandedCardRef}>
-                  <DestinationCard 
-                    destination={destinations[expandedCard]} 
-                    isExpanded={true} 
-                    onToggle={() => setExpandedCard(null)}
-                    layoutDirection={getLayoutDirection(expandedCard)}
-                  />
+                <div ref={expandedCardRef} className="destination-expanded__scroll-anchor">
+                  <div ref={flipWrapperRef} className="destination-expanded__flip-wrapper">
+                    <DestinationCard 
+                      destination={destinations[expandedCard]} 
+                      destinationKey={expandedCard}
+                      isExpanded={true} 
+                      onExpand={handleExpand}
+                      onClose={handleClose}
+                      layoutDirection={getLayoutDirection(expandedCard)}
+                    />
+                  </div>
                 </div>
                 
                 {/* Other Row 1 cards as small cards */}
@@ -403,7 +469,7 @@ export const Destinations: React.FC = () => {
                     <SmallCard 
                       key={key}
                       destination={destinations[key]}
-                      onClick={() => toggleCard(key)}
+                      onClick={(e) => handleExpand(key, e.currentTarget)}
                     />
                   ))}
                 </div>
@@ -413,25 +479,33 @@ export const Destinations: React.FC = () => {
                   <div className="destinations__row">
                     <DestinationCard 
                       destination={destinations.dubai} 
+                      destinationKey="dubai"
                       isExpanded={false} 
-                      onToggle={() => toggleCard('dubai')} 
+                      onExpand={handleExpand}
+                      onClose={handleClose}
                     />
                     <div className="destinations__column">
                       <DestinationCard 
                         destination={destinations.marrakech} 
+                        destinationKey="marrakech"
                         isExpanded={false} 
-                        onToggle={() => toggleCard('marrakech')} 
+                        onExpand={handleExpand}
+                        onClose={handleClose}
                       />
                       <div className="destinations__row destinations__row--inner">
                         <DestinationCard 
                           destination={destinations.jaipur} 
+                          destinationKey="jaipur"
                           isExpanded={false} 
-                          onToggle={() => toggleCard('jaipur')} 
+                          onExpand={handleExpand}
+                          onClose={handleClose}
                         />
                         <DestinationCard 
                           destination={destinations.naoshima} 
+                          destinationKey="naoshima"
                           isExpanded={false} 
-                          onToggle={() => toggleCard('naoshima')} 
+                          onExpand={handleExpand}
+                          onClose={handleClose}
                         />
                       </div>
                     </div>
@@ -449,38 +523,50 @@ export const Destinations: React.FC = () => {
                     <div className="destinations__column">
                       <DestinationCard 
                         destination={destinations.aarhus} 
+                        destinationKey="aarhus"
                         isExpanded={false} 
-                        onToggle={() => toggleCard('aarhus')} 
+                        onExpand={handleExpand}
+                        onClose={handleClose}
                       />
                       <div className="destinations__row destinations__row--inner">
                         <DestinationCard 
                           destination={destinations.calpe} 
+                          destinationKey="calpe"
                           isExpanded={false} 
-                          onToggle={() => toggleCard('calpe')} 
+                          onExpand={handleExpand}
+                          onClose={handleClose}
                         />
                         <DestinationCard 
                           destination={destinations.giza} 
+                          destinationKey="giza"
                           isExpanded={false} 
-                          onToggle={() => toggleCard('giza')} 
+                          onExpand={handleExpand}
+                          onClose={handleClose}
                         />
                       </div>
                     </div>
                     <DestinationCard 
                       destination={destinations.nevada} 
+                      destinationKey="nevada"
                       isExpanded={false} 
-                      onToggle={() => toggleCard('nevada')} 
+                      onExpand={handleExpand}
+                      onClose={handleClose}
                     />
                   </div>
                 </div>
 
                 {/* Expanded Row 2 card */}
-                <div ref={expandedCardRef}>
-                  <DestinationCard 
-                    destination={destinations[expandedCard]} 
-                    isExpanded={true} 
-                    onToggle={() => setExpandedCard(null)}
-                    layoutDirection={getLayoutDirection(expandedCard)}
-                  />
+                <div ref={expandedCardRef} className="destination-expanded__scroll-anchor">
+                  <div ref={flipWrapperRef} className="destination-expanded__flip-wrapper">
+                    <DestinationCard 
+                      destination={destinations[expandedCard]} 
+                      destinationKey={expandedCard}
+                      isExpanded={true} 
+                      onExpand={handleExpand}
+                      onClose={handleClose}
+                      layoutDirection={getLayoutDirection(expandedCard)}
+                    />
+                  </div>
                 </div>
                 
                 {/* Other Row 2 cards as small cards */}
@@ -489,7 +575,7 @@ export const Destinations: React.FC = () => {
                     <SmallCard 
                       key={key}
                       destination={destinations[key]}
-                      onClick={() => toggleCard(key)}
+                      onClick={(e) => handleExpand(key, e.currentTarget)}
                     />
                   ))}
                 </div>
@@ -498,32 +584,40 @@ export const Destinations: React.FC = () => {
           </>
         ) : (
           /* Default Grid View */
-      <div className="destinations__grid">
+          <div className="destinations__grid">
             {/* Row 1: Aarhus (wide) + Calpe/Giza (stacked) + Nevada (tall) */}
             <div className="destinations__row">
               <div className="destinations__column">
                 <DestinationCard 
                   destination={destinations.aarhus} 
+                  destinationKey="aarhus"
                   isExpanded={false} 
-                  onToggle={() => toggleCard('aarhus')} 
+                  onExpand={handleExpand}
+                  onClose={handleClose}
                 />
                 <div className="destinations__row destinations__row--inner">
                   <DestinationCard 
                     destination={destinations.calpe} 
+                    destinationKey="calpe"
                     isExpanded={false} 
-                    onToggle={() => toggleCard('calpe')} 
+                    onExpand={handleExpand}
+                    onClose={handleClose}
                   />
                   <DestinationCard 
                     destination={destinations.giza} 
+                    destinationKey="giza"
                     isExpanded={false} 
-                    onToggle={() => toggleCard('giza')} 
+                    onExpand={handleExpand}
+                    onClose={handleClose}
                   />
                 </div>
               </div>
               <DestinationCard 
                 destination={destinations.nevada} 
+                destinationKey="nevada"
                 isExpanded={false} 
-                onToggle={() => toggleCard('nevada')} 
+                onExpand={handleExpand}
+                onClose={handleClose}
               />
             </div>
             
@@ -531,25 +625,33 @@ export const Destinations: React.FC = () => {
             <div className="destinations__row">
               <DestinationCard 
                 destination={destinations.dubai} 
+                destinationKey="dubai"
                 isExpanded={false} 
-                onToggle={() => toggleCard('dubai')} 
+                onExpand={handleExpand}
+                onClose={handleClose}
               />
               <div className="destinations__column">
                 <DestinationCard 
                   destination={destinations.marrakech} 
+                  destinationKey="marrakech"
                   isExpanded={false} 
-                  onToggle={() => toggleCard('marrakech')} 
+                  onExpand={handleExpand}
+                  onClose={handleClose}
                 />
                 <div className="destinations__row destinations__row--inner">
                   <DestinationCard 
                     destination={destinations.jaipur} 
+                    destinationKey="jaipur"
                     isExpanded={false} 
-                    onToggle={() => toggleCard('jaipur')} 
+                    onExpand={handleExpand}
+                    onClose={handleClose}
                   />
                   <DestinationCard 
                     destination={destinations.naoshima} 
+                    destinationKey="naoshima"
                     isExpanded={false} 
-                    onToggle={() => toggleCard('naoshima')} 
+                    onExpand={handleExpand}
+                    onClose={handleClose}
                   />
                 </div>
               </div>
