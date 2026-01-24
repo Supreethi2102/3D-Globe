@@ -46,7 +46,7 @@ const destinations = {
     photographer: 'Photo by Lena Polishko',
     whyCity: 'La Muralla Roja reimagines a fortress through bold geometry and colour. Stepped volumes and interlocking courtyards make the structure feel sculptural and inhabitable.',
     whatDrawsMe: 'Its maze-like paths invite wandering. Private terraces and shared paths use warm and cool tones to frame views that feel intentional but open.',
-    howInfluences: 'I consider how layout and colour guide focus. My work builds clear systems so people know where to look and what to do.'
+    howInfluences: 'I consider how layout and colour guide focus. My work builds clear systems so people know where to look and what to\u00A0do.'
   },
   giza: { 
     id: 'egypt', 
@@ -94,7 +94,7 @@ const destinations = {
     photographer: 'Photo by Riccardo Monteleone.',
     whyCity: 'The Jardin Majorelle and the adjacent YSL Museum show how colour and craft shape identity. Moroccan design, modern lines, and lush planting give the spaces a vivid feel.',
     whatDrawsMe: 'Majorelle Blue contrasts with dense greenery, while the museum highlights silhouette and palette as expressive tools.',
-    howInfluences: 'I consider how visual language sets tone. Hierarchy, colour, and trend-aware choices shape a clear, intentional design experience.'
+    howInfluences: 'I consider how visual language sets tone. Hierarchy, colour, and trend-aware choices shape a clear, intentional design\u00A0experience.'
   },
   jaipur: { 
     id: 'india', 
@@ -109,7 +109,7 @@ const destinations = {
     photographer: 'Photo by Aditya Kumar.',
     whyCity: 'Jaipur shows how beauty, function, and colour coexist. Pink façades, natural cooling, and human-scale planning respond thoughtfully to daily life.',
     whatDrawsMe: 'Its façade and 953 jharokha windows create airflow, privacy, and rhythm. Practical needs become a defining visual identity.',
-    howInfluences: 'I focus on solving multiple needs simultaneously. Structure and detail allow me to create clarity and purpose in my work.',
+    howInfluences: 'I focus on solving multiple needs simultaneously. Structure and detail allow me to create clarity and purpose in my\u00A0work.',
     drawsHeading: 'What draws me to The Hawa Mahal?'
   },
   naoshima: { 
@@ -121,6 +121,7 @@ const destinations = {
     gridImage: '/destinations/Grid Naoshima Island.png',
     size: 'normal',
     title: 'Pumpkin',
+    noImageBorder: true,
     imageStrokeTop: true,
     artist: 'Pumpkin by Yayoi Kusama.',
     photographer: 'Photo by Rebecca Lam.',

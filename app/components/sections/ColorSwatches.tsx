@@ -92,7 +92,7 @@ export const ColorSwatches: React.FC = () => {
             onMouseLeave={() => setIsBackToTopHovered(false)}
             aria-label="Back to top of page"
           >
-            <CaretUp size={24} weight={isBackToTopHovered ? 'bold' : 'regular'} color={isBackToTopHovered ? '#ffffff' : '#7150E5'} aria-hidden="true" />
+            <CaretUp size={24} weight="regular" color={isBackToTopHovered ? '#ffffff' : '#7150E5'} aria-hidden="true" />
           </button>
           <span className="back-to-top__text" aria-hidden="true">Back to top</span>
         </nav>

@@ -28,6 +28,7 @@ export const Contact: React.FC = () => {
   const nameErrorId = useId();
   const emailErrorId = useId();
   const messageErrorId = useId();
+  const messageCharCountId = useId();
   const statusAnnouncementRef = useRef<HTMLDivElement>(null);
 
   const validateEmail = (email: string) => {
@@ -193,7 +194,7 @@ export const Contact: React.FC = () => {
                 id={nameId}
                 name="name"
                 className="contact__input"
-                placeholder="Enter your name here"
+                placeholder="e.g. Jane Doe"
                 value={formData.name}
                 onChange={handleChange}
                 onBlur={handleBlur}
@@ -220,7 +221,7 @@ export const Contact: React.FC = () => {
                 id={emailId}
                 name="email"
                 className="contact__input"
-                placeholder="Enter your email address"
+                placeholder="e.g. jane@example.com"
                 value={formData.email}
                 onChange={handleChange}
                 onBlur={handleBlur}
@@ -247,7 +248,7 @@ export const Contact: React.FC = () => {
                 id={countryId}
                 name="country"
                 className="contact__input"
-                placeholder="Enter your country"
+                placeholder="e.g. New Zealand"
                 value={formData.country}
                 onChange={handleChange}
                 disabled={isSubmitting}
@@ -265,7 +266,7 @@ export const Contact: React.FC = () => {
                   id={messageId}
                   name="message"
                   className="contact__textarea"
-                  placeholder="Type your message..."
+                  placeholder="e.g. Hi, I'd like to get in touch about..."
                   value={formData.message}
                   onChange={handleChange}
                   onBlur={handleBlur}
@@ -273,25 +274,24 @@ export const Contact: React.FC = () => {
                   maxLength={MESSAGE_MAX_LENGTH}
                   aria-required="true"
                   aria-invalid={errors.message && touched.message ? 'true' : 'false'}
-                  aria-describedby={errors.message && touched.message ? messageErrorId : undefined}
+                  aria-describedby={[messageCharCountId, errors.message && touched.message ? messageErrorId : null].filter(Boolean).join(' ') || undefined}
                 />
-                <div className="contact__char-count-wrapper">
-                  <span 
-                    className={`contact__char-count ${
-                      formData.message.length > MESSAGE_MAX_LENGTH 
-                        ? 'contact__char-count--error' 
-                        : formData.message.length > MESSAGE_MAX_LENGTH * 0.9 
-                          ? 'contact__char-count--warning' 
-                          : ''
-                    }`}
-                    aria-live="polite"
-                  >
-                    {formData.message.length} / {MESSAGE_MAX_LENGTH}
-                    {formData.message.length > MESSAGE_MAX_LENGTH && (
-                      <span className="contact__char-count-over"> (over limit)</span>
-                    )}
-                  </span>
-                </div>
+              </div>
+              <div id={messageCharCountId} className="contact__char-count-wrapper" aria-live="polite">
+                <span
+                  className={`contact__char-count ${
+                    formData.message.length > MESSAGE_MAX_LENGTH
+                      ? 'contact__char-count--error'
+                      : formData.message.length > MESSAGE_MAX_LENGTH * 0.9
+                        ? 'contact__char-count--warning'
+                        : ''
+                  }`}
+                >
+                  {formData.message.length} / {MESSAGE_MAX_LENGTH}
+                  {formData.message.length > MESSAGE_MAX_LENGTH && (
+                    <span className="contact__char-count-over"> (over limit)</span>
+                  )}
+                </span>
               </div>
               {errors.message && touched.message && (
                 <span id={messageErrorId} className="contact__error" role="alert">

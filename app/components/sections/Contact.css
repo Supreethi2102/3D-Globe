@@ -2,7 +2,7 @@
 
 .contact {
   background: #eceef2; /* Figma outer background */
-  padding-top: 112px; /* More padding between testimonials and contact */
+  padding-top: 80px; /* Reduced gap from Testimonials */
   padding-bottom: 112px; /* More bottom padding */
   /* Dynamic padding: grows on screens larger than 1440px */
   padding-left: max(var(--padding-x, 112px), calc((100vw - var(--content-max-width, 1220px)) / 2));
@@ -104,7 +104,7 @@
 .contact__textarea {
   width: 100%;
   height: 202px; /* Figma height */
-  padding: 12px 15px 32px 15px; /* Extra bottom padding for character count */
+  padding: 12px 15px;
   background: #f9fafb; /* gray-50 */
   border: 1px solid #76797f; /* Figma border */
   border-radius: 8px; /* Figma border radius */
@@ -126,12 +126,10 @@
   border-color: #7150e5;
 }
 
-/* Character Count - Inside textarea */
+/* Character Count - Outside and below textarea (UX best practice) */
 .contact__char-count-wrapper {
-  position: absolute;
-  bottom: 8px;
-  right: 12px;
-  pointer-events: none; /* Allow clicking through to textarea */
+  margin-top: 6px;
+  text-align: right;
 }
 
 .contact__char-count {

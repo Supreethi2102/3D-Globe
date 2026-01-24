@@ -3,6 +3,8 @@
 .testimonials {
   background: #eceef2; /* Figma outer background */
   padding: 112px; /* Figma padding */
+  padding-top: 80px; /* Reduced gap from About */
+  padding-bottom: 80px; /* Reduced gap to Contact */
   /* Dynamic padding for centering on large screens */
   padding-left: max(112px, calc((100vw - var(--content-max-width, 1220px)) / 2));
   padding-right: max(112px, calc((100vw - var(--content-max-width, 1220px)) / 2));

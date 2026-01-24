@@ -241,7 +241,7 @@
 
 .back-to-top__btn:hover {
   background: #7150e5;
-  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(113, 80, 229, 0.35);
 }
 
 .back-to-top__btn:hover svg path {
