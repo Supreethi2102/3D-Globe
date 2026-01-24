@@ -302,6 +302,10 @@
   min-width: 272px;
 }
 
+.mega-menu__category--hidden {
+  display: none;
+}
+
 .mega-menu__category-header {
   display: flex;
   align-items: center;
@@ -321,7 +325,7 @@
   font-weight: 600;
   line-height: 24px;
   letter-spacing: 0.4px;
-  color: #3c3f43;
+  color: #111213;
 }
 
 .mega-menu__list {

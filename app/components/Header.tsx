@@ -115,8 +115,8 @@ export const Header: React.FC = () => {
           {/* Mega Menu */}
           <div className={`mega-menu ${isMegaMenuOpen ? 'mega-menu--open' : ''}`}>
             <div className="mega-menu__content">
-              {/* Branding */}
-              <div className="mega-menu__category">
+              {/* Branding - hidden for now */}
+              <div className="mega-menu__category mega-menu__category--hidden" aria-hidden="true">
                 <div className="mega-menu__category-header">
                   <PaintBrush size={24} weight="regular" className="mega-menu__icon" aria-hidden="true" />
                   <span className="mega-menu__category-title">Branding</span>
