@@ -340,7 +340,7 @@
 .mega-menu__list a {
   font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 16px;
-  font-weight: 600;
+  font-weight: 400;
   line-height: 24px;
   color: #3c3f43;
   text-decoration: none;
@@ -522,10 +522,12 @@
     flex-wrap: wrap;
   }
   
-  .mega-menu__category-title,
-  .mega-menu__list a {
+  .mega-menu__category-title {
     font-size: 16px;
-    font-weight: 600;
+  }
+  
+  .mega-menu__list a {
+    font-size: 14px;
   }
 }
 
