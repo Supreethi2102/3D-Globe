@@ -35,7 +35,7 @@
   font-size: 16px;
   font-weight: 400;
   line-height: 24px;
-  color: #3c3f43;
+  color: #3C3F43;
   margin: 0;
 }
 
@@ -99,7 +99,7 @@
 }
 
 .destination-card__image-wrapper {
-  border: 1px solid #b0b3b8; /* Border stroke for destination images */
+  border: 1px solid #B0B3B8;
   border-radius: 12px;
   overflow: hidden;
   position: relative;
@@ -166,7 +166,7 @@
   font-size: 16px;
   font-weight: 400;
   line-height: 24px;
-  color: #3c3f43;
+  color: #3C3F43;
   margin: 0;
 }
 
@@ -187,15 +187,17 @@
    ================================ */
 
 .destination-expanded {
-  background: #eeeeee;
-  border-radius: 16px;
+  background: #F3F5F6;
+  border: 1px solid #B0B3B8;
+  border-radius: 12px;
   display: flex;
   align-items: flex-start;
   position: relative;
   width: 100%;
   max-width: 1216px;
+  min-height: 780px;
   margin-bottom: 56px;
-  padding: 44px;
+  padding: 78px 54px 14px 56px;
   gap: 56px;
   animation: expandCard 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
   transform-origin: center top;
@@ -222,10 +224,13 @@
 
 .destination-expanded__close {
   position: absolute;
-  top: 48px;
-  right: 48px;
+  top: 26px;
+  right: 54px;
+  width: 63px;
+  height: 24px;
   display: flex;
   align-items: center;
+  justify-content: flex-end;
   gap: 8px;
   background: none;
   border: none;
@@ -233,8 +238,9 @@
   font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   font-size: 16px;
   font-weight: 400;
-  color: #3c3f43;
-  padding: 4px;
+  line-height: 24px;
+  color: #3C3F43;
+  padding: 0;
   transition: all 0.2s ease;
   z-index: 10;
   animation: fadeInClose 0.4s ease 0.3s both;
@@ -253,12 +259,17 @@
   color: #111213;
 }
 
+.destination-expanded__close-icon {
+  color: currentColor;
+  flex-shrink: 0;
+}
+
 .destination-expanded__image-wrapper {
   flex: 0 0 auto;
-  width: 580px;
+  width: 742px;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 12px;
   animation: slideInImage 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.1s both;
 }
 
@@ -289,44 +300,47 @@
 }
 
 .destination-expanded__image {
-  width: 100%;
-  height: auto;
-  aspect-ratio: 580 / 488;
+  width: 742px;
+  height: 624px;
   object-fit: cover;
   border-radius: 12px;
-  border: 1px solid #b0b3b8; /* Border stroke for expanded destination images */
+  border: 1px solid #B0B3B8;
 }
 
 .destination-expanded__credit {
   display: flex;
   flex-direction: column;
-  gap: 0;
+  gap: 2px;
 }
 
 .destination-expanded__artist {
   font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   font-size: 16px;
-  font-weight: 600;
+  font-weight: 400;
   line-height: 24px;
-  color: #111213;
+  color: #3C3F43;
   margin: 0;
 }
 
 .destination-expanded__photographer {
   font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 400;
-  line-height: 24px;
-  color: #3c3f43;
+  line-height: 20px;
+  color: #3C3F43;
   margin: 0;
 }
 
 .destination-expanded__content {
   flex: 1;
+  min-width: 0;
+  width: 308px;
+  max-width: 308px;
+  margin-top: 44px;
   display: flex;
   flex-direction: column;
-  gap: 48px;
-  padding-top: 20px;
+  gap: 64px;
+  padding-top: 0;
   animation: slideInContent 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.15s both;
 }
 
@@ -355,6 +369,7 @@
   letter-spacing: 1.28px;
   color: #111213;
   margin: 0;
+  max-width: 308px;
 }
 
 .destination-expanded__location {
@@ -362,8 +377,19 @@
   font-size: 16px;
   font-weight: 400;
   line-height: 24px;
-  color: #3c3f43;
+  color: #3C3F43;
   margin: 0;
+  max-width: 308px;
+}
+
+.destination-expanded__section h4 {
+  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 24px;
+  color: #111213;
+  margin: 0;
+  max-width: 308px;
 }
 
 .destination-expanded__sections {
@@ -375,16 +401,7 @@
 .destination-expanded__section {
   display: flex;
   flex-direction: column;
-  gap: 4px;
-}
-
-.destination-expanded__section h4 {
-  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  font-size: 16px;
-  font-weight: 600;
-  line-height: 24px;
-  color: #111213;
-  margin: 0;
+  gap: 8px;
 }
 
 .destination-expanded__section p {
@@ -392,8 +409,9 @@
   font-size: 16px;
   font-weight: 400;
   line-height: 24px;
-  color: #3c3f43;
+  color: #3C3F43;
   margin: 0;
+  max-width: 308px;
 }
 
 /* ================================
@@ -481,7 +499,7 @@
   font-size: 16px;
   font-weight: 400;
   line-height: 24px;
-  color: #3c3f43;
+  color: #3C3F43;
   margin: 0;
 }
 
@@ -694,12 +712,24 @@
   }
 
   .destination-expanded__image {
-    aspect-ratio: 16 / 10;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 742 / 624;
   }
 
   .destination-expanded__content {
+    width: 100%;
+    max-width: 100%;
+    margin-top: 0;
     padding-top: 0;
     gap: 32px;
+  }
+
+  .destination-expanded__title,
+  .destination-expanded__location,
+  .destination-expanded__section h4,
+  .destination-expanded__section p {
+    max-width: 100%;
   }
 
   .destination-expanded__title {
@@ -838,6 +868,7 @@
   }
 
   .destination-expanded__content {
+    margin-top: 0;
     gap: 24px;
     padding-top: 0;
   }

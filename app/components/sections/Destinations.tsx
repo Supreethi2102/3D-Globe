@@ -9,112 +9,122 @@ const destinations = {
     country: 'Denmark', 
     city: 'Aarhus', 
     image: '/destinations/here-to-travel-seqfFkckQcI-unsplash 8.png',
-    expandedImage: '/Expanded Card Images/here-to-travel-seqfFkckQcI-unsplash 8-3.png',
+    expandedImage: '/destinations/Opened panorama.png',
     size: 'wide',
     title: 'Your rainbow panorama',
     artist: 'Your rainbow panorama by Olafur Eliasson.',
     photographer: 'Photo by Julia Taubitz',
-    whyCity: 'Aarhus is home to the ARoS Aarhus Kunstmuseum, where architecture and art are designed as a single experience. The building is bold but restrained, intended to be moved through rather than simply observed.',
-    whatDrawsMe: 'The circular skywalk reframes the city entirely through colour. As you move through the space, Aarhus shifts gradually, without changing form. Perception, not structure, does the work.',
-    howInfluences: 'It supports the idea that experience unfolds over time. I try to design work that reveals itself progressively, using pacing and subtle cues to guide attention without overwhelming it.'
+    whyCity: 'ARoS Museum blends art and architecture into one experience. Its circular rooftop walkway turns the building into something you move through, not just view.',
+    whatDrawsMe: 'Colour reshapes the city from within the walkway. Aarhus shifts mood without changing form.',
+    howInfluences: 'I aim to create work that reveals itself gradually. Subtle cues guide users without overwhelm.'
   },
   nevada: { 
     id: 'usa', 
     country: 'USA', 
     city: 'Nevada', 
     image: '/destinations/e-3Qf1QyJFs30-unsplash 6.png',
-    expandedImage: '/Expanded Card Images/e-i3rzaeR37Wo-unsplash 4.png',
+    expandedImage: '/destinations/Opened Nevada.png',
+    gridImage: '/destinations/Grid Nevada.png',
     size: 'tall',
     title: 'Seven Magic Mountains',
     artist: 'Seven Magic Mountains by Ugo Rondinone.',
     photographer: 'Photo by Erda Estremera',
-    whyCity: 'Seven Magic Mountains rises boldly in the desert. Painted boulders, 9–11 metres high, contrast with the flat terrain and surroundings. Their scale turns the desert into a canvas, showing human creativity in the space.',
-    whatDrawsMe: 'The towers balance simplicity and spectacle. Neon colours sit against natural stone, creating a striking clash between the artificial and the desert. Their scale feels almost architectural, like playful monuments interrupting the horizon.',
-    howInfluences: 'The installation highlights how context shapes experience. I work to create designs where colour, scale, and placement create impact, spark curiosity, and draw people in.'
+    whyCity: 'Seven Magic Mountains in Nevada brings colour and scale to the desert. Neon stacked limestone boulders, 9 to 11 metres tall, create a striking desert artwork.',
+    whatDrawsMe: 'The towers balance spectacle with simplicity. Bright colours and organic forms create framed, deliberate views.',
+    howInfluences: 'I think about how context shapes perception. Colour, scale, and placement become tools to spark curiosity and define focus.'
   },
   calpe: { 
     id: 'spain', 
     country: 'Spain', 
     city: 'Calpe', 
     image: '/destinations/lena-polishko-XrUCHZO97Ak-unsplash 15.png',
-    expandedImage: '/Expanded Card Images/lena-polishko-XrUCHZO97Ak-unsplash 15.png',
+    expandedImage: '/destinations/Calpe opened.png',
     size: 'normal',
     title: 'La Muralla Roja',
     artist: 'La Muralla Roja by Ricardo Bofill.',
     photographer: 'Photo by Lena Polishko',
-    whyCity: 'La Muralla Roja explores form and colour. Stacked volumes and interlocking courtyards make the building sculptural. Mediterranean and North African influences meet postmodern ideas to create playful, purposeful spaces.',
-    whatDrawsMe: 'The maze-like layout guides movement and discovery. Reds and pinks dominate outside, cooler blues inside. Private terraces and shared paths create semi-public layers. Stairs and corridors frame spaces into flowing sequences.',
-    howInfluences: 'It highlights how form, colour, and rhythm shape experience. I look to design work where layout and colour guide attention, create flow, and make interactions intuitive.'
+    whyCity: 'La Muralla Roja reimagines a fortress through bold geometry and colour. Stepped volumes and interlocking courtyards make the structure feel sculptural and inhabitable.',
+    whatDrawsMe: 'Its maze-like paths invite wandering. Private terraces and shared paths use warm and cool tones to frame views that feel intentional but open.',
+    howInfluences: 'I consider how layout and colour guide focus. My work builds clear systems so people know where to look and what to do.'
   },
   giza: { 
     id: 'egypt', 
     country: 'Egypt', 
     city: 'Giza', 
     image: '/destinations/dilip-poddar--lu6ThTe2g4-unsplash 6.png',
-    expandedImage: '/Expanded Card Images/dilip-poddar--lu6ThTe2g4-unsplash 6.png',
+    expandedImage: '/destinations/Opened Giza.png',
+    gridImage: '/destinations/Grid Giza.png',
     size: 'normal',
     title: 'The Great Sphinx',
     artist: 'The Great Sphinx, built under Pharaoh Khafre.',
     photographer: 'Photo by Dilip Podda',
-    whyCity: 'The Great Sphinx is one of the oldest great sculptures. Carved from a single limestone block, its lion\'s body and human head convey power and intellect. Its scale and survival reflect the ambition of ancient builders.',
-    whatDrawsMe: 'Its form balances simplicity and symbolism. Every angle and curve communicates authority. Erosion adds texture, and its position on the Giza Plateau frames the pyramids behind it as part of a deliberate composition.',
-    howInfluences: 'This approach reveals that design can tell a story over time. I focus on creating work where shape and proportion communicate meaning and leave a lasting impression.'
+    whyCity: 'The Great Sphinx is carved from a single limestone block. Its human head and lion body, combined with scale, reflect the ambition of early Egyptian builders.',
+    whatDrawsMe: 'Its lines feel steady and assured. Weathering adds texture, and its placement ties it to the surrounding pyramids.',
+    howInfluences: 'I explore how form can communicate story and authority. Proportion and balance guide how I structure my own work.',
+    drawsHeading: 'What draws me to the Sphinx?'
   },
   dubai: { 
     id: 'uae', 
     country: 'United Arab Emirates', 
     city: 'Dubai', 
     image: '/destinations/e-3Qf1QyJFs30-unsplash 7.png',
-    expandedImage: '/Expanded Card Images/here-to-travel-seqfFkckQcI-unsplash 8-4.png',
+    expandedImage: '/destinations/Opened Creek Harbour.png',
+    gridImage: '/destinations/Grid Creek Harbour.png',
     size: 'tall',
     title: 'Creek Harbour',
     artist: 'Creek Harbour arches, framing the skyline beyond.',
     photographer: 'Photo by Florian Wehde',
-    whyCity: 'Dubai\'s architecture treats the city itself as a designed object. Geometry, heritage references, and future-facing ambition are used deliberately, not decoratively.',
-    whatDrawsMe: 'The Santiago Calatrava inspired arches at Dubai Creek Harbour frame the skyline like a living artwork. Looking through the arch, the city becomes the focal point. Architecture acting as a lens, not the hero.',
-    howInfluences: 'The work reinforces the power of framing and hierarchy. I aim to design interfaces that guide attention intentionally, using form and layout to elevate content rather than compete with it, across UI, UX, and visual design.'
+    whyCity: 'Dubai treats the city as a designed composition. Its mix of Islamic geometry, futurism, and engineered spectacle makes the urban landscape intentional.',
+    whatDrawsMe: 'Calatrava-inspired arches frame the skyline like living artwork. Seen through them, the city becomes the central focus.',
+    howInfluences: 'I explore how framing guides attention. Layout and hierarchy help highlight content without distraction.',
+    drawsHeading: 'What draws me to Creek Harbour?'
   },
   marrakech: { 
     id: 'morocco', 
     country: 'Morocco', 
     city: 'Marrakech', 
     image: '/destinations/riccardo-monteleone-59mmHLj0sbQ-unsplash 6.png',
-    expandedImage: '/Expanded Card Images/here-to-travel-seqfFkckQcI-unsplash 8-2.png',
+    expandedImage: '/destinations/Opened Marrakech.png',
+    gridImage: '/destinations/Grid Marrakech.png',
     size: 'wide',
     title: 'The Jardin Majorelle',
     artist: 'The Jardin Majorelle, built by French painter Jacques Majorelle.',
     photographer: 'Photo by Riccardo Monteleone',
-    whyCity: 'The Jardin Majorelle and the adjacent Musée Yves Saint Laurent show how colour, style, and space can create a strong visual identity. They reveal how trends and creative ideas ripple across design channels.',
-    whatDrawsMe: 'The intense cobalt "Majorelle Blue" garden contrasts with lush plants, while the nearby fashion museum celebrates Yves Saint Laurent\'s use of silhouette, palette, and form to shape style and mood.',
-    howInfluences: 'Fashion leads with mood and visual language. I apply that mindset to UI, UX, and graphic design through colour, hierarchy, and structure that feels intentional and trend-aware.'
+    whyCity: 'The Jardin Majorelle and the adjacent YSL Museum show how colour and craft shape identity. Moroccan design, modern lines, and lush planting give the spaces a vivid feel.',
+    whatDrawsMe: 'Majorelle Blue contrasts with dense greenery, while the museum highlights silhouette and palette as expressive tools.',
+    howInfluences: 'I consider how visual language sets tone. Hierarchy, colour, and trend-aware choices shape a clear, intentional design experience.'
   },
   jaipur: { 
     id: 'india', 
     country: 'India', 
     city: 'Jaipur', 
     image: '/destinations/aditya-kumar-gvY6OpSxNZY-unsplash 3.png',
-    expandedImage: '/Expanded Card Images/here-to-travel-seqfFkckQcI-unsplash 8.png',
+    expandedImage: '/destinations/Opened hawa Mahal.png',
+    gridImage: '/destinations/Grid hawa Mahal.png',
     size: 'normal',
     title: 'The Hawa Mahal',
     artist: 'The Hawa Mahal, with its pink sandstone façade.',
     photographer: 'Photo by Aditya Kumar',
-    whyCity: 'Jaipur\'s architecture shows how beauty, colour, and function can coexist without compromise. Design here is deeply human, responding to climate, culture, and everyday life rather than pure spectacle.',
-    whatDrawsMe: 'The Hawa Mahal, or Palace of Winds, with its pink sandstone façade and 953 jharokha windows. Its intricate latticework creates privacy, airflow, and rhythm, turning a practical solution into a defining visual identity.',
-    howInfluences: 'Good design solves more than one problem at a time. Across my UI, UX, and graphic design work, Composition and detail are prioritised to deliver clarity with intent.'
+    whyCity: 'Jaipur shows how beauty, function, and colour coexist. Pink façades, natural cooling, and human-scale planning respond thoughtfully to daily life.',
+    whatDrawsMe: 'Its façade and 953 jharokha windows create airflow, privacy, and rhythm. Practical needs become a defining visual identity.',
+    howInfluences: 'I focus on solving multiple needs simultaneously. Structure and detail allow me to create clarity and purpose in my work.',
+    drawsHeading: 'What draws me to The Hawa Mahal?'
   },
   naoshima: { 
     id: 'japan', 
     country: 'Japan', 
     city: 'Naoshima Island', 
     image: '/destinations/rebecca-lam-0uAUVfLxXsY-unsplash 7.png',
-    expandedImage: '/Expanded Card Images/here-to-travel-seqfFkckQcI-unsplash 8-1.png',
+    expandedImage: '/destinations/Opened Naoshima Island.png',
+    gridImage: '/destinations/Grid Naoshima Island.png',
     size: 'normal',
     title: 'Pumpkin',
     artist: 'Yayoi Kusama\'s "Pumpkin" on the Benesse jetty.',
     photographer: 'Photo by Rebecca Lam',
-    whyCity: 'Off the coast of Japan, the island blends contemporary art, architecture, and nature seamlessly. Its network of museums and seasonal art festivals shows how minimalism and thoughtful detail can transform spaces into immersive experiences.',
-    whatDrawsMe: 'Yayoi Kusama\'s polka dot installation on the jetty is playful and bold. Its repetition and scale contrast with the natural setting, creating a moment of surprise and delight.',
-    howInfluences: 'Pattern, scale, and colour sit at the centre of my thinking. The outcome is clear, thoughtful, playful design that invites exploration without overwhelming the user.'
+    whyCity: 'Naoshima blends art, architecture, and landscape with precision. Underground museums and site-specific installations make the island a curated experience.',
+    whatDrawsMe: 'Kusama\'s spotted sculpture is playful yet calm. Its repetition and scale stand out against the natural shoreline.',
+    howInfluences: 'I use pattern, scale, and colour intentionally. This helps me craft work that is organised, approachable, and invites exploration.',
+    drawsHeading: 'What draws me to the Pumpkin?'
   },
 };
 
@@ -126,6 +136,7 @@ interface Destination {
   city: string;
   image: string;
   expandedImage: string;
+  gridImage?: string;
   size: string;
   title: string;
   artist: string;
@@ -133,6 +144,7 @@ interface Destination {
   whyCity: string;
   whatDrawsMe: string;
   howInfluences: string;
+  drawsHeading?: string;
 }
 
 interface DestinationCardProps {
@@ -156,7 +168,7 @@ const ExpandedContent: React.FC<{ destination: Destination; titleId: string }> =
       </section>
       
       <section className="destination-expanded__section" aria-labelledby={`${titleId}-draws`}>
-        <h4 id={`${titleId}-draws`}>What draws me to {destination.title}?</h4>
+        <h4 id={`${titleId}-draws`}>{destination.drawsHeading || 'What draws me to this place?'}</h4>
         <p>{destination.whatDrawsMe}</p>
       </section>
       
@@ -207,7 +219,7 @@ const DestinationCard: React.FC<DestinationCardProps> = ({
           }}
           aria-label={`Close ${destination.city} details`}
         >
-          Close <X size={16} weight="bold" aria-hidden="true" />
+          Close <X size={16} weight="regular" className="destination-expanded__close-icon" aria-hidden="true" />
         </button>
         
         {layoutDirection === 'image-left' ? (
@@ -285,7 +297,7 @@ const SmallCard: React.FC<SmallCardProps> = ({ destination, onClick }) => (
   >
     <div className="destination-small__image-wrapper">
       <img 
-        src={destination.image} 
+        src={destination.gridImage ?? destination.image} 
         alt={`Photo of ${destination.city}, ${destination.country}`}
         className="destination-small__image"
       />
