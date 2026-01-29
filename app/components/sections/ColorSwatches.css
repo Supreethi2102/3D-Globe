@@ -301,6 +301,7 @@
   font-weight: 400;
   line-height: 20px;
   color: #3c3f43;
+  white-space: nowrap;
 }
 
 .site-footer__right {
@@ -320,6 +321,7 @@
   font-weight: 400;
   line-height: 20px;
   transition: color 0.2s ease;
+  white-space: nowrap;
 }
 
 .site-footer__link:hover {
@@ -345,11 +347,11 @@ button.site-footer__link {
   font: inherit;
 }
 
-/* Sustainability modal – Figma 1512:2090 (My Portfolio revised) */
+/* Sustainability modal – same layout as Privacy and cookies */
 .sustainability-modal__overlay {
   position: fixed;
   inset: 0;
-  background: rgba(17, 18, 19, 0.4);
+  background: rgba(0, 0, 0, 0.30);
   z-index: 1000;
   display: flex;
   align-items: center;
@@ -358,27 +360,27 @@ button.site-footer__link {
 }
 
 .sustainability-modal {
-  background: #FFFFFF;
-  border-radius: 12px;
-  width: 948px;
-  height: 574px;
+  display: flex;
+  width: 844px;
+  height: 452px;
   max-width: calc(100vw - 48px);
   max-height: calc(100vh - 48px);
-  overflow: auto;
-  position: relative;
-  padding: 88px 60px 64px 64px;
-  display: flex;
+  padding: 88px 64px 64px 64px;
   flex-direction: column;
+  align-items: flex-start;
+  gap: 0;
+  border-radius: 24px;
+  background: #FCFCFD;
+  overflow: visible;
+  position: relative;
   box-sizing: border-box;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
 }
 
-/* Close: pure black, very small gap, symmetrical padding from top/right (Figma) */
 .sustainability-modal__close {
   position: absolute;
-  top: 24px;
-  right: 24px;
-  width: 63px;
-  height: 24px;
+  top: 32px;
+  right: 64px;
   display: flex;
   align-items: center;
   justify-content: flex-end;
@@ -387,7 +389,7 @@ button.site-footer__link {
   border: none;
   cursor: pointer;
   padding: 0;
-  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-family: "Atkinson Hyperlegible Next VF", 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   font-size: 16px;
   font-weight: 400;
   line-height: 24px;
@@ -408,39 +410,48 @@ button.site-footer__link {
 
 .sustainability-modal__content {
   display: flex;
-  gap: 56px;
-  align-items: flex-start;
+  flex-direction: row;
+  gap: 60px;
+  align-items: center;
   flex: 1;
   min-height: 0;
-  height: 422px;
+  width: 100%;
+  overflow: visible;
 }
 
 .sustainability-modal__text {
   flex: 1;
   min-width: 0;
-  padding-top: 45.5px;
-  padding-bottom: 45.5px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  max-width: 50%;
 }
 
-/* Heading: bold, pure black (Figma) */
 .sustainability-modal__title {
-  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  font-size: 24px;
-  font-weight: 700;
-  line-height: 32px;
-  color: #000000;
-  margin: 0 0 16px 0;
+  color: #111213;
+  font-family: "Atkinson Hyperlegible Next VF", 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  margin: 0 0 12px 0;
 }
 
-/* Body: regular, dark grey (Figma) */
 .sustainability-modal__p {
-  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  color: #3C3F43;
+  font-family: "Atkinson Hyperlegible Next VF", 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   font-size: 16px;
+  font-style: normal;
   font-weight: 400;
   line-height: 24px;
-  color: #333333;
-  margin: 0 0 16px 0;
+  margin: 0;
   max-width: 100%;
+}
+
+.sustainability-modal__p--lines {
+  white-space: pre-line;
 }
 
 .sustainability-modal__p:last-child {
@@ -448,20 +459,23 @@ button.site-footer__link {
 }
 
 .sustainability-modal__image-wrap {
-  flex: 0 0 auto;
-  width: 460px;
-  height: 422px;
+  flex: 1;
+  min-width: 0;
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-shrink: 0;
+  overflow: visible;
 }
 
 .sustainability-modal__image {
-  width: 460px;
-  height: 422px;
+  width: 100%;
+  height: auto;
+  max-height: 380px;
   object-fit: contain;
   object-position: center;
+  /* Scale up so illustration overflows its box (flowers extend beyond bounds) */
+  transform: scale(1.18);
+  transform-origin: center center;
 }
 
 @media (max-width: 960px) {
@@ -470,6 +484,7 @@ button.site-footer__link {
     height: auto;
     min-height: 400px;
     padding: 40px 32px 40px 32px;
+    overflow: auto;
   }
 
   .sustainability-modal__close {
@@ -510,6 +525,7 @@ button.site-footer__link {
     max-width: 320px;
     height: auto;
     aspect-ratio: 405 / 371;
+    transform: none;
   }
 }
 
@@ -547,14 +563,11 @@ button.site-footer__link {
   }
 }
 
-/* ================================
-   Accessibility modal – Figma 1539:228 (My Portfolio revised)
-   ================================ */
-
-.accessibility-modal__overlay {
+/* Privacy and cookies modal – Figma 1512:2095 */
+.privacy-cookies-modal__overlay {
   position: fixed;
   inset: 0;
-  background: rgba(17, 18, 19, 0.4);
+  background: rgba(0, 0, 0, 0.30);
   z-index: 1000;
   display: flex;
   align-items: center;
@@ -562,27 +575,32 @@ button.site-footer__link {
   padding: 24px;
 }
 
-.accessibility-modal {
-  background: #FFFFFF;
-  border-radius: 28px;
-  width: 1056px;
-  min-height: 480px;
+.privacy-cookies-modal {
+  display: flex;
+  width: 844px;
+  height: 452px;
   max-width: calc(100vw - 48px);
   max-height: calc(100vh - 48px);
+  /* 32px (to close) + ~24px (close height) + 32px (gap) = 88px so 32px padding after close */
+  padding: 88px 64px 64px 64px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0;
+  border-radius: 24px;
+  background: #FCFCFD;
   overflow: auto;
   position: relative;
-  padding: 32px 64px 48px 64px;
-  display: flex;
-  flex-direction: column;
   box-sizing: border-box;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
 }
 
-.accessibility-modal__close {
+.privacy-cookies-modal__close {
   position: absolute;
   top: 32px;
   right: 64px;
   display: flex;
   align-items: center;
+  justify-content: flex-end;
   gap: 4px;
   background: none;
   border: none;
@@ -592,7 +610,213 @@ button.site-footer__link {
   font-size: 16px;
   font-weight: 400;
   line-height: 24px;
-  color: #1C1C1C;
+  letter-spacing: 0;
+  color: #000000;
+  z-index: 10;
+}
+
+.privacy-cookies-modal__close:hover {
+  color: #333333;
+}
+
+.privacy-cookies-modal__close-icon {
+  color: currentColor;
+  fill: currentColor;
+  flex-shrink: 0;
+}
+
+.privacy-cookies-modal__content {
+  display: flex;
+  flex-direction: row;
+  gap: 60px;
+  align-items: center;
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+}
+
+.privacy-cookies-modal__text {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  max-width: 50%;
+}
+
+.privacy-cookies-modal__title {
+  color: #111213;
+  font-family: "Atkinson Hyperlegible Next VF", 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  margin: 0 0 12px 0;
+}
+
+.privacy-cookies-modal__p {
+  color: #3C3F43;
+  font-family: "Atkinson Hyperlegible Next VF", 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px;
+  margin: 0;
+  max-width: 100%;
+}
+
+.privacy-cookies-modal__image-wrap {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.privacy-cookies-modal__image {
+  width: 100%;
+  height: auto;
+  max-height: 320px;
+  object-fit: contain;
+  object-position: center;
+}
+
+@media (max-width: 960px) {
+  .privacy-cookies-modal {
+    width: 100%;
+    height: auto;
+    min-height: 400px;
+    padding: 40px 32px 40px 32px;
+  }
+
+  .privacy-cookies-modal__close {
+    top: 24px;
+    right: 32px;
+  }
+
+  .privacy-cookies-modal__content {
+    flex-direction: column;
+    gap: 40px;
+    align-items: stretch;
+    height: auto;
+  }
+
+  .privacy-cookies-modal__text {
+    flex: none;
+    padding-top: 24px;
+    padding-bottom: 24px;
+  }
+
+  .privacy-cookies-modal__title {
+    margin-bottom: 12px;
+  }
+
+  .privacy-cookies-modal__p {
+    margin-bottom: 12px;
+  }
+
+  .privacy-cookies-modal__image-wrap {
+    flex: none;
+    width: 100%;
+    height: auto;
+    min-height: 280px;
+  }
+
+  .privacy-cookies-modal__image {
+    width: 100%;
+    max-width: 320px;
+    height: auto;
+    aspect-ratio: 405 / 371;
+  }
+}
+
+@media (max-width: 640px) {
+  .privacy-cookies-modal {
+    padding: 32px 24px 32px 24px;
+  }
+
+  .privacy-cookies-modal__close {
+    top: 20px;
+    right: 24px;
+    font-size: 14px;
+    width: auto;
+    height: auto;
+  }
+
+  .privacy-cookies-modal__content {
+    gap: 32px;
+  }
+
+  .privacy-cookies-modal__title {
+    font-size: 18px;
+    line-height: 24px;
+    margin-bottom: 16px;
+  }
+
+  .privacy-cookies-modal__p {
+    font-size: 14px;
+    line-height: 20px;
+    margin-bottom: 12px;
+  }
+
+  .privacy-cookies-modal__image {
+    max-width: 280px;
+  }
+}
+
+/* ================================
+   Accessibility modal – Figma 1539-239 (My Portfolio revised)
+   ================================ */
+
+.accessibility-modal__overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.30);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.accessibility-modal {
+  display: flex;
+  width: 844px;
+  height: 480px;
+  max-width: calc(100vw - 48px);
+  max-height: calc(100vh - 48px);
+  /* 32px (to close) + ~24px (close height) + 32px (gap after close) = 88px top */
+  padding: 88px 64px 48px 64px;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 4px;
+  border-radius: 24px;
+  background: #FCFCFD;
+  overflow: visible;
+  position: relative;
+  box-sizing: border-box;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+}
+
+.accessibility-modal__close {
+  position: absolute;
+  top: 32px;
+  right: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 4px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  font-family: "Atkinson Hyperlegible Next VF", 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  letter-spacing: 0;
+  color: #000000;
   z-index: 10;
 }
 
@@ -608,58 +832,66 @@ button.site-footer__link {
 
 .accessibility-modal__content {
   display: flex;
-  gap: 48px;
-  align-items: flex-start;
+  flex-direction: row;
+  gap: 60px;
+  align-items: center;
   flex: 1;
   min-height: 0;
-  padding-top: 88px;
+  width: 100%;
+  overflow: visible;
+  align-self: stretch;
 }
 
 .accessibility-modal__text {
-  flex: 0 0 456px;
-  width: 456px;
+  flex: 1;
   min-width: 0;
-  max-width: 456px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  max-width: 50%;
 }
 
 .accessibility-modal__title {
-  font-family: 'Atkinson Hyperlegible Next', 'Atkinson Hyperlegible Next VF', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  color: #111213;
+  font-family: "Atkinson Hyperlegible Next VF", 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   font-size: 20px;
   font-style: normal;
   font-weight: 600;
   line-height: normal;
-  color: #000;
-  margin: 0 0 32px 0;
-  max-width: 456px;
+  margin: 0 0 12px 0;
 }
 
 .accessibility-modal__p {
-  font-family: 'Atkinson Hyperlegible Next', 'Atkinson Hyperlegible Next VF', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  color: #3C3F43;
+  font-family: "Atkinson Hyperlegible Next VF", 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   font-size: 16px;
   font-style: normal;
   font-weight: 400;
   line-height: 24px;
-  color: #3C3F43;
-  margin: 0 0 24px 0;
-  max-width: 456px;
+  margin: 0;
+  overflow-wrap: normal;
+  hyphens: none;
 }
 
 .accessibility-modal__p:last-of-type {
-  margin-bottom: 48px;
+  margin-bottom: 0;
 }
 
 .accessibility-modal__motion {
   display: flex;
   align-items: center;
   gap: 16px;
-  margin-bottom: 48px;
+  margin-top: 48px;
 }
 
 .accessibility-modal__motion-label {
-  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  color: #3C3F43;
+  font-family: "Atkinson Hyperlegible Next VF", 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   font-size: 16px;
+  font-style: normal;
   font-weight: 400;
-  color: #000000;
+  line-height: 1;
 }
 
 .accessibility-modal__toggle {
@@ -669,15 +901,22 @@ button.site-footer__link {
   flex-shrink: 0;
   padding: 0;
   border: none;
-  border-radius: 19.53px;
+  border-radius: 24.412px;
   cursor: pointer;
   background: #E0E0E0;
   transition: background 0.2s ease;
   position: relative;
+  /* Establish typography so "On" text inherits (overrides browser button defaults) */
+  font-family: "Atkinson Hyperlegible Next VF", 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px;
+  color: #FFF;
 }
 
 .accessibility-modal__toggle--on {
-  background: #7C5DFF;
+  background: #7150E5;
 }
 
 .accessibility-modal__toggle-track {
@@ -687,21 +926,28 @@ button.site-footer__link {
   width: 100%;
   height: 100%;
   min-height: 39.059px;
-  padding: 0 5px;
+  /* Padding around "On" text: ~15px left, ~14px top/bottom, ~47px gap to thumb */
+  padding: 14px 50px 14px 15px;
   position: relative;
   box-sizing: border-box;
 }
 
-.accessibility-modal__toggle-on-text {
-  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  font-size: 12px;
+/* On text – Figma spec; reset inheritance so browser button defaults don't override */
+.accessibility-modal__toggle .accessibility-modal__toggle-on-text {
+  color: #FFF !important;
+  leading-trim: both;
+  text-edge: cap;
+  font-family: "Atkinson Hyperlegible Next VF", 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
+  font-size: 16px !important;
+  font-style: normal;
   font-weight: 400;
-  color: #FFFFFF;
+  line-height: 24px !important; /* 150% */
   opacity: 0;
   transition: opacity 0.2s ease;
   flex-shrink: 0;
-  margin-right: 6px;
   pointer-events: none;
+  position: relative;
+  z-index: 1;
 }
 
 .accessibility-modal__toggle--on .accessibility-modal__toggle-on-text {
@@ -730,22 +976,23 @@ button.site-footer__link {
 }
 
 .accessibility-modal__image-wrap {
-  flex: 0 0 422px;
-  width: 422px;
-  height: 495px;
+  flex: 1;
   min-width: 0;
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow: visible;
 }
 
 .accessibility-modal__image {
-  width: 422px;
-  height: 495px;
-  max-width: 100%;
-  max-height: 100%;
+  width: 100%;
+  height: auto;
+  max-height: 380px;
   object-fit: contain;
   object-position: center;
+  /* Scale up so illustration overflows layout (overflow visible) */
+  transform: scale(1.2);
+  transform-origin: center center;
 }
 
 @media (max-width: 1120px) {
@@ -754,6 +1001,7 @@ button.site-footer__link {
     height: auto;
     min-height: 400px;
     padding: 40px 32px 40px 32px;
+    overflow: auto;
   }
 
   .accessibility-modal__close {
@@ -764,7 +1012,6 @@ button.site-footer__link {
   .accessibility-modal__content {
     flex-direction: column;
     gap: 40px;
-    padding-top: 48px;
   }
 
   .accessibility-modal__text {
@@ -813,7 +1060,6 @@ button.site-footer__link {
 
   .accessibility-modal__content {
     gap: 32px;
-    padding-top: 24px;
   }
 
   .accessibility-modal__title {
@@ -841,6 +1087,7 @@ button.site-footer__link {
 
   .accessibility-modal__image {
     max-width: 280px;
+    transform: none;
   }
 }
 

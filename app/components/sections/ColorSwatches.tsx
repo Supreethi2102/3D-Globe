@@ -15,11 +15,14 @@ export const ColorSwatches: React.FC = () => {
   const [isBackToTopHovered, setIsBackToTopHovered] = useState(false);
   const [sustainabilityOpen, setSustainabilityOpen] = useState(false);
   const [accessibilityOpen, setAccessibilityOpen] = useState(false);
+  const [privacyCookiesOpen, setPrivacyCookiesOpen] = useState(false);
   const [motionOn, setMotionOn] = useState(true);
   const sustainabilityBtnRef = useRef<HTMLButtonElement>(null);
   const sustainabilityCloseRef = useRef<HTMLButtonElement>(null);
   const accessibilityBtnRef = useRef<HTMLButtonElement>(null);
   const accessibilityCloseRef = useRef<HTMLButtonElement>(null);
+  const privacyCookiesBtnRef = useRef<HTMLButtonElement>(null);
+  const privacyCookiesCloseRef = useRef<HTMLButtonElement>(null);
 
   const closeSustainability = () => {
     setSustainabilityOpen(false);
@@ -29,6 +32,11 @@ export const ColorSwatches: React.FC = () => {
   const closeAccessibility = () => {
     setAccessibilityOpen(false);
     requestAnimationFrame(() => accessibilityBtnRef.current?.focus());
+  };
+
+  const closePrivacyCookies = () => {
+    setPrivacyCookiesOpen(false);
+    requestAnimationFrame(() => privacyCookiesBtnRef.current?.focus());
   };
 
   useEffect(() => {
@@ -50,6 +58,16 @@ export const ColorSwatches: React.FC = () => {
     accessibilityCloseRef.current?.focus();
     return () => document.removeEventListener('keydown', onKeyDown);
   }, [accessibilityOpen]);
+
+  useEffect(() => {
+    if (!privacyCookiesOpen) return;
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') closePrivacyCookies();
+    };
+    document.addEventListener('keydown', onKeyDown);
+    privacyCookiesCloseRef.current?.focus();
+    return () => document.removeEventListener('keydown', onKeyDown);
+  }, [privacyCookiesOpen]);
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -120,15 +138,20 @@ export const ColorSwatches: React.FC = () => {
               <Leaf size={24} weight={hoveredLink === 'sustainability' ? 'fill' : 'regular'} color={hoveredLink === 'sustainability' ? '#7150E5' : '#3C3F43'} aria-hidden="true" />
               <span>Sustainability</span>
             </button>
-            <a 
-              href="#privacy" 
+            <button
+              ref={privacyCookiesBtnRef}
+              type="button"
               className={`site-footer__link ${hoveredLink === 'privacy' ? 'site-footer__link--hovered' : ''}`}
               onMouseEnter={() => setHoveredLink('privacy')}
               onMouseLeave={() => setHoveredLink(null)}
+              onClick={() => setPrivacyCookiesOpen(true)}
+              aria-expanded={privacyCookiesOpen}
+              aria-haspopup="dialog"
+              aria-label="Open Privacy and cookies information"
             >
               <Cookie size={24} weight={hoveredLink === 'privacy' ? 'fill' : 'regular'} color={hoveredLink === 'privacy' ? '#7150E5' : '#3C3F43'} aria-hidden="true" />
               <span>Privacy and cookies</span>
-            </a>
+            </button>
             <button
               ref={accessibilityBtnRef}
               type="button"
@@ -144,7 +167,7 @@ export const ColorSwatches: React.FC = () => {
               <span>Accessibility</span>
             </button>
             <a 
-              href="https://linkedin.com" 
+              href="https://www.linkedin.com/in/samanthajsmith-nz/" 
               target="_blank" 
               rel="noopener noreferrer" 
               className={`site-footer__link ${hoveredLink === 'linkedin' ? 'site-footer__link--hovered' : ''}`}
@@ -185,18 +208,69 @@ export const ColorSwatches: React.FC = () => {
             <div className="sustainability-modal__content">
               <div className="sustainability-modal__text">
                 <h2 id="sustainability-modal-title" className="sustainability-modal__title">Lighter digital footprint</h2>
-                <p className="sustainability-modal__p">
-                  Sustainability shaped this site from the beginning. Performance has been optimised to reduce energy use through efficient image handling, minimal code, and fast loading times.
-                </p>
-                <p className="sustainability-modal__p">
-                  As digital standards shift, I'll keep refining. If you have tips for reducing impact even further, I'd love to hear them.
+                <p className="sustainability-modal__p sustainability-modal__p--lines">
+                  {`Sustainability shaped this site from the
+beginning. Performance has been optimised
+to reduce energy use through efficient 
+image handling, minimal code, and fast 
+loading times.
+
+As digital standards shift, I'll keep refining.
+If you have tips for reducing impact even
+further, I'd love to hear them.`}
                 </p>
               </div>
               <div className="sustainability-modal__image-wrap">
                 <img
-                  src="/Footer images/Sustainbility Footer.png"
+                  src="/Footer images/Laptop and flowers 2.png"
                   alt=""
                   className="sustainability-modal__image"
+                  aria-hidden="true"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Privacy and cookies modal – Figma 1512:2095 */}
+      {privacyCookiesOpen && (
+        <div
+          className="privacy-cookies-modal__overlay"
+          role="presentation"
+          onClick={closePrivacyCookies}
+        >
+          <div
+            className="privacy-cookies-modal"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="privacy-cookies-modal-title"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              ref={privacyCookiesCloseRef}
+              type="button"
+              className="privacy-cookies-modal__close"
+              onClick={closePrivacyCookies}
+              aria-label="Close Privacy and cookies"
+            >
+              Close <X size={16} weight="regular" className="privacy-cookies-modal__close-icon" aria-hidden="true" />
+            </button>
+            <div className="privacy-cookies-modal__content">
+              <div className="privacy-cookies-modal__text">
+                <h2 id="privacy-cookies-modal-title" className="privacy-cookies-modal__title">Privacy and cookies</h2>
+                <p className="privacy-cookies-modal__p">
+                  Your privacy matters. This site only collects the information you share through the contact form, such as your name and email address, and uses it solely to respond to your message.
+                </p>
+                <p className="privacy-cookies-modal__p">
+                  There are no tracking cookies, no third-party analytics, and no unnecessary data collection. Just a simple, respectful browsing experience. If you have any questions about how your data is handled, I&apos;m happy to clarify.
+                </p>
+              </div>
+              <div className="privacy-cookies-modal__image-wrap">
+                <img
+                  src="/Footer images/Cookie jar copy 3.png"
+                  alt=""
+                  className="privacy-cookies-modal__image"
                   aria-hidden="true"
                 />
               </div>
@@ -248,7 +322,7 @@ export const ColorSwatches: React.FC = () => {
                     onClick={() => setMotionOn(!motionOn)}
                   >
                     <span className="accessibility-modal__toggle-track">
-                      <span className="accessibility-modal__toggle-on-text">on</span>
+                      <span className="accessibility-modal__toggle-on-text">On</span>
                       <span className="accessibility-modal__toggle-thumb" />
                     </span>
                   </button>
@@ -256,7 +330,7 @@ export const ColorSwatches: React.FC = () => {
               </div>
               <div className="accessibility-modal__image-wrap">
                 <img
-                  src="/Footer images/Accessibilitu.png"
+                  src="/Footer images/Balloons accessibility 2.png"
                   alt=""
                   className="accessibility-modal__image"
                   aria-hidden="true"
