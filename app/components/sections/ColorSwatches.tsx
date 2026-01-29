@@ -322,7 +322,8 @@ further, I'd love to hear them.`}
                     onClick={() => setMotionOn(!motionOn)}
                   >
                     <span className="accessibility-modal__toggle-track">
-                      <span className="accessibility-modal__toggle-on-text">On</span>
+                      <span className="accessibility-modal__toggle-on-text">on</span>
+                      <span className="accessibility-modal__toggle-off-text">off</span>
                       <span className="accessibility-modal__toggle-thumb" />
                     </span>
                   </button>

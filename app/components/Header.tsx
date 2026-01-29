@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Palette, User, ChatCircleDots, Sun, SunHorizon, MoonStars, CloudMoon, Moon, Phone, PaintBrush, Megaphone, Package, BookOpen, Ruler, UserCircle } from '@phosphor-icons/react';
+import { Palette, User, ChatCircleDots, Sun, SunHorizon, MoonStars, CloudMoon, Moon, Phone, PaintBrush, Megaphone, Package, BookOpen, Ruler, PencilSimple } from '@phosphor-icons/react';
 import './Header.css';
 
 export const Header: React.FC = () => {
@@ -181,7 +181,7 @@ export const Header: React.FC = () => {
               {/* UX */}
               <div className="mega-menu__category">
                 <div className="mega-menu__category-header">
-                  <UserCircle size={24} weight="regular" className="mega-menu__icon" aria-hidden="true" />
+                  <PencilSimple size={24} weight="regular" className="mega-menu__icon" aria-hidden="true" />
                   <span className="mega-menu__category-title">UX</span>
                 </div>
                 <ul className="mega-menu__list">

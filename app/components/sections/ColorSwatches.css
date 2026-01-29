@@ -954,6 +954,26 @@ button.site-footer__link {
   opacity: 1;
 }
 
+/* Off text – visible when toggle is off (gray track) */
+.accessibility-modal__toggle-off-text {
+  color: #3C3F43 !important;
+  font-family: "Atkinson Hyperlegible Next VF", 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
+  font-size: 16px !important;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px !important;
+  opacity: 1;
+  transition: opacity 0.2s ease;
+  flex-shrink: 0;
+  pointer-events: none;
+  position: relative;
+  z-index: 1;
+}
+
+.accessibility-modal__toggle--on .accessibility-modal__toggle-off-text {
+  opacity: 0;
+}
+
 .accessibility-modal__toggle-thumb {
   position: absolute;
   top: 4px;

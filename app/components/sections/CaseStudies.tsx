@@ -5,6 +5,7 @@ import {
   Megaphone, 
   Package, 
   Ruler,
+  PencilSimple,
   ArrowsClockwise,
   PuzzlePiece,
   Target,
@@ -16,7 +17,7 @@ import {
 } from '@phosphor-icons/react';
 import './CaseStudies.css';
 
-// Category data - UX uses custom SVG from Figma, others use Phosphor
+// Category data - all use Phosphor icon library (UX: PencilSimple)
 type CategoryType = {
   id: string;
   label: string;
@@ -30,7 +31,7 @@ const categories: CategoryType[] = [
   { id: 'campaigns', label: 'Campaigns', Icon: Megaphone },
   { id: 'packaging', label: 'Packaging', Icon: Package },
   { id: 'ui', label: 'UI', Icon: Ruler },
-  { id: 'ux', label: 'UX', svgPath: '/icons/user-pencil.svg' },
+  { id: 'ux', label: 'UX', Icon: PencilSimple },
 ];
 
 // Case study data with actual images from public folder
