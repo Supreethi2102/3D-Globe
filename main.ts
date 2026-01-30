@@ -7,8 +7,7 @@ import {RenderMode, WebGlGlobe} from './src';
 const distance = 20_000_000;
 
 // Use a single PNG image for the globe
-// Place your flat map image in the public directory and update the filename below
-const customImageUrl = '/globe/flat-map-4096x2048.png'; // Update this to match your image filename
+const customImageUrl = '/globe/Revised%20Globe%20sketch%2029th%20Jan.png';
 
 const globe = new WebGlGlobe(document.querySelector('#globe')!, {
   renderMode: RenderMode.GLOBE,

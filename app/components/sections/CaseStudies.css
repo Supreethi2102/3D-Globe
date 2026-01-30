@@ -97,6 +97,15 @@
   filter: brightness(0) saturate(100%) invert(36%) sepia(68%) saturate(1352%) hue-rotate(229deg) brightness(88%) contrast(96%);
 }
 
+/* UX logo: pencil tip up, ruler vertical */
+.ux-icon svg:first-child {
+  transform: rotate(135deg);
+}
+.ux-icon svg:last-child {
+  transform: rotate(-45deg);
+  margin-left: -6px;
+}
+
 .category-pill__label {
   display: flex;
   align-items: center;

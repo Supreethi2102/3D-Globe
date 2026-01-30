@@ -8,7 +8,6 @@ export class InteractionController {
   private renderer: Renderer;
   private controlsInteractionEnabled = false;
   private spinAbortController: AbortController | null = null;
-  private autoSpinSpeed: number = 1;
   private shouldAutoSpin: boolean = false;
 
   private targetCameraView?: CameraView;
@@ -27,7 +26,6 @@ export class InteractionController {
     this.abortCurrentSpin();
 
     this.shouldAutoSpin = isEnabled;
-    this.autoSpinSpeed = speed;
 
     this.renderer.globeControls.autoRotate = isEnabled;
     this.renderer.globeControls.autoRotateSpeed = speed;

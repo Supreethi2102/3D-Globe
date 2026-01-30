@@ -17,11 +17,29 @@ import {
 } from '@phosphor-icons/react';
 import './CaseStudies.css';
 
-// Category data - all use Phosphor icon library (UX: PencilSimple)
+// UX logo: Phosphor pencil + ruler
+function UxIcon({ size = 24, weight = 'regular', color, className }: { size?: number; weight?: IconWeight; color?: string; className?: string }) {
+  return (
+    <span
+      className={['ux-icon', className].filter(Boolean).join(' ')}
+      style={{
+        display: 'inline-flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        gap: -4,
+      }}
+    >
+      <PencilSimple size={size} weight={weight} color={color} style={{ display: 'block', flexShrink: 0 }} />
+      <Ruler size={size} weight={weight} color={color} style={{ display: 'block', flexShrink: 0 }} />
+    </span>
+  );
+}
+
+// Category data - Phosphor icons; UX = pencil + ruler
 type CategoryType = {
   id: string;
   label: string;
-  Icon?: Icon;
+  Icon?: Icon | typeof UxIcon;
   svgPath?: string;
 };
 
@@ -31,7 +49,7 @@ const categories: CategoryType[] = [
   { id: 'campaigns', label: 'Campaigns', Icon: Megaphone },
   { id: 'packaging', label: 'Packaging', Icon: Package },
   { id: 'ui', label: 'UI', Icon: Ruler },
-  { id: 'ux', label: 'UX', Icon: PencilSimple },
+  { id: 'ux', label: 'UX', Icon: UxIcon },
 ];
 
 // Case study data with actual images from public folder

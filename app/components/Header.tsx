@@ -178,10 +178,13 @@ export const Header: React.FC = () => {
                 </ul>
               </div>
 
-              {/* UX */}
+              {/* UX - Phosphor pencil + ruler */}
               <div className="mega-menu__category">
                 <div className="mega-menu__category-header">
-                  <PencilSimple size={24} weight="regular" className="mega-menu__icon" aria-hidden="true" />
+                  <span className="mega-menu__icon mega-menu__icon-ux" aria-hidden="true">
+                    <PencilSimple size={24} weight="regular" color="#3c3f43" />
+                    <Ruler size={24} weight="regular" color="#3c3f43" />
+                  </span>
                   <span className="mega-menu__category-title">UX</span>
                 </div>
                 <ul className="mega-menu__list">

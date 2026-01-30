@@ -1,4 +1,4 @@
-import {Color, Clock, Mesh, MeshBasicMaterial, OrthographicCamera, PerspectiveCamera, RawShaderMaterial, Scene, SphereGeometry, Vector2, WebGLRenderer} from 'three';
+import {Color, Clock, Mesh, OrthographicCamera, PerspectiveCamera, RawShaderMaterial, Scene, SphereGeometry, Vector2, WebGLRenderer} from 'three';
 
 import {OrbitControls} from './vendor/orbit-controls';
 import {MapControls} from 'three/examples/jsm/controls/MapControls';

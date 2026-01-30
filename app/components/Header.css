@@ -153,65 +153,62 @@
   justify-content: center;
   gap: 0;
   background: #eceff1;
-  border-radius: 48px;
+  border-radius: 8px;
   padding: 8px;
   width: fit-content;
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
   position: relative;
 }
 
-/* Sliding indicator */
+/* Sliding indicator – same width as each option, translateX = index × width */
 .theme-menu__slider {
   position: absolute;
   top: 8px;
   left: 8px;
   height: 48px;
-  width: 100px;
+  width: 110px;
   background: #f9fafb;
   border: 1px solid #b0b3b8;
-  border-radius: 24px;
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 8px;
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
   pointer-events: none;
   z-index: 0;
 }
 
-/* Slider positions based on active theme */
 .theme-menu__container[data-active-theme="light"] .theme-menu__slider {
   transform: translateX(0);
-  width: 100px;
 }
 
 .theme-menu__container[data-active-theme="dawn"] .theme-menu__slider {
-  transform: translateX(100px);
-  width: 104px;
+  transform: translateX(110px);
 }
 
 .theme-menu__container[data-active-theme="aurora"] .theme-menu__slider {
-  transform: translateX(204px);
-  width: 108px;
+  transform: translateX(220px);
 }
 
 .theme-menu__container[data-active-theme="nebula"] .theme-menu__slider {
-  transform: translateX(312px);
-  width: 116px;
+  transform: translateX(330px);
 }
 
 .theme-menu__container[data-active-theme="eclipse"] .theme-menu__slider {
-  transform: translateX(428px);
-  width: 116px;
+  transform: translateX(440px);
 }
 
 .theme-menu__container[data-active-theme="dark"] .theme-menu__slider {
-  transform: translateX(544px);
-  width: 100px;
+  transform: translateX(550px);
 }
 
 .theme-menu__option {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 8px;
+  width: 110px;
+  min-width: 110px;
   padding: 12px 16px;
   height: 48px;
+  box-sizing: border-box;
   font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 16px;
   font-weight: 400;
@@ -219,7 +216,7 @@
   color: #3c3f43;
   background: transparent;
   border: none;
-  border-radius: 24px;
+  border-radius: 8px;
   cursor: pointer;
   transition: color 0.2s ease;
   white-space: nowrap;
@@ -318,6 +315,31 @@
   height: 24px;
   color: #3c3f43;
   flex-shrink: 0;
+}
+
+.mega-menu__icon-ux {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  width: auto;
+  height: 24px;
+  flex-shrink: 0;
+}
+
+.mega-menu__icon-ux svg {
+  display: block;
+  flex-shrink: 0;
+  vertical-align: middle;
+}
+
+/* Pencil tip up, ruler vertical */
+.mega-menu__icon-ux svg:first-child {
+  transform: rotate(135deg);
+}
+.mega-menu__icon-ux svg:last-child {
+  transform: rotate(-45deg);
+  margin-left: -6px;
 }
 
 .mega-menu__category-title {

@@ -134,7 +134,7 @@ export class WebGlGlobe extends EventTarget {
 
   public setZoomEnabled(enabled: boolean) {
     this.renderer.getGlobeControls().enableZoom = enabled;
-    this.renderer.getMapControls().enableZoom = enabled;
+    this.renderer.mapControls.enableZoom = enabled;
   }
 
   private setLayers(layers: LayerProps[]) {
