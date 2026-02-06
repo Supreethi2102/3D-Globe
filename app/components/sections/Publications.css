@@ -47,13 +47,16 @@
   margin-bottom: 48px;
 }
 
-/* Publication Card */
+/* Publication Card - now a link */
 .publication-card {
   display: flex;
   flex-direction: column;
   gap: 0;
   cursor: pointer;
+  text-decoration: none;
+  color: inherit;
 }
+
 
 .publication-card__image-container {
   width: 100%;
@@ -150,6 +153,7 @@
 .view-publications-btn__icon {
   width: 24px;
   height: 24px;
+  flex-shrink: 0;
   /* Purple filter for icon */
   filter: brightness(0) saturate(100%) invert(36%) sepia(68%) saturate(1352%) hue-rotate(229deg) brightness(88%) contrast(96%);
 }
@@ -161,6 +165,489 @@
   line-height: 24px;
   color: #7150e5;
   white-space: nowrap;
+}
+
+/* Publication popup – Figma 1656-172 Publications / Photo gallery */
+.publication-modal__overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.30);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.publication-modal {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 1104px;
+  min-width: 320px;
+  max-height: calc(100vh - 48px);
+  /* Figma: 40px top, 64px sides, 44px bottom */
+  padding: 40px 64px 44px 64px;
+  border-radius: 24px;
+  background: #FCFCFD;
+  overflow: auto;
+  position: relative;
+  box-sizing: border-box;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+}
+
+/* Header: breadcrumb left, Close right – same row */
+.publication-modal__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0;
+}
+
+.publication-modal__breadcrumb {
+  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  letter-spacing: 0;
+  color: #3c3f43;
+  margin: 0;
+}
+
+.publication-modal__heading {
+  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 28px;
+  letter-spacing: 0.32px;
+  color: #111213;
+  margin: 0;
+}
+
+/* Figma: Close X is purple */
+.publication-modal__close {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 4px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  letter-spacing: 0;
+  color: #7150e5;
+  z-index: 10;
+}
+
+.publication-modal__close:hover {
+  color: #5238a8;
+}
+
+.publication-modal__close-icon {
+  color: currentColor;
+  fill: currentColor;
+  flex-shrink: 0;
+}
+
+/* Main content – 40px below header (Figma blue 40) */
+.publication-modal__body {
+  display: flex;
+  flex-direction: row;
+  gap: 56px;
+  margin-top: 40px;
+  flex: 1;
+  min-height: 0;
+}
+
+/* 1/16 images – above main image in right column (Figma: small, light grey) */
+.publication-modal__counter {
+  display: block;
+  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  color: #3c3f43;
+  margin: 0 0 8px 0;
+}
+
+/* Left column: text – ~50% width, max for readability */
+.publication-modal__text-col {
+  flex: 0 1 440px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0;
+}
+
+/* Publication title – bold, large (Figma) */
+.publication-modal__title {
+  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 32px;
+  letter-spacing: 0.32px;
+  color: #111213;
+  margin: 0 0 8px 0;
+}
+
+.publication-modal__modal-subtitle {
+  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  color: #3c3f43;
+  margin: 0 0 16px 0;
+}
+
+.publication-modal__intro {
+  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  color: #3c3f43;
+  margin: 0 0 12px 0;
+}
+
+.publication-modal__bullets {
+  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  color: #3c3f43;
+  margin: 0 0 0 0;
+  padding-left: 20px;
+  list-style: disc;
+}
+
+.publication-modal__bullets li {
+  margin-bottom: 4px;
+}
+
+.publication-modal__bullets li:last-child {
+  margin-bottom: 0;
+}
+
+/* Figma blue 100: 100px between bullets and conclusion */
+.publication-modal__conclusion {
+  margin: 100px 0 24px 0;
+}
+
+.publication-modal__conclusion p {
+  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  color: #3c3f43;
+  margin: 0 0 12px 0;
+}
+
+.publication-modal__conclusion p:last-child {
+  margin-bottom: 0;
+}
+
+/* Listen button – Figma: icon to left of "Listen", light bg, purple border */
+.publication-modal__listen-btn {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-width: 77px;
+  padding: 12px 16px;
+  background: #F7F9FA;
+  border: 1px solid #7150e5;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: auto;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.publication-modal__listen-btn:hover {
+  background: rgba(113, 80, 229, 0.08);
+}
+
+.publication-modal__listen-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #7150e5;
+  flex-shrink: 0;
+}
+
+.publication-modal__listen-text {
+  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  color: #7150e5;
+}
+
+/* Right column: counter, main image, 44px gap, thumbnails (Figma) */
+.publication-modal__gallery-col {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* Figma blue 44: 44px between main image and thumbnail strip */
+.publication-modal__main-image-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4/3;
+  max-height: 400px;
+  margin-bottom: 44px;
+  border-radius: 12px;
+  overflow: hidden;
+  /* Figma: light blue-grey fill, thin light blue border */
+  background: #e0e4e8;
+  border: 1px solid #b8bcc4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.publication-modal__main-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+}
+
+.publication-modal__nav-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f7f9fa;
+  border: 1px solid #7150e5;
+  border-radius: 8px;
+  cursor: pointer;
+  z-index: 2;
+  transition: background 0.2s ease;
+  color: #7150e5;
+}
+
+.publication-modal__nav-btn:hover {
+  background: rgba(113, 80, 229, 0.12);
+}
+
+.publication-modal__nav-btn--prev {
+  left: 16px;
+}
+
+.publication-modal__nav-btn--next {
+  right: 16px;
+}
+
+.publication-modal__expand-btn {
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #F7F9FA;
+  border: 1px solid #7150e5;
+  border-radius: 8px;
+  cursor: pointer;
+  z-index: 2;
+  transition: background 0.2s ease;
+  color: #7150e5;
+}
+
+.publication-modal__expand-btn:hover {
+  background: rgba(113, 80, 229, 0.12);
+}
+
+/* Thumbnails – Figma: light blue-grey placeholders, rounded corners */
+.publication-modal__thumbnails {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 12px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+
+.publication-modal__thumb {
+  flex: 0 0 72px;
+  width: 72px;
+  height: 72px;
+  border-radius: 8px;
+  overflow: hidden;
+  /* Figma: light blue-grey fill, thin light blue border when not selected */
+  background: #e0e4e8;
+  border: 1px solid #b8bcc4;
+  cursor: pointer;
+  padding: 0;
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.publication-modal__thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Figma: selected thumbnail has prominent purple glow and purple border */
+.publication-modal__thumb--selected {
+  border: 2px solid #7150e5;
+  box-shadow: 0 0 0 2px #7150e5, 0 4px 16px rgba(113, 80, 229, 0.35);
+}
+
+.publication-modal__thumb:hover:not(.publication-modal__thumb--selected) {
+  border-color: #b0b3b8;
+}
+
+/* Expand overlay – fullscreen image */
+.publication-modal__expand-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  z-index: 1001;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48px;
+}
+
+.publication-modal__expand-close {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  color: #fff;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.publication-modal__expand-close:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.publication-modal__expand-image {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.publication-modal__expand-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 8px;
+  cursor: pointer;
+  z-index: 10;
+  transition: background 0.2s ease;
+  color: #fff;
+}
+
+.publication-modal__expand-nav:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.publication-modal__expand-nav--prev {
+  left: 24px;
+}
+
+.publication-modal__expand-nav--next {
+  right: 24px;
+}
+
+@media (max-width: 960px) {
+  .publication-modal {
+    padding: 32px 32px 44px 32px;
+  }
+
+  .publication-modal__heading {
+    font-size: 18px;
+  }
+
+  .publication-modal__counter {
+    margin-top: 24px;
+  }
+
+  .publication-modal__body {
+    flex-direction: column;
+    gap: 32px;
+    margin-top: 24px;
+  }
+
+  .publication-modal__text-col {
+    flex: none;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .publication-modal__title {
+    font-size: 22px;
+  }
+
+  .publication-modal__main-image-wrap {
+    max-height: 320px;
+  }
+}
+
+@media (max-width: 480px) {
+  .publication-modal {
+    padding: 24px 24px 44px 24px;
+  }
+
+  .publication-modal__heading {
+    font-size: 16px;
+  }
+
+  .publication-modal__close {
+    font-size: 14px;
+  }
+
+  .publication-modal__counter {
+    margin-top: 16px;
+  }
+
+  .publication-modal__body {
+    margin-top: 20px;
+  }
+
+  .publication-modal__title {
+    font-size: 20px;
+  }
+
+  .publication-modal__listen-btn {
+    width: 77px;
+  }
+
+  .publication-modal__thumb {
+    flex: 0 0 56px;
+    width: 56px;
+    height: 56px;
+  }
 }
 
 /* Responsive - Large Desktop */

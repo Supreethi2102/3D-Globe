@@ -15,12 +15,12 @@
   background: #f7f9fa; /* Figma card background */
   border: 1px solid #b0b3b8; /* Figma border */
   border-radius: 24px; /* Figma border radius */
-  padding: 64px; /* Figma padding */
+  padding: 64px 56px; /* Slightly less horizontal padding for better balance */
   max-width: var(--content-max-width, 1220px);
   min-height: 851px; /* Figma height */
   margin: 0 auto;
   display: flex;
-  gap: 84px; /* Figma gap between form and postcard */
+  gap: 64px; /* Reduced gap between form and postcard */
   align-items: center;
 }
 
@@ -161,7 +161,7 @@
   flex-shrink: 0;
 }
 
-/* Right Side - Postcard */
+/* Right Side - Postcard - single centered column */
 .contact__postcard-side {
   flex: 1;
   display: flex;
@@ -171,6 +171,87 @@
   gap: 56px; /* Figma gap */
   padding: 27px 0;
   width: 100%;
+  min-width: 0;
+  margin-left: -10px; /* Shift 10px left */
+}
+
+/* Wrapper for postcard + sent box – clips sliding content */
+.contact__postcard-slot {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 520px; /* Keep height so layout doesn’t jump */
+}
+
+/* Single postcard (stamp + address + button) – slides out/in */
+.contact__postcard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 56px;
+  width: 100%;
+  flex-shrink: 0;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.contact__postcard--out {
+  transform: translateX(120%);
+}
+
+.contact__postcard--at-left {
+  transform: translateX(-120%);
+  transition: none;
+}
+
+.contact__postcard--animate-to-center {
+  transform: translateX(0);
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* “Sent” message box – appears after postcard slides out */
+.contact__sent-box {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 32px;
+  text-align: center;
+  animation: contactSentFadeIn 0.35s ease forwards;
+}
+
+@keyframes contactSentFadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.contact__sent-box-title {
+  font-family: 'Romie Trial', Georgia, serif;
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 1.3;
+  color: #111213;
+  margin: 0;
+}
+
+.contact__sent-box-text {
+  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  color: #3c3f43;
+  margin: 0;
 }
 
 .contact__stamp-area {
@@ -186,6 +267,7 @@
   width: 100%;
   height: 100%;
   object-fit: contain;
+  object-position: 35% 50%; /* Center visual content (stamp + cancellation) */
   image-rendering: -webkit-optimize-contrast;
   image-rendering: crisp-edges;
 }
@@ -203,11 +285,12 @@
   width: 100%;
   height: 100%;
   object-fit: contain;
+  object-position: 50% 50%; /* Center address block */
   image-rendering: -webkit-optimize-contrast;
   image-rendering: crisp-edges;
 }
 
-/* Send Button */
+/* Send Button - outlined by default, filled on hover (like view all) */
 .contact__submit-btn {
   display: flex;
   align-items: center;
@@ -216,16 +299,22 @@
   width: 230px; /* Figma width */
   height: 48px; /* Figma height */
   padding: 16px 24px;
-  background: #7150e5; /* Figma purple */
-  border: none;
+  margin: 0 auto;
+  background: #f7f9fa;
+  border: 1px solid #7150e5;
   border-radius: 8px;
   cursor: pointer;
-  transition: background 0.2s ease;
+  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
   margin: 0 auto;
 }
 
-.contact__submit-btn:hover {
-  background: #5238a8;
+.contact__submit-btn:hover:not(:disabled):not(.contact__submit-btn--loading):not(.contact__submit-btn--success) {
+  background: #7150e5;
+}
+
+.contact__submit-btn:hover:not(:disabled):not(.contact__submit-btn--loading):not(.contact__submit-btn--success) span,
+.contact__submit-btn:hover:not(:disabled):not(.contact__submit-btn--loading):not(.contact__submit-btn--success) svg {
+  color: #f6f7f8;
 }
 
 .contact__submit-btn svg {
@@ -239,8 +328,9 @@
   font-size: 16px;
   font-weight: 400;
   line-height: 24px;
-  color: #f6f7f8;
+  color: #7150e5;
   white-space: nowrap;
+  transition: color 0.2s ease;
 }
 
 /* Form validation states */
@@ -289,16 +379,26 @@
   cursor: not-allowed;
 }
 
+.contact__submit-btn--loading span,
+.contact__submit-btn--loading svg,
+.contact__submit-btn--success span,
+.contact__submit-btn--success svg {
+  color: #f6f7f8 !important;
+}
+
 .contact__submit-btn--loading {
   background: #6b7280;
+  border-color: #6b7280;
 }
 
 .contact__submit-btn--success {
   background: #059669;
+  border-color: #059669;
 }
 
 .contact__submit-btn--success:hover {
   background: #047857;
+  border-color: #047857;
 }
 
 /* Loading spinner */
@@ -436,6 +536,14 @@
     max-width: 540px;
     gap: 32px;
     padding: 0;
+  }
+
+  .contact__postcard-slot {
+    min-height: 420px;
+  }
+
+  .contact__postcard {
+    gap: 32px;
   }
 
   .contact__stamp-area {

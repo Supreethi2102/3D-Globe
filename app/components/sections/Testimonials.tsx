@@ -94,7 +94,7 @@ export const Testimonials: React.FC = () => {
           <header className="testimonials__header">
             <h2 id="testimonials-title" className="testimonials__title">Global shoutout</h2>
             <p className="testimonials__subtitle">
-              Here's what collaborators and colleagues say — near and far.
+              Here's what collaborators and colleagues say, near and far
             </p>
           </header>
 

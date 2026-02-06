@@ -88,7 +88,7 @@ export const ColorSwatches: React.FC = () => {
           <img src="/icons/HandSwipeRight.svg" alt="" className="color-swatches__icon" />
         </div>
         <p className="color-swatches__text">
-          Tap, click, or drag the colour swatches to discover my travel colour moods.
+          Tap, click, or drag the colour swatches to discover my travel colour moods
         </p>
       </header>
 
@@ -217,7 +217,8 @@ loading times.
 
 As digital standards shift, I'll keep refining.
 If you have tips for reducing impact even
-further, I'd love to hear them.`}
+further, `}
+                  <a href="#contact" onClick={closeSustainability} className="modal__inline-link">I'd love to hear them.</a>
                 </p>
               </div>
               <div className="sustainability-modal__image-wrap">
@@ -263,7 +264,7 @@ further, I'd love to hear them.`}
                   Your privacy matters. This site only collects the information you share through the contact form, such as your name and email address, and uses it solely to respond to your message.
                 </p>
                 <p className="privacy-cookies-modal__p">
-                  There are no tracking cookies, no third-party analytics, and no unnecessary data collection. Just a simple, respectful browsing experience. If you have any questions about how your data is handled, I&apos;m happy to clarify.
+                  There are no tracking cookies, no third-party analytics, and no unnecessary data collection. Just a simple, respectful browsing experience. If you have any questions about how your data is handled, <a href="#contact" onClick={closePrivacyCookies} className="modal__inline-link">I'm happy to clarify.</a>
                 </p>
               </div>
               <div className="privacy-cookies-modal__image-wrap">
@@ -309,7 +310,8 @@ further, I'd love to hear them.`}
                   Everyone should be able to navigate this site with ease. It was designed with accessibility in mind, including colour contrast, readable typography, keyboard navigation, and a clear content structure.
                 </p>
                 <p className="accessibility-modal__p">
-                  I continue to learn and improve as accessibility standards evolve. If there's anything that could be more inclusive, I'd genuinely appreciate your feedback.
+                  I continue to learn and improve as accessibility standards evolve. If there's anything that could be more inclusive, <br />
+                  <a href="#contact" onClick={closeAccessibility} className="modal__inline-link">I'd genuinely appreciate your feedback.</a>
                 </p>
                 <div className="accessibility-modal__motion">
                   <span className="accessibility-modal__motion-label">Motion</span>
@@ -322,8 +324,8 @@ further, I'd love to hear them.`}
                     onClick={() => setMotionOn(!motionOn)}
                   >
                     <span className="accessibility-modal__toggle-track">
-                      <span className="accessibility-modal__toggle-on-text">on</span>
-                      <span className="accessibility-modal__toggle-off-text">off</span>
+                      <span className="accessibility-modal__toggle-on-text">On</span>
+                      <span className="accessibility-modal__toggle-off-text">Off</span>
                       <span className="accessibility-modal__toggle-thumb" />
                     </span>
                   </button>

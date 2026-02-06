@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect, useId } from 'react';
 import { ArrowSquareOut, X } from '@phosphor-icons/react';
 import './Destinations.css';
 
-// Destination data matching Figma design with expanded content
+// Destination data — expanded card layout matches Figma node 1408-2357 (Your rainbow panorama)
 const destinations = {
   aarhus: { 
     id: 'denmark', 
@@ -16,7 +16,7 @@ const destinations = {
     photographer: 'Photo by Julia Taubitz',
     whyCity: 'ARoS Museum blends art and architecture into one experience. Its circular rooftop walkway turns the building into something you move through, not just view.',
     whatDrawsMe: 'Colour reshapes the city from within the walkway. Aarhus shifts mood without changing form.',
-    howInfluences: 'I aim to create work that reveals itself gradually. Subtle cues guide users without overwhelm.'
+    howInfluences: 'I aim to create work that reveals itself gradually. Subtle cues guide users without\u00A0overwhelm.'
   },
   nevada: { 
     id: 'usa', 
@@ -32,7 +32,7 @@ const destinations = {
     photographer: 'Photo by Erda Estremera',
     whyCity: 'Seven Magic Mountains in Nevada brings colour and scale to the desert. Neon stacked limestone boulders, 9 to 11 metres tall, create a striking desert artwork.',
     whatDrawsMe: 'The towers balance spectacle with simplicity. Bright colours and organic forms create framed, deliberate views.',
-    howInfluences: 'I think about how context shapes perception. Colour, scale, and placement become tools to spark curiosity and define focus.'
+    howInfluences: 'I think about how context shapes perception. Colour, scale, and placement become tools to spark curiosity and define\u00A0focus.'
   },
   calpe: { 
     id: 'spain', 
@@ -60,7 +60,7 @@ const destinations = {
     artist: 'The Great Sphinx, built under Pharaoh Khafre.',
     photographer: 'Photo by Dilip Podda',
     whyCity: 'The Great Sphinx is carved from a single limestone block. Its human head and lion body, combined with scale, reflect the ambition of early Egyptian builders.',
-    whatDrawsMe: 'Its lines feel steady and assured. Weathering adds texture, and its placement ties it to the surrounding pyramids.',
+    whatDrawsMe: 'Its lines feel steady and assured. Weathering adds texture, and its placement ties it to the surrounding\u00A0pyramids.',
     howInfluences: 'I explore how form can communicate story and authority. Proportion and balance guide how I structure my own work.',
     drawsHeading: 'What draws me to the Sphinx?'
   },
@@ -92,7 +92,7 @@ const destinations = {
     title: 'The Jardin Majorelle',
     artist: 'The Jardin Majorelle by Jacques Majorelle.',
     photographer: 'Photo by Riccardo Monteleone.',
-    whyCity: 'The Jardin Majorelle and the adjacent YSL Museum show how colour and craft shape identity. Moroccan design, modern lines, and lush planting give the spaces a vivid feel.',
+    whyCity: 'The Jardin Majorelle and the adjacent YSL Museum show how colour and craft shape identity. Moroccan design, modern lines, and lush planting give the spaces a vivid\u00A0feel.',
     whatDrawsMe: 'Majorelle Blue contrasts with dense greenery, while the museum highlights silhouette and palette as expressive tools.',
     howInfluences: 'I consider how visual language sets tone. Hierarchy, colour, and trend-aware choices shape a clear, intentional design\u00A0experience.'
   },
@@ -108,7 +108,7 @@ const destinations = {
     artist: 'The Hawa Mahal, pink sandstone façade.',
     photographer: 'Photo by Aditya Kumar.',
     whyCity: 'Jaipur shows how beauty, function, and colour coexist. Pink façades, natural cooling, and human-scale planning respond thoughtfully to daily life.',
-    whatDrawsMe: 'Its façade and 953 jharokha windows create airflow, privacy, and rhythm. Practical needs become a defining visual identity.',
+    whatDrawsMe: 'Its façade and 953 jharokha windows create airflow, privacy, and rhythm. Practical needs become a defining visual\u00A0identity.',
     howInfluences: 'I focus on solving multiple needs simultaneously. Structure and detail allow me to create clarity and purpose in my\u00A0work.',
     drawsHeading: 'What draws me to The Hawa Mahal?'
   },
@@ -127,7 +127,7 @@ const destinations = {
     photographer: 'Photo by Rebecca Lam.',
     whyCity: 'Naoshima blends art, architecture, and landscape with precision. Underground museums and site-specific installations make the island a curated experience.',
     whatDrawsMe: 'Kusama\'s spotted sculpture is playful yet calm. Its repetition and scale stand out against the natural shoreline.',
-    howInfluences: 'I use pattern, scale, and colour intentionally. This helps me craft work that is organised, approachable, and invites exploration.',
+    howInfluences: 'I use pattern, scale, and colour intentionally. This helps me craft work that is organised, approachable, and invites\u00A0exploration.',
     drawsHeading: 'What draws me to the Pumpkin?'
   },
 };
@@ -666,7 +666,7 @@ export const Destinations: React.FC = () => {
         <p className="destinations__cta-text">
           Been to any of these places? Spotted great design?
           <br />
-          Let me know, I'd love to hear about it.
+          Let me know, I'd love to hear about it
         </p>
         <button 
           type="button"
@@ -675,7 +675,7 @@ export const Destinations: React.FC = () => {
           onMouseLeave={() => setIsShareHovered(false)}
           aria-label="Share your design inspiration with me"
         >
-          <ArrowSquareOut size={24} weight={isShareHovered ? 'fill' : 'regular'} color="#fbfbfb" className="destinations__share-icon" aria-hidden="true" />
+          <ArrowSquareOut size={24} weight={isShareHovered ? 'fill' : 'regular'} color={isShareHovered ? '#fbfbfb' : '#7150E5'} className="destinations__share-icon" aria-hidden="true" />
           <span>Share inspiration</span>
         </button>
       </footer>

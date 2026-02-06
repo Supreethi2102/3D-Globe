@@ -192,6 +192,7 @@
   background: #f7f9fa;
   border: 1px solid #7150e5;
   border-radius: 8px;
+  transition: background 0.2s ease, border-color 0.2s ease;
 }
 
 .flip-button__icon img {
@@ -206,6 +207,18 @@
   line-height: 24px;
   color: #7150e5;
   text-align: center;
+  transition: color 0.2s ease;
+}
+
+.flip-button:hover .flip-button__icon {
+  background: #7150e5;
+  border-color: #7150e5;
+}
+
+.flip-button:hover .flip-button__icon img,
+.flip-button:hover .flip-button__icon svg {
+  filter: brightness(0) invert(1);
+  color: #fbfbfb;
 }
 
 /* Tabs */

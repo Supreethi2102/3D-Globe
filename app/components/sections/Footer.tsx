@@ -22,7 +22,7 @@ export const Footer: React.FC = () => {
         </div>
         
         <p className="footer__text">
-          Click and drag the globe to see what shaped each project, or scroll to see more.
+          Click and drag the globe to see what shaped each project, or scroll to see more
         </p>
       </div>
     </aside>

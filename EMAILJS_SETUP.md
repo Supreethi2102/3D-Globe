@@ -100,7 +100,7 @@ export const emailjsConfig = {
 
 - **"EmailJS is not configured" error**: Make sure all credentials are set in either `.env` or `emailjs.ts`
 - **Email not received**: Check your spam folder and verify your EmailJS service is properly connected
-- **Template variables not working**: Make sure your template uses the exact variable names: `{{from_name}}`, `{{from_email}}`, `{{country}}`, `{{message}}`, `{{date}}`
+- **Template variables not working**: Make sure your template uses the exact variable names: `{{from_name}}`, `{{from_email}}`, `{{message}}`, `{{date}}`
 - **Postcard template not displaying correctly**: Make sure you're using the HTML editor in EmailJS (not plain text), and that email clients support HTML (most modern clients do)
 
 ## Security Notes

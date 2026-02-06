@@ -297,9 +297,9 @@
 
 .site-footer__copyright {
   font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 400;
-  line-height: 20px;
+  line-height: normal;
   color: #3c3f43;
   white-space: nowrap;
 }
@@ -317,9 +317,9 @@
   text-decoration: none;
   color: #3c3f43;
   font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 400;
-  line-height: 20px;
+  line-height: normal;
   transition: color 0.2s ease;
   white-space: nowrap;
 }
@@ -456,6 +456,19 @@ button.site-footer__link {
 
 .sustainability-modal__p:last-child {
   margin-bottom: 0;
+}
+
+/* Inline link in modals – links to contact form */
+.modal__inline-link {
+  color: #7150E5;
+  text-decoration: none;
+  font: inherit;
+  border-bottom: 1px solid #7150E5;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+.modal__inline-link:hover {
+  color: #5238a8;
+  border-bottom-color: #5238a8;
 }
 
 .sustainability-modal__image-wrap {
@@ -662,8 +675,12 @@ button.site-footer__link {
   font-style: normal;
   font-weight: 400;
   line-height: 24px;
-  margin: 0;
+  margin: 0 0 24px 0;
   max-width: 100%;
+}
+
+.privacy-cookies-modal__p:last-child {
+  margin-bottom: 0;
 }
 
 .privacy-cookies-modal__image-wrap {
@@ -869,7 +886,7 @@ button.site-footer__link {
   font-style: normal;
   font-weight: 400;
   line-height: 24px;
-  margin: 0;
+  margin: 0 0 24px 0;
   overflow-wrap: normal;
   hyphens: none;
 }
@@ -926,48 +943,48 @@ button.site-footer__link {
   width: 100%;
   height: 100%;
   min-height: 39.059px;
-  /* Padding around "On" text: ~15px left, ~14px top/bottom, ~47px gap to thumb */
-  padding: 14px 50px 14px 15px;
+  /* Padding so "on" text stays clear of the thumb (thumb ~31px + right 5px = 36px; add space for "on") */
+  padding: 14px 60px 14px 15px;
   position: relative;
   box-sizing: border-box;
 }
 
-/* On text – Figma spec; reset inheritance so browser button defaults don't override */
+/* On text – absolutely positioned so it has room (track flex area is only ~8px wide) */
 .accessibility-modal__toggle .accessibility-modal__toggle-on-text {
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
   color: #FFF !important;
-  leading-trim: both;
-  text-edge: cap;
   font-family: "Atkinson Hyperlegible Next VF", 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
   font-size: 16px !important;
-  font-style: normal;
   font-weight: 400;
-  line-height: 24px !important; /* 150% */
+  line-height: 1 !important;
   opacity: 0;
   transition: opacity 0.2s ease;
-  flex-shrink: 0;
   pointer-events: none;
-  position: relative;
-  z-index: 1;
+  z-index: 2;
 }
 
 .accessibility-modal__toggle--on .accessibility-modal__toggle-on-text {
   opacity: 1;
 }
 
-/* Off text – visible when toggle is off (gray track) */
+/* Off text – absolutely positioned on the right (mirror of On) */
 .accessibility-modal__toggle-off-text {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
   color: #3C3F43 !important;
   font-family: "Atkinson Hyperlegible Next VF", 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
   font-size: 16px !important;
-  font-style: normal;
   font-weight: 400;
-  line-height: 24px !important;
+  line-height: 1 !important;
   opacity: 1;
   transition: opacity 0.2s ease;
-  flex-shrink: 0;
   pointer-events: none;
-  position: relative;
-  z-index: 1;
+  z-index: 2;
 }
 
 .accessibility-modal__toggle--on .accessibility-modal__toggle-off-text {

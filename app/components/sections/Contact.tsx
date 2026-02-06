@@ -7,29 +7,60 @@ import './Contact.css';
 // Character limit for message field (generous limit)
 const MESSAGE_MAX_LENGTH = 2000;
 
+// Postcard animation timing (ms)
+const POSTCARD_SLIDE_OUT_MS = 500;
+const POSTCARD_SENT_SHOW_MS = 1400;
+const POSTCARD_SLIDE_IN_MS = 500;
+
 export const Contact: React.FC = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    country: '',
     message: '',
   });
   const [isSendHovered, setIsSendHovered] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [errorMessage, setErrorMessage] = useState<string>('');
+  const [postcardPhase, setPostcardPhase] = useState<'idle' | 'out' | 'sent' | 'in'>('idle');
+  const [postcardInAnimate, setPostcardInAnimate] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [touched, setTouched] = useState<Record<string, boolean>>({});
   
   // Generate unique IDs for form fields
   const nameId = useId();
   const emailId = useId();
-  const countryId = useId();
   const messageId = useId();
   const nameErrorId = useId();
   const emailErrorId = useId();
   const messageErrorId = useId();
   const messageCharCountId = useId();
   const statusAnnouncementRef = useRef<HTMLDivElement>(null);
+
+  // Drive postcard animation: out → sent → in → idle
+  useEffect(() => {
+    if (postcardPhase === 'out') {
+      const t = setTimeout(() => setPostcardPhase('sent'), POSTCARD_SLIDE_OUT_MS);
+      return () => clearTimeout(t);
+    }
+    if (postcardPhase === 'sent') {
+      const t = setTimeout(() => {
+        setPostcardInAnimate(false);
+        setPostcardPhase('in');
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => setPostcardInAnimate(true));
+        });
+      }, POSTCARD_SENT_SHOW_MS);
+      return () => clearTimeout(t);
+    }
+    if (postcardPhase === 'in' && postcardInAnimate) {
+      const t = setTimeout(() => {
+        setPostcardPhase('idle');
+        setPostcardInAnimate(false);
+      }, POSTCARD_SLIDE_IN_MS);
+      return () => clearTimeout(t);
+    }
+  }, [postcardPhase, postcardInAnimate]);
 
   const validateEmail = (email: string) => {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -84,7 +115,7 @@ export const Contact: React.FC = () => {
     
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
-      setTouched({ name: true, email: true, country: true, message: true });
+      setTouched({ name: true, email: true, message: true });
       return;
     }
 
@@ -99,22 +130,37 @@ export const Contact: React.FC = () => {
     setSubmitStatus('idle');
 
     try {
+      // Validate configuration before proceeding
+      if (!emailjsConfig.publicKey || emailjsConfig.publicKey === 'YOUR_PUBLIC_KEY_HERE') {
+        throw new Error('EmailJS Public Key is not configured');
+      }
+      if (!emailjsConfig.serviceId || emailjsConfig.serviceId === 'YOUR_SERVICE_ID_HERE') {
+        throw new Error('EmailJS Service ID is not configured');
+      }
+      if (!emailjsConfig.templateId || emailjsConfig.templateId === 'YOUR_TEMPLATE_ID_HERE') {
+        throw new Error('EmailJS Template ID is not configured');
+      }
+
       // Initialize EmailJS with public key
       emailjs.init(emailjsConfig.publicKey);
 
       // Prepare template parameters
       const templateParams = {
-        from_name: formData.name,
-        from_email: formData.email,
-        country: formData.country.trim() || 'Somewhere in the world',
-        message: formData.message,
-        to_email: emailjsConfig.toEmail, // Recipient email: vadadasupreethi@gmail.com
+        from_name: formData.name.trim(),
+        from_email: formData.email.trim(),
+        message: formData.message.trim(),
         date: new Date().toLocaleDateString('en-US', { 
           year: 'numeric', 
           month: 'long', 
           day: 'numeric' 
         }),
       };
+
+      console.log('Sending email with params:', {
+        serviceId: emailjsConfig.serviceId,
+        templateId: emailjsConfig.templateId,
+        templateParams
+      });
 
       // Send email using EmailJS
       const response = await emailjs.send(
@@ -123,15 +169,18 @@ export const Contact: React.FC = () => {
         templateParams
       );
 
-      // Success
+      // Success – start postcard animation sequence
       console.log('Email sent successfully:', response);
       setSubmitStatus('success');
-      setFormData({ name: '', email: '', country: '', message: '' });
+      setErrorMessage('');
+      setFormData({ name: '', email: '', message: '' });
       setTouched({});
       setErrors({});
-      
-      // Reset success message after 5 seconds
-      setTimeout(() => setSubmitStatus('idle'), 5000);
+      setPostcardPhase('out'); // Postcard slides off to the right
+
+      // Reset success message after full animation + buffer
+      const totalAnimMs = POSTCARD_SLIDE_OUT_MS + POSTCARD_SENT_SHOW_MS + POSTCARD_SLIDE_IN_MS + 500;
+      setTimeout(() => setSubmitStatus('idle'), totalAnimMs);
     } catch (error: any) {
       console.error('Failed to send email:', error);
       console.error('Error details:', {
@@ -145,6 +194,36 @@ export const Contact: React.FC = () => {
         }
       });
       
+      // Show more specific error message
+      let errorMessage = 'Something went wrong. Please try again.';
+      if (error?.status === 400) {
+        errorMessage = 'Invalid request. Please check your form data and try again.';
+      } else if (error?.status === 401) {
+        errorMessage = 'Authentication failed. Please check your EmailJS Public Key.';
+      } else if (error?.status === 404) {
+        errorMessage = 'Service or template not found. Please verify your Service ID and Template ID.';
+      } else if (error?.status === 403) {
+        errorMessage = 'Access denied. Please check your EmailJS configuration.';
+      } else if (error?.text) {
+        errorMessage = `Error: ${error.text}`;
+      } else if (error?.message) {
+        errorMessage = `Error: ${error.message}`;
+      }
+      
+      console.error('EmailJS Error:', {
+        status: error?.status,
+        text: error?.text,
+        message: error?.message,
+        fullError: error
+      });
+      console.error('User-friendly error:', errorMessage);
+      console.error('Current config:', {
+        publicKey: emailjsConfig.publicKey ? `${emailjsConfig.publicKey.substring(0, 5)}...` : 'MISSING',
+        serviceId: emailjsConfig.serviceId,
+        templateId: emailjsConfig.templateId
+      });
+      
+      setErrorMessage(errorMessage);
       setSubmitStatus('error');
     } finally {
       setIsSubmitting(false);
@@ -238,24 +317,6 @@ export const Contact: React.FC = () => {
               )}
             </div>
 
-            <div className="contact__field">
-              <label className="contact__field-label" htmlFor={countryId}>
-                Country
-                <span className="sr-only"> (optional)</span>
-              </label>
-              <input
-                type="text"
-                id={countryId}
-                name="country"
-                className="contact__input"
-                placeholder="e.g. New Zealand"
-                value={formData.country}
-                onChange={handleChange}
-                disabled={isSubmitting}
-                autoComplete="country-name"
-              />
-            </div>
-
             <div className={`contact__field ${errors.message && touched.message ? 'contact__field--error' : ''}`}>
               <label className="contact__field-label" htmlFor={messageId}>
                 Message
@@ -305,66 +366,82 @@ export const Contact: React.FC = () => {
         {/* Divider */}
         <div className="contact__divider" aria-hidden="true" />
 
-        {/* Right Side - Postcard */}
+        {/* Right Side - Postcard (slides out on send, sent box, then fresh postcard slides in) */}
         <aside className="contact__postcard-side" aria-label="Postcard decoration">
-          {/* Postage Stamp */}
-          <div className="contact__stamp-area">
-            <img 
-              src="/about/postage-stamp-textured 2.png" 
-              alt="" 
-              className="contact__stamp"
-              role="presentation"
-            />
+          <div className="contact__postcard-slot">
+            {/* Postcard (stamp + address + button) – slides out right, then new one slides in from left */}
+            <div
+              className={`contact__postcard
+                ${postcardPhase === 'out' ? 'contact__postcard--out' : ''}
+                ${postcardPhase === 'in' && !postcardInAnimate ? 'contact__postcard--at-left' : ''}
+                ${postcardPhase === 'in' && postcardInAnimate ? 'contact__postcard--animate-to-center' : ''}
+              `}
+              aria-hidden={postcardPhase === 'sent'}
+            >
+              <div className="contact__stamp-area">
+                <img
+                  src="/about/postage-stamp-textured 2.png"
+                  alt=""
+                  className="contact__stamp"
+                  role="presentation"
+                />
+              </div>
+              <address className="contact__address-area">
+                <img
+                  src="/about/postal address 6.png"
+                  alt="Contact address: Samantha Smith, 123 Pixel Parade, Design District, Imagination NZ"
+                  className="contact__address"
+                />
+              </address>
+              <button
+                type="submit"
+                className={`contact__submit-btn ${isSubmitting ? 'contact__submit-btn--loading' : ''} ${submitStatus === 'success' && postcardPhase === 'out' ? 'contact__submit-btn--success' : ''}`}
+                onClick={handleSubmit}
+                onMouseEnter={() => setIsSendHovered(true)}
+                onMouseLeave={() => setIsSendHovered(false)}
+                disabled={isSubmitting}
+                aria-busy={isSubmitting}
+                aria-label={
+                  isSubmitting
+                    ? 'Sending message...'
+                    : submitStatus === 'success'
+                      ? 'Message sent successfully'
+                      : 'Send message'
+                }
+              >
+                {isSubmitting ? (
+                  <>
+                    <span className="contact__spinner" aria-hidden="true" />
+                    <span>Sending...</span>
+                  </>
+                ) : submitStatus === 'success' && postcardPhase === 'out' ? (
+                  <>
+                    <CheckCircle size={24} weight="fill" color="#F6F7F8" aria-hidden="true" />
+                    <span>Message sent!</span>
+                  </>
+                ) : (
+                  <>
+                    <PaperPlaneTilt size={24} weight={isSendHovered ? 'fill' : 'regular'} color={isSendHovered ? '#F6F7F8' : '#7150E5'} aria-hidden="true" />
+                    <span>Send message</span>
+                  </>
+                )}
+              </button>
+            </div>
+
+            {/* “Sent” message box – shown after postcard slides out */}
+            {postcardPhase === 'sent' && (
+              <div className="contact__sent-box" role="status" aria-live="polite">
+                <CheckCircle size={48} weight="fill" color="#059669" aria-hidden="true" />
+                <p className="contact__sent-box-title">Message sent!</p>
+                <p className="contact__sent-box-text">Thanks for reaching out. I’ll get back to you soon.</p>
+              </div>
+            )}
           </div>
 
-          {/* Address */}
-          <address className="contact__address-area">
-            <img 
-              src="/about/postal address 6.png" 
-              alt="Contact address: Samantha Smith, 123 Pixel Parade, Design District, Imagination NZ" 
-              className="contact__address"
-            />
-          </address>
-
-          {/* Send Button */}
-          <button 
-            type="submit" 
-            className={`contact__submit-btn ${isSubmitting ? 'contact__submit-btn--loading' : ''} ${submitStatus === 'success' ? 'contact__submit-btn--success' : ''}`}
-            onClick={handleSubmit}
-            onMouseEnter={() => setIsSendHovered(true)}
-            onMouseLeave={() => setIsSendHovered(false)}
-            disabled={isSubmitting}
-            aria-busy={isSubmitting}
-            aria-label={
-              isSubmitting 
-                ? 'Sending message...' 
-                : submitStatus === 'success' 
-                  ? 'Message sent successfully' 
-                  : 'Send message'
-            }
-          >
-            {isSubmitting ? (
-              <>
-                <span className="contact__spinner" aria-hidden="true" />
-                <span>Sending...</span>
-              </>
-            ) : submitStatus === 'success' ? (
-              <>
-                <CheckCircle size={24} weight="fill" color="#F6F7F8" aria-hidden="true" />
-                <span>Message sent!</span>
-              </>
-            ) : (
-              <>
-                <PaperPlaneTilt size={24} weight={isSendHovered ? 'fill' : 'regular'} color="#F6F7F8" aria-hidden="true" />
-                <span>Send message</span>
-              </>
-            )}
-          </button>
-          
           {submitStatus === 'error' && (
             <p className="contact__submit-error" role="alert">
               <WarningCircle size={16} weight="fill" aria-hidden="true" />
-              Something went wrong. Please try again.
+              {errorMessage || 'Something went wrong. Please try again.'}
             </p>
           )}
         </aside>

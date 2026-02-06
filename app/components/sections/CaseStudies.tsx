@@ -1,4 +1,5 @@
 import React, { useState, useId } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { 
   SelectionAll, 
   PaintBrush, 
@@ -88,6 +89,7 @@ interface CaseStudyCardProps {
 }
 
 const CaseStudyCard: React.FC<CaseStudyCardProps> = ({ study }) => {
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('challenge');
   const [hoveredBtn, setHoveredBtn] = useState<string | null>(null);
   const tabPanelId = useId();
@@ -108,7 +110,7 @@ const CaseStudyCard: React.FC<CaseStudyCardProps> = ({ study }) => {
             aria-label="Flip card for design inspiration"
           >
             <div className="flip-button__icon">
-              <ArrowsClockwise size={24} weight={hoveredBtn === 'flip' ? 'fill' : 'regular'} color="#7150E5" aria-hidden="true" />
+              <ArrowsClockwise size={24} weight={hoveredBtn === 'flip' ? 'fill' : 'regular'} color={hoveredBtn === 'flip' ? '#fbfbfb' : '#7150E5'} aria-hidden="true" />
             </div>
             <span className="flip-button__text">Flip for inspiration</span>
           </button>
@@ -194,6 +196,17 @@ const CaseStudyCard: React.FC<CaseStudyCardProps> = ({ study }) => {
             className="view-design-btn"
             onMouseEnter={() => setHoveredBtn('viewDesign')}
             onMouseLeave={() => setHoveredBtn(null)}
+            onClick={() => {
+              // Map case study ID to publication ID
+              // Case study ID 1 -> Publication ID 13 (NZ Weddings Planner)
+              const publicationIdMap: Record<number, number> = {
+                1: 13, // NZ Weddings Planner
+                2: 1,  // Map other case studies as needed
+                3: 1,  // Map other case studies as needed
+              };
+              const publicationId = publicationIdMap[study.id] || study.id;
+              navigate(`/publications/${publicationId}`);
+            }}
             aria-label={`View the design for ${study.subtitle}`}
           >
             <Ruler size={24} weight={hoveredBtn === 'viewDesign' ? 'fill' : 'regular'} color="#fbfbfb" aria-hidden="true" />
@@ -213,7 +226,8 @@ const CaseStudyCard: React.FC<CaseStudyCardProps> = ({ study }) => {
           role="img"
           aria-label={`${study.subtitle} project preview`}
         />
-        <button 
+        {/* Listen button – commented out for now, will use in future */}
+        {/* <button 
           type="button"
           className="listen-button"
           onMouseEnter={() => setHoveredBtn('listen')}
@@ -225,7 +239,7 @@ const CaseStudyCard: React.FC<CaseStudyCardProps> = ({ study }) => {
           </div>
           <div className="listen-button__divider" aria-hidden="true"></div>
           <span className="listen-button__text">Listen</span>
-        </button>
+        </button> */}
       </figure>
     </article>
   );

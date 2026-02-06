@@ -185,6 +185,7 @@
 
 /* ================================
    EXPANDED CARD VIEW - Figma Design
+   Figma: node-id=1408-2357 (Your rainbow panorama opened card)
    ================================ */
 
 .destination-expanded__scroll-anchor {
@@ -199,16 +200,17 @@
 .destination-expanded {
   background: #F3F5F6;
   border: 1px solid #B0B3B8;
-  border-radius: 12px;
+  border-radius: 20px;
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   position: relative;
   width: 100%;
   max-width: 1216px;
   min-height: 780px;
   margin-bottom: 56px;
-  padding: 78px 54px 14px 56px;
+  padding: 32px 56px;
   gap: 56px;
+  overflow: visible;
   animation: expandCard 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
   transform-origin: center top;
 }
@@ -245,8 +247,8 @@
 
 .destination-expanded__close {
   position: absolute;
-  top: 26px;
-  right: 54px;
+  top: 32px;
+  right: 56px;
   width: 63px;
   height: 24px;
   display: flex;
@@ -291,6 +293,7 @@
   display: flex;
   flex-direction: column;
   gap: 12px;
+  margin-top: 62px;
   animation: slideInImage 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.1s both;
 }
 
@@ -336,14 +339,17 @@
   border: none;
 }
 
-.destination-expanded__image--stroke-top {
+.destination-expanded__image--no-border.destination-expanded__image--stroke-top {
+  border: none;
   border-top: 1px solid #B0B3B8;
+  border-radius: 12px 12px 12px 12px;
 }
 
 .destination-expanded__credit {
   display: flex;
   flex-direction: column;
   gap: 2px;
+  overflow: visible;
 }
 
 .destination-expanded__artist {
@@ -353,6 +359,8 @@
   line-height: 24px;
   color: #3C3F43;
   margin: 0;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
 }
 
 .destination-expanded__photographer {
@@ -362,6 +370,8 @@
   line-height: 20px;
   color: #3C3F43;
   margin: 0;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
 }
 
 .destination-expanded--image-right .destination-expanded__credit {
@@ -379,12 +389,15 @@
   min-width: 0;
   width: 308px;
   max-width: 308px;
-  margin-top: 44px;
+  margin-top: 0;
   display: flex;
   flex-direction: column;
   gap: 64px;
-  padding-top: 0;
+  background: transparent;
+  border-radius: 0;
+  padding: 0;
   animation: slideInContent 0.6s cubic-bezier(0.4, 0, 0.2, 1) 0.15s both;
+  overflow: visible;
 }
 
 @keyframes slideInContent {
@@ -402,6 +415,7 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
+  overflow: visible;
 }
 
 .destination-expanded__title {
@@ -413,6 +427,9 @@
   color: #111213;
   margin: 0;
   max-width: 308px;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  hyphens: none;
 }
 
 .destination-expanded__location {
@@ -423,6 +440,8 @@
   color: #3C3F43;
   margin: 0;
   max-width: 308px;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
 }
 
 .destination-expanded__section h4 {
@@ -433,18 +452,22 @@
   color: #111213;
   margin: 0;
   max-width: 308px;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
 }
 
 .destination-expanded__sections {
   display: flex;
   flex-direction: column;
   gap: 24px;
+  overflow: visible;
 }
 
 .destination-expanded__section {
   display: flex;
   flex-direction: column;
   gap: 8px;
+  overflow: visible;
 }
 
 .destination-expanded__section p {
@@ -455,6 +478,10 @@
   color: #3C3F43;
   margin: 0;
   max-width: 308px;
+  overflow: visible;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  text-overflow: unset;
 }
 
 /* ================================
@@ -577,21 +604,27 @@
   width: 198px; /* Figma width */
   height: 48px; /* Figma height */
   padding: 16px 24px;
-  background: #7150e5;
-  border: none;
+  background: #f7f9fa;
+  border: 1px solid #7150e5;
   border-radius: 8px;
   cursor: pointer;
-  transition: background 0.2s ease;
+  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
 }
 
 .destinations__share-btn:hover {
-  background: #5238a8;
+  background: #7150e5;
+}
+
+.destinations__share-btn:hover .destinations__share-icon,
+.destinations__share-btn:hover span {
+  color: #fbfbfb;
 }
 
 .destinations__share-icon {
   width: 24px;
   height: 24px;
   flex-shrink: 0;
+  transition: color 0.2s ease;
 }
 
 .destinations__share-btn span {
@@ -599,8 +632,9 @@
   font-size: 16px;
   font-weight: 400;
   line-height: 24px;
-  color: #fbfbfb;
+  color: #7150e5;
   white-space: nowrap;
+  transition: color 0.2s ease;
 }
 
 /* ================================
@@ -752,6 +786,7 @@
 
   .destination-expanded__image-wrapper {
     width: 100%;
+    margin-top: 0;
   }
 
   .destination-expanded__image {
@@ -764,7 +799,7 @@
     width: 100%;
     max-width: 100%;
     margin-top: 0;
-    padding-top: 0;
+    padding: 24px;
     gap: 32px;
   }
 
@@ -913,7 +948,7 @@
   .destination-expanded__content {
     margin-top: 0;
     gap: 24px;
-    padding-top: 0;
+    padding: 20px;
   }
 
   .destination-expanded__section h4,

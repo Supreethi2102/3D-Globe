@@ -1,16 +1,41 @@
 import React, { useEffect, useRef } from 'react';
-import { Header, Hero, Footer, CaseStudies, Publications, About, Testimonials, Contact, Destinations, ColorSwatches } from './components';
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
+import { Header, Hero, Footer, CaseStudies, Publications, About, Testimonials, Contact, Destinations, ColorSwatches, PublicationDetail } from './components';
 import './App.css';
 
-export const App: React.FC = () => {
+const AppRoutes: React.FC = () => {
+  const location = useLocation();
+  const isHome = location.pathname === '/';
+
+  useEffect(() => {
+    const globe = document.getElementById('globe');
+    if (globe) {
+      globe.style.display = isHome ? '' : 'none';
+    }
+  }, [isHome]);
+
+  return (
+    <Routes>
+      <Route path="/" element={<HomePage />} />
+      <Route path="/publications/:id" element={<PublicationDetailPage />} />
+    </Routes>
+  );
+};
+
+const HomePage: React.FC = () => {
   const globeContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // Move the globe element into our React layout
     const globeElement = document.getElementById('globe');
     if (globeElement && globeContainerRef.current) {
       globeContainerRef.current.appendChild(globeElement);
     }
+    return () => {
+      const globe = document.getElementById('globe');
+      if (globe && document.body) {
+        document.body.appendChild(globe);
+      }
+    };
   }, []);
 
   return (
@@ -66,5 +91,22 @@ export const App: React.FC = () => {
       {/* Color Swatches Footer */}
       <ColorSwatches />
     </div>
+  );
+};
+
+const PublicationDetailPage: React.FC = () => {
+  return (
+    <div className="app">
+      <Header />
+      <PublicationDetail />
+    </div>
+  );
+};
+
+export const App: React.FC = () => {
+  return (
+    <BrowserRouter>
+      <AppRoutes />
+    </BrowserRouter>
   );
 };
