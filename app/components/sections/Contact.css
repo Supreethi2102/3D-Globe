@@ -1,6 +1,6 @@
 /* Contact Section - Following same max-width pattern as other sections */
 
-.contact {
+.contact-wrapper {
   background: #eceef2; /* Figma outer background */
   padding-top: 80px; /* Reduced gap from Testimonials */
   padding-bottom: 112px; /* More bottom padding */
@@ -9,6 +9,41 @@
   padding-right: max(var(--padding-x, 112px), calc((100vw - var(--content-max-width, 1220px)) / 2));
   width: 100%;
   scroll-margin-top: 100px;
+  position: relative;
+  overflow: hidden; /* Hidden for proper clipping during animation */
+  min-height: 851px; /* Ensure section has height */
+  perspective: 1200px; /* Critical: perspective must be on parent for 3D transforms */
+}
+
+/* Contact card wrapper - handles animation */
+.contact-stage {
+  position: relative;
+  min-height: 851px; /* matches the card height so absolute cards don't cause layout shift */
+}
+
+.contact-card {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  max-width: var(--content-max-width, 1220px);
+  margin: 0 auto;
+  backface-visibility: hidden;
+  transform-style: preserve-3d; /* Critical: enables 3D transforms */
+  will-change: transform, opacity;
+}
+
+.contact-card.is-active {
+  display: block !important;
+  z-index: 1;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+.contact-card.is-next {
+  display: none;
+  z-index: 2; /* Higher z-index so it appears above old card when sliding in */
 }
 
 .contact__card {
@@ -22,6 +57,132 @@
   display: flex;
   gap: 64px; /* Reduced gap between form and postcard */
   align-items: center;
+  position: relative;
+  /* GPU acceleration - GSAP will handle transforms */
+  will-change: transform, opacity;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Snapshot-based paper fold overlay (physical fold feel) */
+.paper-fold-overlay {
+  position: fixed;
+  inset: auto;
+  z-index: 99999;
+  pointer-events: none;
+  transform-style: preserve-3d;
+  will-change: transform, opacity;
+}
+
+.paper-fold-panel {
+  position: absolute;
+  inset: 0;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
+  will-change: transform, opacity;
+}
+
+/* Static panel shapes (clip-path is STATIC; we only animate transforms) */
+.paper-fold-panel--left {
+  clip-path: polygon(0 0, 55% 50%, 0 100%);
+  transform-origin: 0% 50%;
+}
+
+.paper-fold-panel--right {
+  clip-path: polygon(100% 0, 100% 100%, 45% 50%);
+  transform-origin: 100% 50%;
+}
+
+.paper-fold-panel--top {
+  clip-path: polygon(0 0, 100% 0, 50% 55%);
+  transform-origin: 50% 0%;
+}
+
+.paper-fold-panel--base {
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+}
+
+/* GPU-accelerated transforms for smooth animation */
+.contact-card.is-active .contact__card {
+  will-change: transform, opacity;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+.contact-card.is-next .contact__card {
+  will-change: transform, opacity;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Round ball drill animation */
+.contact__ball-drill {
+  position: absolute;
+  top: 50%;
+  right: calc(25% - 115px); /* Position relative to button in postcard side */
+  z-index: 1000;
+  pointer-events: none;
+  transform: translate(50%, -50%);
+}
+
+.contact__ball {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, #ff9a5c, #ff7e35);
+  box-shadow: 0 2px 8px rgba(255, 126, 53, 0.5), inset -2px -2px 4px rgba(0, 0, 0, 0.2);
+  animation: ballDrill 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+}
+
+@keyframes ballDrill {
+  0% {
+    transform: translate(-100px, 0) scale(0.5) rotate(0deg);
+    opacity: 0;
+  }
+  20% {
+    transform: translate(-60px, -8px) scale(0.9) rotate(90deg);
+    opacity: 0.8;
+  }
+  40% {
+    transform: translate(-30px, -4px) scale(1.1) rotate(180deg);
+    opacity: 1;
+  }
+  60% {
+    transform: translate(-10px, 2px) scale(1) rotate(270deg);
+    opacity: 0.95;
+  }
+  100% {
+    transform: translate(20px, 0) scale(0.4) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+/* Button drilling effect */
+.contact__submit-btn--drilling {
+  animation: buttonDrill 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  transform-origin: center;
+  position: relative;
+  z-index: 1001;
+}
+
+@keyframes buttonDrill {
+  0% {
+    transform: scale(1);
+    box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+  }
+  30% {
+    transform: scale(0.92);
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  60% {
+    transform: scale(0.95);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+  }
 }
 
 /* Left Side - Form */
@@ -211,6 +372,18 @@
 .contact__postcard--animate-to-center {
   transform: translateX(0);
   transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: postcardSlideIn 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes postcardSlideIn {
+  from {
+    transform: translateX(-120%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
 }
 
 /* “Sent” message box – appears after postcard slides out */
@@ -392,13 +565,13 @@
 }
 
 .contact__submit-btn--success {
-  background: #059669;
-  border-color: #059669;
+  background: #7150e5; /* brand purple */
+  border-color: #7150e5;
 }
 
 .contact__submit-btn--success:hover {
-  background: #047857;
-  border-color: #047857;
+  background: #5b3fd3; /* slightly darker purple on hover */
+  border-color: #5b3fd3;
 }
 
 /* Loading spinner */
