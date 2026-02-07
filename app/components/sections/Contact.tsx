@@ -9,7 +9,7 @@ import './Contact.css';
 // Character limit for message field
 const MESSAGE_MAX_LENGTH = 2000;
 // Animation testing mode: keep EmailJS OFF until explicitly re-enabled.
-const ENABLE_EMAILJS = false;
+const ENABLE_EMAILJS = true;
 
 export const Contact: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -25,6 +25,7 @@ export const Contact: React.FC = () => {
   const [touched, setTouched] = useState<Record<string, boolean>>({});
   const [cardKey, setCardKey] = useState(0); // Track which card is active
   const [activeSlot, setActiveSlot] = useState<0 | 1>(0);
+  const [showValidationErrors, setShowValidationErrors] = useState(false);
   
   // Refs for GSAP animations
   const wrapperRef = useRef<HTMLElement>(null);
@@ -114,7 +115,7 @@ export const Contact: React.FC = () => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
     
-    if (touched[name]) {
+    if (showValidationErrors) {
       const error = validateField(name, value);
       setErrors(prev => ({ ...prev, [name]: error }));
     }
@@ -123,8 +124,8 @@ export const Contact: React.FC = () => {
   const handleBlur = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setTouched(prev => ({ ...prev, [name]: true }));
-    const error = validateField(name, value);
-    setErrors(prev => ({ ...prev, [name]: error }));
+    // Do NOT show validation errors on blur.
+    // Errors should appear only after the user tries to submit.
   };
 
   // Render contact card content (reusable)
@@ -177,7 +178,7 @@ export const Contact: React.FC = () => {
                 aria-describedby={cardErrors.name && cardTouched.name ? `${nameErrorId}-${cardKey}` : undefined}
                 autoComplete="name"
               />
-              {cardErrors.name && cardTouched.name && (
+              {cardErrors.name && showValidationErrors && (
                 <span id={`${nameErrorId}-${cardKey}`} className="contact__error" role="alert">
                   {cardErrors.name}
                 </span>
@@ -204,7 +205,7 @@ export const Contact: React.FC = () => {
                 aria-describedby={cardErrors.email && cardTouched.email ? `${emailErrorId}-${cardKey}` : undefined}
                 autoComplete="email"
               />
-              {cardErrors.email && cardTouched.email && (
+              {cardErrors.email && showValidationErrors && (
                 <span id={`${emailErrorId}-${cardKey}`} className="contact__error" role="alert">
                   {cardErrors.email}
                 </span>
@@ -248,7 +249,7 @@ export const Contact: React.FC = () => {
                   )}
                 </span>
               </div>
-              {cardErrors.message && cardTouched.message && (
+              {cardErrors.message && showValidationErrors && (
                 <span id={`${messageErrorId}-${cardKey}`} className="contact__error" role="alert">
                   {cardErrors.message}
                 </span>
@@ -330,12 +331,11 @@ export const Contact: React.FC = () => {
     
     if (isAnimatingRef.current) return;
 
-    // TEMPORARY: Disable validation for animation testing
-    /*
     // Validate all fields
+    setShowValidationErrors(true);
     const newErrors: Record<string, string> = {};
     Object.entries(formData).forEach(([key, value]) => {
-      const error = validateField(key, value);
+      const error = validateField(key, String(value));
       if (error) newErrors[key] = error;
     });
     
@@ -351,7 +351,6 @@ export const Contact: React.FC = () => {
       setErrorMessage('Email service is not configured.');
       return;
     }
-    */
 
     setIsSubmitting(true);
     setSubmitStatus('idle');
@@ -362,52 +361,28 @@ export const Contact: React.FC = () => {
     if (active) active.style.pointerEvents = 'none';
 
     try {
-      // Always trigger animation (EmailJS is disabled for now)
-      setSubmitStatus('success');
-      setErrorMessage('');
-      
-      // Start GSAP animation immediately
-      void animateCardTransition();
-      
-      if (!ENABLE_EMAILJS) {
-        return;
-      }
-
-      if (emailjsConfig.publicKey && emailjsConfig.publicKey !== 'YOUR_PUBLIC_KEY_HERE') {
-        emailjs.init(emailjsConfig.publicKey);
-      }
-
-      const templateParams = {
-        from_name: formData.name.trim() || 'Test User',
-        from_email: formData.email.trim() || 'test@example.com',
-        message: formData.message.trim() || 'Animation test message',
-        date: new Date().toLocaleDateString('en-US', { 
-          year: 'numeric', 
-          month: 'long', 
-          day: 'numeric' 
-        }),
-      };
-
-      let response;
-      try {
-        if (emailjsConfig.publicKey && 
-            emailjsConfig.publicKey !== 'YOUR_PUBLIC_KEY_HERE' &&
-            emailjsConfig.serviceId && 
-            emailjsConfig.serviceId !== 'YOUR_SERVICE_ID_HERE' &&
-            emailjsConfig.templateId && 
-            emailjsConfig.templateId !== 'YOUR_TEMPLATE_ID_HERE') {
-          response = await emailjs.send(
-            emailjsConfig.serviceId,
-            emailjsConfig.templateId,
-            templateParams
-          );
-          console.log('Email sent successfully:', response);
-        } else {
-          response = { status: 200, text: 'Animation test' };
+      if (ENABLE_EMAILJS) {
+        if (emailjsConfig.publicKey && emailjsConfig.publicKey !== 'YOUR_PUBLIC_KEY_HERE') {
+          emailjs.init(emailjsConfig.publicKey);
         }
-      } catch (emailError) {
-        console.log('Email send failed, but triggering animation:', emailError);
-        response = { status: 200, text: 'Animation test' };
+
+        const templateParams = {
+          from_name: formData.name.trim(),
+          from_email: formData.email.trim(),
+          message: formData.message.trim(),
+          date: new Date().toLocaleDateString('en-US', { 
+            year: 'numeric', 
+            month: 'long', 
+            day: 'numeric' 
+          }),
+        };
+
+        const response = await emailjs.send(
+          emailjsConfig.serviceId,
+          emailjsConfig.templateId,
+          templateParams
+        );
+        console.log('Email sent successfully:', response);
       }
 
       setSubmitStatus('success');
@@ -418,10 +393,10 @@ export const Contact: React.FC = () => {
       
     } catch (error: any) {
       console.error('Failed:', error);
-      // Still trigger animation for testing
-      setSubmitStatus('success');
-      setErrorMessage('');
-      void animateCardTransition();
+      setSubmitStatus('error');
+      setErrorMessage('Something went wrong. Please try again.');
+      isAnimatingRef.current = false;
+      if (active) active.style.pointerEvents = '';
       
       /*
       setSubmitStatus('error');
@@ -517,6 +492,7 @@ export const Contact: React.FC = () => {
       setFormData({ name: '', email: '', message: '' });
       setTouched({});
       setErrors({});
+      setShowValidationErrors(false);
       setSubmitStatus('idle');
       setErrorMessage('');
       setCardKey((k) => k + 1);
