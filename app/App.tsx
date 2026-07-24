@@ -89,7 +89,7 @@ const HomePage: React.FC = () => {
             <div
               className="main__globe"
               role="img"
-              aria-label="Interactive rotating globe highlighting places that inspire design and UX work around the world"
+              aria-label="Interactive globe highlighting places around the world that inspire my creative work"
             >
               <div className="main__globe-inner" ref={globeContainerRef}>
                 <img
