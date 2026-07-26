@@ -262,7 +262,7 @@ export const CaseStudyCard: React.FC<CaseStudyCardProps> = ({ study }) => {
   };
 
   return (
-    <div className="case-study-card-flip">
+    <div className="case-study-card-flip" id={`case-study-${study.id}`}>
       <article
         className={`case-study-card ${isFlipped ? 'case-study-card--flipped' : ''}`}
         aria-labelledby={cardTitleId}

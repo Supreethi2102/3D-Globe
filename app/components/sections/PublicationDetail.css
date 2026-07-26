@@ -13,11 +13,10 @@
   padding-right: max(var(--padding-x, 112px), calc((100vw - var(--content-max-width, 1220px)) / 2));
   box-sizing: border-box;
   /*
-   * Product shots include studio margins around angled props.
-   * Slight zoom so mockups read larger — keep headroom for the hover scale
-   * so work isn’t cropped when the image enlarges.
+   * Default frame zoom when an image has no per-asset frameZoom.
+   * Individual gallery images set --publication-image-frame-zoom inline.
    */
-  --publication-image-frame-zoom: 1.08;
+  --publication-image-frame-zoom: 1;
 }
 
 .publication-detail__inner {
@@ -263,6 +262,10 @@
   width: 100%;
 }
 
+.publication-detail__thumbs-row {
+  overflow: visible;
+}
+
 .publication-detail__gallery-rail {
   width: var(--publication-detail-control-size);
   min-width: var(--publication-detail-control-size);
@@ -278,12 +281,12 @@
   width: 100%;
 }
 
-/* Counter above thumbnail list - align with first thumb's left edge (matches thumbs inset) */
+/* Counter above thumbnail list — flush with stage / first thumb frame */
 .publication-detail__counter {
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  padding-left: 20px;
+  padding-left: 0;
   font-family: var(--font-family-ui);
   font-size: var(--type-atkinson-text-md-size);
   font-weight: 400;
@@ -395,7 +398,7 @@
 
 @media (min-width: 1025px) and (hover: hover) and (pointer: fine) {
   .publication-detail__stage:hover .publication-detail__image {
-    transform: scale(calc(var(--publication-image-frame-zoom, 1.08) * 1.06));
+    transform: scale(calc(var(--publication-image-frame-zoom, 1) * 1.06));
   }
 }
 
@@ -413,7 +416,7 @@
   object-fit: cover;
   object-position: center;
   display: block;
-  transform: scale(var(--publication-image-frame-zoom, 1.08));
+  transform: scale(var(--publication-image-frame-zoom, 1));
   transform-origin: center center;
   transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -434,28 +437,38 @@
 .publication-detail__thumbs-wrap {
   min-width: 0;
   width: 100%;
-  /* Keep active thumb glow inside this box (no negative-margin bleed) */
   overflow: visible;
 }
 
 .publication-detail__thumbs-clip {
   width: 100%;
-  overflow-x: hidden;
-  overflow-y: visible;
-  /* Room so the active thumb ring/shadow isn’t clipped */
-  padding: 10px 0 14px;
-  margin: -10px 0 -14px;
+  overflow: visible;
+  box-sizing: border-box;
+  /*
+   * Glow room lives on the scroller (padding), not this clip —
+   * overflow-x:auto on .thumbs was cutting the left shadow.
+   */
+  --publication-thumb-glow-pad-x: 16px;
+  --publication-thumb-glow-pad-y: 12px;
+  padding: var(--publication-thumb-glow-pad-y) 0
+    calc(var(--publication-thumb-glow-pad-y) + 4px);
+  margin: calc(var(--publication-thumb-glow-pad-y) * -1) 0
+    calc((var(--publication-thumb-glow-pad-y) + 4px) * -1);
 }
 
 .publication-detail__thumbs {
-  width: 100%;
+  /* Pad the scrollport so the first/last active glow isn’t clipped */
+  --publication-thumb-glow-pad-x: 16px;
   overflow-x: auto;
   overflow-y: visible;
   display: flex;
   gap: 20px;
-  /* Extra left inset — first active purple glow must clear the clip edge */
-  padding: 8px 16px 20px 20px;
-  scroll-padding-inline: 20px 16px;
+  padding: 8px var(--publication-thumb-glow-pad-x) 20px;
+  /* Pull back so thumb frames still line up with stage + counter */
+  margin-inline: calc(var(--publication-thumb-glow-pad-x) * -1);
+  width: calc(100% + (var(--publication-thumb-glow-pad-x) * 2));
+  max-width: none;
+  scroll-padding-inline: var(--publication-thumb-glow-pad-x);
   box-sizing: border-box;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
@@ -553,8 +566,8 @@
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  /* Outside .publication-detail — keep the same frame zoom */
-  --publication-image-frame-zoom: 1.08;
+  /* Outside .publication-detail — per-image zoom applied inline on the stage */
+  --publication-image-frame-zoom: 1;
 }
 
 .publication-detail-enlarged__panel-inner {
@@ -705,7 +718,7 @@
   object-fit: cover;
   object-position: center;
   display: block;
-  transform: scale(var(--publication-image-frame-zoom, 1.08));
+  transform: scale(var(--publication-image-frame-zoom, 1));
   transform-origin: center center;
   box-shadow: none;
 }
@@ -881,7 +894,7 @@
 
   .publication-detail__thumbs {
     gap: 12px;
-    padding: 4px 12px 8px;
+    padding: 4px var(--publication-thumb-glow-pad-x, 16px) 8px;
   }
 
   .publication-detail__thumb {
@@ -950,7 +963,7 @@
 
   .publication-detail__thumbs {
     gap: 10px;
-    padding: 4px 12px 4px;
+    padding: 4px var(--publication-thumb-glow-pad-x, 16px);
   }
 
   .publication-detail__thumb {

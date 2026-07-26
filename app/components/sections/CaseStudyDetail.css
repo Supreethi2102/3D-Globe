@@ -263,14 +263,23 @@
   box-sizing: border-box;
   align-self: flex-end;
   cursor: pointer;
-  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+  box-shadow: var(--btn-shadow-1, none);
+  transform: var(--btn-motion-rest, none);
+  transition:
+    transform var(--btn-motion-duration, 180ms) var(--btn-motion-ease, ease-out),
+    background-color var(--btn-motion-duration, 180ms) var(--btn-motion-ease, ease-out),
+    border-color var(--btn-motion-duration, 180ms) var(--btn-motion-ease, ease-out),
+    color var(--btn-motion-duration, 180ms) var(--btn-motion-ease, ease-out),
+    box-shadow var(--btn-motion-duration, 180ms) var(--btn-motion-ease, ease-out);
 }
 
 
 @media (min-width: 1025px) and (hover: hover) and (pointer: fine) {
 .case-study-detail__listen:hover:not(:disabled) {
-  background: var(--btn-primary-hover);
-  border-color: var(--btn-primary-hover);
+  background: var(--btn-purple-100-bg);
+  border-color: var(--btn-secondary-hover-border);
+  transform: var(--btn-motion-hover, translateY(-2px));
+  box-shadow: var(--btn-shadow-2, var(--btn-shadow-1, none));
 }
 }
 
@@ -278,6 +287,9 @@
 .case-study-detail__listen:active:not(:disabled) {
   background: var(--btn-primary-active);
   border-color: var(--btn-primary-active);
+  transform: var(--btn-motion-active, scale(0.98));
+  transition-duration: var(--btn-motion-duration-press, 90ms);
+  box-shadow: var(--btn-shadow-1, none);
 }
 
 .case-study-detail__listen:focus-visible {
@@ -296,7 +308,10 @@
 
 
 @media (min-width: 1025px) and (hover: hover) and (pointer: fine) {
-.case-study-detail__listen:hover:not(:disabled) .case-study-detail__listen-icon,
+.case-study-detail__listen:hover:not(:disabled) .case-study-detail__listen-icon {
+  color: var(--btn-purple-100-text);
+}
+
 .case-study-detail__listen:active:not(:disabled) .case-study-detail__listen-icon {
   color: var(--btn-white);
 }
@@ -321,7 +336,11 @@
 
 
 @media (min-width: 1025px) and (hover: hover) and (pointer: fine) {
-.case-study-detail__listen:hover:not(:disabled) .case-study-detail__listen-label,
+.case-study-detail__listen:hover:not(:disabled) .case-study-detail__listen-label {
+  color: var(--btn-purple-100-text);
+  border-left-color: var(--btn-secondary-hover-border);
+}
+
 .case-study-detail__listen:active:not(:disabled) .case-study-detail__listen-label {
   color: var(--btn-white);
   border-left-color: rgba(255, 255, 255, 0.35);

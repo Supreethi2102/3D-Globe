@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useLayoutEffect, useCallback, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import type { Icon } from '@phosphor-icons/react';
 import { Palette, User, ChatsCircle, Sun, SunHorizon, CloudFog, MoonStars, CloudMoon, Moon, EnvelopeSimple, Megaphone, Package, BookOpen, Ruler, NotePencil, CaretDown } from '@phosphor-icons/react';
 import {
@@ -35,7 +36,7 @@ const MegaMenuLinkLabel: React.FC<{ item: CaseStudyNavItem }> = ({ item }) => {
 
 type WorkMegaMenuContentProps = {
   tab: MegaMenuTab;
-  onNavigate: (e: React.MouseEvent<HTMLAnchorElement>, sectionId: string) => void;
+  onNavigate: (e: React.MouseEvent<HTMLAnchorElement>, href: string) => void;
   linkTabIndex?: number;
 };
 
@@ -56,10 +57,10 @@ const WorkMegaMenuContent: React.FC<WorkMegaMenuContentProps> = ({ tab, onNaviga
                 {category.items.map((item) => (
                   <li key={item.label}>
                     <a
-                      href={item.sectionId}
+                      href={item.href}
                       className="mega-menu__link"
                       aria-label={item.labelLines ? item.label : undefined}
-                      onClick={(e) => onNavigate(e, item.sectionId)}
+                      onClick={(e) => onNavigate(e, item.href)}
                       tabIndex={linkTabIndex}
                     >
                       <MegaMenuLinkLabel item={item} />
@@ -79,9 +80,9 @@ const WorkMegaMenuContent: React.FC<WorkMegaMenuContentProps> = ({ tab, onNaviga
       {projectHighlightItems.map((item) => (
         <li key={item.label}>
           <a
-            href={item.sectionId}
+            href={item.href}
             className="mega-menu__link"
-            onClick={(e) => onNavigate(e, item.sectionId)}
+            onClick={(e) => onNavigate(e, item.href)}
             tabIndex={linkTabIndex}
           >
             {item.label}
@@ -93,6 +94,7 @@ const WorkMegaMenuContent: React.FC<WorkMegaMenuContentProps> = ({ tab, onNaviga
 };
 
 export const Header: React.FC = () => {
+  const navigate = useNavigate();
   const headerRef = useRef<HTMLElement | null>(null);
   const megaMenuCloseTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -217,17 +219,25 @@ export const Header: React.FC = () => {
     return () => document.removeEventListener('mousedown', handleDocumentPointerDown);
   }, [clearMegaMenuCloseTimer]);
 
-  // Smooth scroll to section — offset matches fixed header height
-  const scrollToSection = useCallback((e: React.MouseEvent<HTMLAnchorElement>, sectionId: string) => {
-    e.preventDefault();
+  const closeAllMenus = useCallback(() => {
     setIsMobileMenuOpen(false);
     setIsMobileWorkOpen(false);
     setIsMobileThemeOpen(false);
     setIsMegaMenuOpen(false);
     setIsThemeMenuOpen(false);
+  }, []);
+
+  // Smooth scroll to section — offset matches fixed header height
+  const scrollToSection = useCallback((e: React.MouseEvent<HTMLAnchorElement>, sectionId: string) => {
+    e.preventDefault();
+    closeAllMenus();
 
     const el = document.querySelector(sectionId);
-    if (!el) return;
+    if (!el) {
+      // On detail pages, home sections aren't mounted — go home then scroll
+      navigate(`/${sectionId}`);
+      return;
+    }
 
     const headerRaw = getComputedStyle(document.documentElement).getPropertyValue('--header-height').trim();
     const headerH = parseFloat(headerRaw) || 96;
@@ -245,7 +255,17 @@ export const Header: React.FC = () => {
     window.setTimeout(() => {
       (el as HTMLElement).focus({ preventScroll: true });
     }, reduce ? 0 : 400);
-  }, []);
+  }, [closeAllMenus, navigate]);
+
+  // Work mega-menu items → case study / publication detail pages
+  const goToWorkDetail = useCallback(
+    (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+      e.preventDefault();
+      closeAllMenus();
+      navigate(href);
+    },
+    [closeAllMenus, navigate],
+  );
 
   const toggleMegaMenu = useCallback((e: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement>) => {
     e.preventDefault();
@@ -373,7 +393,7 @@ export const Header: React.FC = () => {
                 aria-labelledby={megaMenuTab === 'case-studies' ? 'mega-tab-case-studies' : 'mega-tab-project-highlights'}
                 className="mega-menu__content"
               >
-                <WorkMegaMenuContent tab={megaMenuTab} onNavigate={scrollToSection} />
+                <WorkMegaMenuContent tab={megaMenuTab} onNavigate={goToWorkDetail} />
               </div>
             </div>
           </div>
@@ -590,7 +610,7 @@ export const Header: React.FC = () => {
 
           <WorkMegaMenuContent
             tab={megaMenuTab}
-            onNavigate={scrollToSection}
+            onNavigate={goToWorkDetail}
             linkTabIndex={isMobileMenuOpen && isMobileWorkOpen ? 0 : -1}
           />
         </div>

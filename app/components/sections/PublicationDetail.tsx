@@ -4,7 +4,7 @@ import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { ArrowUpRight, CaretLeft, CaretRight, ArrowLeft } from '@phosphor-icons/react';
 import { getGalleryImages, getPublicationById, getPublicationCopy } from '../../data/publications';
 import { ResponsivePicture } from '../ResponsivePicture';
-import { isRasterImageSources, publicationImageAlt } from '../../utils/imageFormats';
+import { isRasterImageSources, publicationImageAlt, publicationImageFrameZoom } from '../../utils/imageFormats';
 import './PublicationDetail.css';
 
 function clampIndex(n: number, len: number) {
@@ -155,6 +155,16 @@ export const PublicationDetail: React.FC = () => {
     return `${publication.title} image ${activeIndex + 1}`;
   }, [activeImage, activeIndex, publication]);
 
+  const activeFrameZoom = useMemo(
+    () => publicationImageFrameZoom(activeImage, 1),
+    [activeImage],
+  );
+
+  const frameZoomStyle = useMemo(
+    () => ({ ['--publication-image-frame-zoom' as string]: String(activeFrameZoom) }),
+    [activeFrameZoom],
+  );
+
   const caption = useMemo(() => {
     const lowerSubtitle = (copy?.modalSubtitle ?? '').toLowerCase();
     const titleLower = (publication?.title ?? '').toLowerCase();
@@ -205,7 +215,7 @@ export const PublicationDetail: React.FC = () => {
               <CaretLeft size={24} weight="regular" color="#7150E5" aria-hidden="true" />
             </button>
 
-            <div className="publication-detail-enlarged__stage">
+            <div className="publication-detail-enlarged__stage" style={frameZoomStyle}>
               {activeImage ? (
                 <ResponsivePicture
                   image={activeImage}
@@ -309,6 +319,7 @@ export const PublicationDetail: React.FC = () => {
               <button
                 type="button"
                 className="publication-detail__stage"
+                style={frameZoomStyle}
                 onClick={openEnlarged}
                 aria-label={activeImageAlt ? `View larger, ${activeImageAlt}` : 'View larger'}
               >

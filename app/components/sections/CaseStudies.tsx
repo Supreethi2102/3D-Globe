@@ -303,6 +303,9 @@ export const CaseStudies: React.FC = () => {
   const [hoveredFilterNav, setHoveredFilterNav] = useState<'prev' | 'next' | null>(null);
   /** True only when the user chose “Show fewer” — not when the category filter resets the list. */
   const anchorScrollAfterCollapseRef = useRef(false);
+  /** Skip collapsing the list when a globe tooltip deep-links into a filtered category. */
+  const skipCollapseOnCategoryChangeRef = useRef(false);
+  const pendingGlobeFocusIdRef = useRef<number | null>(null);
 
   const updateFilterScrollState = useCallback(() => {
     const el = filterWrapRef.current;
@@ -365,6 +368,10 @@ export const CaseStudies: React.FC = () => {
     : caseStudies.filter(s => s.category === activeCategory);
 
   useEffect(() => {
+    if (skipCollapseOnCategoryChangeRef.current) {
+      skipCollapseOnCategoryChangeRef.current = false;
+      return;
+    }
     setShowAllCaseStudies(false);
   }, [activeCategory]);
 
@@ -380,6 +387,42 @@ export const CaseStudies: React.FC = () => {
     showAllCaseStudies || filteredStudies.length <= INITIAL_CASE_STUDIES_VISIBLE
       ? filteredStudies
       : filteredStudies.slice(0, INITIAL_CASE_STUDIES_VISIBLE);
+
+  /** Globe tooltip → scroll to the matching case study card on this page. */
+  useEffect(() => {
+    const onFocusCaseStudy = (event: Event) => {
+      const id = (event as CustomEvent<{ id: number }>).detail?.id;
+      if (typeof id !== 'number') return;
+      if (!caseStudies.some((s) => s.id === id)) return;
+
+      pendingGlobeFocusIdRef.current = id;
+      skipCollapseOnCategoryChangeRef.current = true;
+      setActiveCategory('all');
+
+      const indexInAll = caseStudies.findIndex((s) => s.id === id);
+      setShowAllCaseStudies(indexInAll >= INITIAL_CASE_STUDIES_VISIBLE);
+
+      // If the card is already mounted (no React state change), scroll immediately
+      requestAnimationFrame(() => {
+        const el = document.getElementById(`case-study-${id}`);
+        if (!el || pendingGlobeFocusIdRef.current !== id) return;
+        pendingGlobeFocusIdRef.current = null;
+        el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      });
+    };
+
+    window.addEventListener('portfolio:focus-case-study', onFocusCaseStudy);
+    return () => window.removeEventListener('portfolio:focus-case-study', onFocusCaseStudy);
+  }, []);
+
+  useLayoutEffect(() => {
+    const id = pendingGlobeFocusIdRef.current;
+    if (id == null) return;
+    const el = document.getElementById(`case-study-${id}`);
+    if (!el) return;
+    pendingGlobeFocusIdRef.current = null;
+    el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }, [activeCategory, showAllCaseStudies, visibleStudies]);
 
   const showViewAllFooter = filteredStudies.length > 0;
 

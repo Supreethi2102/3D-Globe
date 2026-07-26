@@ -40,26 +40,34 @@
   flex-shrink: 0;
   padding: 12px;
   color: var(--btn-primary, #7150e5);
-  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+  transform: var(--btn-motion-rest, none);
+  transition:
+    transform var(--btn-motion-duration, 180ms) var(--btn-motion-ease, ease-out),
+    background-color var(--btn-motion-duration, 180ms) var(--btn-motion-ease, ease-out),
+    border-color var(--btn-motion-duration, 180ms) var(--btn-motion-ease, ease-out),
+    color var(--btn-motion-duration, 180ms) var(--btn-motion-ease, ease-out);
 }
 
 @media (min-width: 1025px) and (hover: hover) and (pointer: fine) {
   .case-studies__filter-nav-btn:hover:not(:disabled) {
-    background: var(--btn-primary-hover, #7150e5);
-    border-color: var(--btn-primary-hover, #7150e5);
-    color: var(--btn-white, #ffffff);
+    background: var(--btn-purple-100-bg, #eee8fe);
+    border-color: var(--btn-secondary-hover-border, #5e3ec9);
+    color: var(--btn-purple-100-text, #4c3cac);
+    transform: var(--btn-motion-hover, translateY(-2px));
   }
 }
 
 .case-studies__filter-nav-btn:active:not(:disabled) {
-  background: var(--btn-primary-active, #5a3fd4);
-  border-color: var(--btn-primary-active, #5a3fd4);
+  background: var(--btn-primary-active, #5238a8);
+  border-color: var(--btn-primary-active, #5238a8);
   color: var(--btn-white, #ffffff);
+  transform: var(--btn-motion-active, scale(0.98));
+  transition-duration: var(--btn-motion-duration-press, 90ms);
 }
 
 .case-studies__filter-nav-btn:focus-visible {
-  outline: var(--btn-focus-outline, 2px solid #7150e5);
-  outline-offset: var(--btn-focus-offset, 2px);
+  outline: var(--btn-focus-outline, 2px solid #5340c4);
+  outline-offset: var(--btn-focus-offset, 4px);
 }
 
 .case-studies__filter-nav-btn:disabled {
@@ -68,6 +76,7 @@
   color: var(--btn-disabled-text, #9ca3af);
   cursor: not-allowed;
   opacity: 1;
+  transform: none;
 }
 
 .case-studies__title {
@@ -154,22 +163,43 @@
   min-width: 0;
   min-height: 131px;
   background: #ffffff;
-  border: 1px solid #7150e5;
+  border: 1px solid var(--btn-primary, #7150e5);
   border-radius: 16px;
   cursor: pointer;
-  transition: background 0.2s ease, border-color 0.2s ease;
+  transform: var(--btn-motion-rest, none);
+  transition:
+    transform var(--btn-motion-duration, 180ms) var(--btn-motion-ease, ease-out),
+    background var(--btn-motion-duration, 180ms) var(--btn-motion-ease, ease-out),
+    border-color var(--btn-motion-duration, 180ms) var(--btn-motion-ease, ease-out),
+    box-shadow var(--btn-motion-duration, 180ms) var(--btn-motion-ease, ease-out);
 }
 
 @media (min-width: 1025px) and (hover: hover) and (pointer: fine) {
-  .category-pill:hover {
-    background: #7150E5;
-    border-color: rgba(255, 255, 255, 0.4);
+  .category-pill:hover:not(.category-pill--active) {
+    background: var(--btn-purple-100-bg, #eee8fe);
+    border-color: var(--btn-secondary-hover-border, #5e3ec9);
+    transform: var(--btn-motion-hover, translateY(-2px));
   }
 
-  .category-pill:hover .category-pill__label {
-    color: #ffffff;
-    border-top-color: rgba(255, 255, 255, 0.4);
+  .category-pill:hover:not(.category-pill--active) .category-pill__label {
+    color: var(--btn-purple-100-text, #4c3cac);
+    border-top-color: var(--btn-secondary-hover-border, #5e3ec9);
   }
+
+  .category-pill--active:hover {
+    /* Keep selected style; cursor feedback only */
+    transform: none;
+  }
+}
+
+.category-pill:active:not(:disabled) {
+  transform: var(--btn-motion-active, scale(0.98));
+  transition-duration: var(--btn-motion-duration-press, 90ms);
+}
+
+.category-pill:focus-visible {
+  outline: var(--btn-focus-outline, 2px solid #5340c4);
+  outline-offset: var(--btn-focus-offset, 4px);
 }
 
 .category-pill--active {

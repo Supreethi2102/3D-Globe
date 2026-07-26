@@ -17,6 +17,7 @@ export class MarkerHtml {
 
   private globePosition: Vector3 = new Vector3();
   private mapPosition: Vector3 = new Vector3();
+  private pendingPointerTarget: EventTarget | null = null;
 
   constructor(renderer: Renderer, props: MarkerProps) {
     this.id = props.id;
@@ -32,6 +33,7 @@ export class MarkerHtml {
     renderer.container.appendChild(this.markerEl);
 
     this.markerEl.addEventListener('pointerdown', ev => {
+      this.pendingPointerTarget = ev.target;
       this.markerEl.setPointerCapture(ev.pointerId);
       this.markerEl.addEventListener('pointerup', () => this.handleMarkerClick(), {once: true});
 
@@ -40,8 +42,6 @@ export class MarkerHtml {
       // via setPointerCapture().
       ev.stopPropagation();
     });
-
-    // this.markerEl.addEventListener('click', this.handleMarkerClick);
 
     this.setProps(this.props);
 
@@ -60,10 +60,9 @@ export class MarkerHtml {
 
     let occluded = false;
     if (renderMode === RenderMode.GLOBE) {
-      // Normalize camera position for consistent edge detection
-      // Higher threshold (0.45) = markers only show when land is clearly in view
+      // Hide pins on the far side so they never project onto the wrong continent
       const camDir = camera.position.clone().normalize();
-      occluded = this.globePosition.dot(camDir) < 0.45;
+      occluded = this.globePosition.dot(camDir) < 0.35;
       v3.copy(this.globePosition).project(camera);
     } else {
       v3.copy(this.mapPosition).project(camera);
@@ -73,7 +72,18 @@ export class MarkerHtml {
     const top = (1 - (v3.y + 1) / 2) * height;
 
     this.markerEl.style.transform = `translate(${left}px, ${top}px)`;
-    this.markerEl.style.zIndex = occluded ? '0' : '2';
+    const isOpen = Boolean(this.markerEl.querySelector('.globe-marker.is-open'));
+    if (occluded && !isOpen) {
+      this.markerEl.style.visibility = 'hidden';
+      this.markerEl.style.opacity = '0';
+      this.markerEl.style.pointerEvents = 'none';
+      this.markerEl.style.zIndex = '0';
+    } else {
+      this.markerEl.style.visibility = 'visible';
+      this.markerEl.style.opacity = '1';
+      this.markerEl.style.pointerEvents = 'auto';
+      this.markerEl.style.zIndex = isOpen ? '20' : '2';
+    }
   }
 
   setProps(props: MarkerProps) {
@@ -97,10 +107,18 @@ export class MarkerHtml {
   }
 
   private handleMarkerClick = () => {
-    if (!this.props.onClick) {
+    const target = this.pendingPointerTarget as HTMLElement | null;
+    this.pendingPointerTarget = null;
+
+    const card = target?.closest?.('[data-scroll-case-study]') as HTMLElement | null;
+    if (card) {
+      const caseStudyId = Number(card.getAttribute('data-scroll-case-study'));
+      if (!Number.isNaN(caseStudyId)) {
+        this.props.onCardClick?.(caseStudyId);
+      }
       return;
     }
 
-    this.props.onClick(this.id);
+    this.props.onClick?.(this.id);
   };
 }

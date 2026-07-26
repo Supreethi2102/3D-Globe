@@ -2,6 +2,11 @@ export type RasterImageSources = {
   avif: string;
   webp: string;
   alt: string;
+  /**
+   * Stage crop zoom for publication detail (1 = no extra zoom).
+   * Tight 3D mockups ≈ 1.0; airy stills with studio margin ≈ 1.08–1.15.
+   */
+  frameZoom?: number;
 };
 
 export type PublicationImage = string | RasterImageSources;
@@ -17,4 +22,12 @@ export function publicationImageSrc(image: PublicationImage): string {
 
 export function publicationImageAlt(image: PublicationImage, fallback: string): string {
   return isRasterImageSources(image) ? image.alt : fallback;
+}
+
+/** Per-image frame zoom; falls back to the CSS default when unset. */
+export function publicationImageFrameZoom(image: PublicationImage | undefined, fallback = 1): number {
+  if (image && isRasterImageSources(image) && typeof image.frameZoom === 'number') {
+    return image.frameZoom;
+  }
+  return fallback;
 }

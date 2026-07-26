@@ -1,16 +1,25 @@
 import './examples/style.css';
+import './app/globe-markers.css';
 import './app/main.tsx';
 
 import type {LayerProps, MarkerProps} from './src';
 import {RenderMode, WebGlGlobe} from './src';
+import {
+  GLOBE_MARKERS,
+  buildGlobeMarkerHtml,
+  canUseGlobeHover,
+  focusCaseStudyCard,
+} from './app/data/globeMarkers';
 
 const distance = 20_000_000;
+const AUTO_SPIN_SPEED = 1;
 
 // Equirectangular PNG (from public/illustration-global-inspiration-globe 2.svg)
 // Cache-bust when the texture file is replaced (browser/CDN may keep the old PNG).
 const customImageUrl = encodeURI('/Images/Illustrations 2/illustration-global-inspiration-map.png') + '?v=3';
 
 const globeEl = document.querySelector('#globe')! as HTMLElement;
+
 const globe = new WebGlGlobe(globeEl, {
   renderMode: RenderMode.GLOBE,
   layers: [
@@ -25,8 +34,8 @@ const globe = new WebGlGlobe(globeEl, {
       getUrl: () => customImageUrl
     } as LayerProps
   ],
-  // Tip view north so Antarctica sits lower; continents read more centered
-  cameraView: {lng: 155, lat: 18, altitude: distance, isAnimated: false}
+  // Start facing New Zealand; lat raised so Antarctica stays out of frame
+  cameraView: {lng: 131, lat: 18, altitude: distance, isAnimated: false}
 });
 
 function resizeGlobeIfVisible() {
@@ -47,42 +56,115 @@ const resizeObserver = new ResizeObserver(() => {
 });
 resizeObserver.observe(globeEl);
 
-// Simple pin icon without text - sized for resized globe
-// Three concentric circles scaled to 50x50
-const pinIconHtml = `
-  <div class="myMarker" style="width: 50px; height: 50px; margin: -25px;">
-    <svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <!-- Third circle (outermost): 10% opacity -->
-      <circle cx="25" cy="25" r="20" fill="#7150E5" fill-opacity="0.1"/>
-      <!-- Second circle (middle): 20% opacity -->
-      <circle cx="25" cy="25" r="12.5" fill="#7150E5" fill-opacity="0.2"/>
-      <!-- Main center circle: 100% opacity -->
-      <circle cx="25" cy="25" r="4.5" fill="#7150E5"/>
-    </svg>
-  </div>`;
+function getMarkerRoot(id: string): HTMLElement | null {
+  return globeEl.querySelector(`.globe-marker[data-marker-id="${id}"]`);
+}
 
-const markerProps: MarkerProps[] = [
-  // New Zealand area
-  {id: 'newzealand', html: pinIconHtml, lng: 174.76, lat: -41.29},
-  // Jaipur, India
-  {id: 'jaipur', html: pinIconHtml, lng: 75.79, lat: 26.92},
-  // Random markers spread across the globe
-  {id: 'paris', html: pinIconHtml, lng: 2.35, lat: 48.86},
-  {id: 'tokyo', html: pinIconHtml, lng: 139.69, lat: 35.69},
-  {id: 'capetown', html: pinIconHtml, lng: 18.42, lat: -33.93},
-  {id: 'vancouver', html: pinIconHtml, lng: -123.12, lat: 49.28},
-  {id: 'rio', html: pinIconHtml, lng: -43.21, lat: -22.91},
-  {id: 'sydney', html: pinIconHtml, lng: 151.21, lat: -33.87}
-];
+/**
+ * Place the card where it fits: pins in the upper part of the globe open
+ * downward (caret on top); pins near the bottom open upward (caret below).
+ */
+function applyTooltipPlacement(markerRoot: HTMLElement) {
+  const globeRect = globeEl.getBoundingClientRect();
+  if (globeRect.height <= 0) return;
 
-markerProps.forEach(m => {
-  m.onClick = id => console.log('clicked:', id);
-});
+  const pinRect = markerRoot.getBoundingClientRect();
+  const pinCenterY = pinRect.top + pinRect.height / 2;
+  const relativeY = (pinCenterY - globeRect.top) / globeRect.height;
+
+  // Upper ~58% of the sphere → tooltip below pin (Figma “Up” / caret on top)
+  const placeAbove = relativeY > 0.58;
+
+  const tooltip = markerRoot.querySelector('.globe-marker__tooltip');
+  const card = markerRoot.querySelector('.globe-marker__card');
+  if (!(tooltip instanceof HTMLElement) || !(card instanceof HTMLElement)) return;
+
+  tooltip.classList.toggle('globe-marker__tooltip--above', placeAbove);
+  tooltip.classList.toggle('globe-marker__tooltip--below', !placeAbove);
+  card.classList.toggle('globe-marker__card--above', placeAbove);
+  card.classList.toggle('globe-marker__card--below', !placeAbove);
+}
+
+function closeAllTooltips() {
+  globeEl.querySelectorAll('.globe-marker.is-open').forEach(el => {
+    el.classList.remove('is-open');
+    const pin = el.querySelector('.globe-marker__pin');
+    pin?.setAttribute('aria-expanded', 'false');
+  });
+  globe.startAutoSpin(AUTO_SPIN_SPEED);
+}
+
+function openTooltip(markerRoot: HTMLElement) {
+  if (markerRoot.classList.contains('is-open')) {
+    if (!canUseGlobeHover()) {
+      // Touch toggle: second tap on the same pin closes
+      closeAllTooltips();
+    }
+    return;
+  }
+  closeAllTooltips();
+  applyTooltipPlacement(markerRoot);
+  markerRoot.classList.add('is-open');
+  markerRoot.querySelector('.globe-marker__pin')?.setAttribute('aria-expanded', 'true');
+  globe.stopAutoSpin();
+}
+
+const markerProps: MarkerProps[] = GLOBE_MARKERS.map(marker => ({
+  id: marker.id,
+  html: buildGlobeMarkerHtml(marker),
+  lng: marker.lng,
+  lat: marker.lat,
+  onClick: id => {
+    // Desktop uses hover; pin click is for mobile/tablet (and keyboard)
+    if (canUseGlobeHover()) return;
+    const root = getMarkerRoot(id);
+    if (!root) return;
+    openTooltip(root);
+  },
+  onCardClick: caseStudyId => {
+    closeAllTooltips();
+    focusCaseStudyCard(caseStudyId);
+  },
+}));
 
 globe.setProps({markers: markerProps});
 globe.setControlsInteractionEnabled(true);
-globe.startAutoSpin(1);
+globe.startAutoSpin(AUTO_SPIN_SPEED);
 globe.setZoomEnabled(false);
+
+// Desktop: show tooltip while hovering the pin or its tooltip card
+globeEl.addEventListener('mouseover', ev => {
+  if (!canUseGlobeHover()) return;
+  const marker = (ev.target as Element | null)?.closest?.('.globe-marker');
+  if (!(marker instanceof HTMLElement)) return;
+  const related = ev.relatedTarget as Node | null;
+  if (related && marker.contains(related)) return;
+  openTooltip(marker);
+});
+
+globeEl.addEventListener('mouseout', ev => {
+  if (!canUseGlobeHover()) return;
+  const marker = (ev.target as Element | null)?.closest?.('.globe-marker');
+  if (!(marker instanceof HTMLElement)) return;
+  const related = ev.relatedTarget as Node | null;
+  if (related && marker.contains(related)) return;
+  if (marker.classList.contains('is-open')) {
+    closeAllTooltips();
+  }
+});
+
+// Mobile/tablet: tap outside a marker to dismiss
+document.addEventListener(
+  'pointerdown',
+  ev => {
+    if (canUseGlobeHover()) return;
+    const target = ev.target as Element | null;
+    if (target?.closest?.('.globe-marker')) return;
+    if (!globeEl.querySelector('.globe-marker.is-open')) return;
+    closeAllTooltips();
+  },
+  true,
+);
 
 // Debug: Listen for layer loading state changes
 globe.addEventListener('layerLoadingStateChanged', (ev: any) => {
@@ -91,4 +173,3 @@ globe.addEventListener('layerLoadingStateChanged', (ev: any) => {
     console.error('Layer failed to load:', ev.detail.layer.id);
   }
 });
-
