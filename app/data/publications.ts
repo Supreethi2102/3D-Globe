@@ -847,18 +847,6 @@ export const publications: PublicationDetail[] = [
       'This project strengthened my attention to detail, sharpened my design focus, and reinforced solid discipline within structured editorial systems.',
     galleryImages: HOUSES_GALLERY,
   },
-  {
-    id: 2,
-    title: 'The Warehouse Toy Guide',
-    subtitle: 'Mailer',
-    image: '/misc/81183903d1a5b39abc75683b7deb5957a7a26ddf.png',
-    modalSubtitle: 'Archived mailer',
-    intro:
-      'Designed the Big Toy Mailer for The\u00A0Warehouse, a 48-page guide of toys, activities, and play. I led art direction with depth, colour, fun.\n\nBrainstormed interactive spreads with playful type and kid-friendly styled images. Action figures dressed up, dice rolled and toy products popped out.',
-    bullets: ['Layered colour across pages', 'Added diverse culture, humour', 'Made simple craft projects'],
-    conclusion: 'Each spread encouraged interaction. Kids and guardians explored toys to play and buy.',
-    galleryImages: Array(16).fill('/misc/81183903d1a5b39abc75683b7deb5957a7a26ddf.png'),
-  }
 ];
 
 export function getPublicationById(id: number): PublicationDetail | undefined {

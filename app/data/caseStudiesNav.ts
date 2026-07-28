@@ -55,7 +55,6 @@ export const projectHighlightItems: CaseStudyNavItem[] = [
   { label: 'NZW Grooms Guide Booklet', href: '/publications/4' },
   { label: 'Pumpkin Patch Catalogue', href: '/publications/6' },
   { label: 'SuperLife Booklet', href: '/publications/5' },
-  { label: 'The Warehouse — Big Toy Month Mailer', href: '/publications/2' },
 ];
 
 export type MegaMenuTab = 'case-studies' | 'project-highlights';
