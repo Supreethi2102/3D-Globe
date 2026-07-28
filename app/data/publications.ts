@@ -718,63 +718,6 @@ const SUPERLIFE_GALLERY: RasterImageSources[] = [
 
 export const publications: PublicationDetail[] = [
   {
-    id: 1,
-    title: 'New Zealand Weddings',
-    subtitle: 'Magazine',
-    image: NZ_WEDDINGS_HERO,
-    modalSubtitle: 'Archived magazine',
-    intro:
-      "Contributed to the art direction and editorial design of New Zealand Weddings, the country's go-to print magazine for bridal inspiration, fashion, and planning. I worked on:",
-    bullets: [
-      'Designing feature and style page layouts for elegant, cohesive spreads',
-      'Crafting typography and storytelling that enhanced readability and flow',
-      'Collaborating with editors to bring detail and celebration to each page',
-    ],
-    conclusion:
-      'My time on the title sharpened my instincts and still guides how I design for clarity, warmth, balance, and strong visual impact.',
-    galleryImages: NZ_WEDDINGS_GALLERY,
-  },
-  {
-    id: 2,
-    title: 'The Warehouse Toy Guide',
-    subtitle: 'Mailer',
-    image: '/misc/81183903d1a5b39abc75683b7deb5957a7a26ddf.png',
-    modalSubtitle: 'Archived mailer',
-    intro:
-      'Designed the Big Toy Mailer for The\u00A0Warehouse, a 48-page guide of toys, activities, and play. I led art direction with depth, colour, fun.\n\nBrainstormed interactive spreads with playful type and kid-friendly styled images. Action figures dressed up, dice rolled and toy products popped out.',
-    bullets: ['Layered colour across pages', 'Added diverse culture, humour', 'Made simple craft projects'],
-    conclusion: 'Each spread encouraged interaction. Kids and guardians explored toys to play and buy.',
-    galleryImages: Array(16).fill('/misc/81183903d1a5b39abc75683b7deb5957a7a26ddf.png'),
-  },
-  {
-    id: 4,
-    title: 'Grooms Guide',
-    subtitle: 'Booklet',
-    image: GROOMS_GUIDE_HERO,
-    modalSubtitle: 'Archived magazine supplement',
-    intro:
-      'In my role at New Zealand Weddings, I\u00A0also served as Art Director for the Grooms Guide, a companion title sold with the magazine.\n\nIt offered style tips, planning advice, and wedding essentials for grooms. I\u00A0created layout templates and led art direction, building a clear system for consistent features and ads.',
-    bullets: ['Shaped the overall visual flow', 'Guided tone across key stories', 'Ensured clarity in print layouts'],
-    conclusion: 'Though a limited-run project, it honed my skill in tailoring editorial design.',
-    galleryImages: GROOMS_GUIDE_GALLERY,
-  },
-  {
-    id: 5,
-    title: 'SuperLife',
-    subtitle: 'Booklet',
-    image: SUPERLIFE_HERO,
-    modalSubtitle: 'Archived booklet',
-    intro:
-      'Designed a Retirement booklet for SuperLife, guiding readers through investment decisions with a calm, clear, and approachable tone.\n\nThe design used natural imagery to support complex financial content.',
-    bullets: [
-      'Curated New Zealand nature photos',
-      'Shaped dense content into clear, readable sections',
-      'Aligned visuals with brand values and real reader needs',
-    ],
-    conclusion: 'This project strengthened my ability to balance warmth, clarity, and structure in print work.',
-    galleryImages: SUPERLIFE_GALLERY,
-  },
-  {
     id: 6,
     title: 'Pumpkin Patch',
     subtitle: 'Catalogue',
@@ -787,30 +730,29 @@ export const publications: PublicationDetail[] = [
     galleryImages: PUMPKIN_PATCH_GALLERY,
   },
   {
-    id: 8,
-    title: 'Houses',
-    subtitle: 'Magazine',
-    image: HOUSES_HERO,
-    modalSubtitle: 'Archived magazine',
+    id: 12,
+    title: 'Beauty Lookbook',
+    subtitle: 'Lookbook',
+    image: BEAUTY_LOOKBOOK_HERO,
+    modalSubtitle: 'Archived seasonal lookbook',
     intro:
-      'I freelanced for Houses magazine, a quarterly title by AGM Publishing showcasing New Zealand homes and interior design across the country.\n\nMy work focused on building clean, precise layout pages that followed the established style guides closely.',
-    bullets: ['Crafted clear architectural layouts', 'Refined imagery and floor plans', 'Supported editors with clean visuals'],
+      'As Art Director at NZ Weddings, I\u00A0designed the Beauty Look Book, a\u00A0limited guide with Green Cross Health that showcased key trends. Each page used a polished look with a fresh, modern beauty feel.',
+    bullets: ['Shaped clear layout templates', 'Set visual style for all brands', 'Crafted spreads with purpose'],
     conclusion:
-      'This project strengthened my attention to detail, sharpened my design focus, and reinforced solid discipline within structured editorial systems.',
-    galleryImages: HOUSES_GALLERY,
+      'The cover featured an Andrea Moore silk scarf in rich colours and bold motifs hinting at new beginnings. It became a sought after keepsake for readers. This project sharpened my print editorial skills for beauty stories.',
+    galleryImages: BEAUTY_LOOKBOOK_GALLERY,
   },
   {
-    id: 9,
-    title: 'Architecture New Zealand',
-    subtitle: 'Magazine',
-    image: ARCHITECTURE_NZ_HERO,
-    modalSubtitle: 'Archived magazine',
+    id: 4,
+    title: 'Grooms Guide',
+    subtitle: 'Booklet',
+    image: GROOMS_GUIDE_HERO,
+    modalSubtitle: 'Archived magazine supplement',
     intro:
-      'I freelanced for Architecture New\u00A0Zealand, AGM Publishing’s flagship journal covering built work and design discourse across Aotearoa.\n\nWork focused on layouts for long-form features, project showcases, and editorial articles across issues.',
-    bullets: ['Organised dense content clearly', 'Applied systems to complex imagery', 'Balanced visuals and text for impact'],
-    conclusion:
-      'Collaborated closely with the editor to craft strong, clear visual narratives. The\u00A0project honed skills in adapting systems for image-rich work.',
-    galleryImages: ARCHITECTURE_NZ_GALLERY,
+      'In my role at New Zealand Weddings, I\u00A0also served as Art Director for the Grooms Guide, a companion title sold with the magazine.\n\nIt offered style tips, planning advice, and wedding essentials for grooms. I\u00A0created layout templates and led art direction, building a clear system for consistent features and ads.',
+    bullets: ['Shaped the overall visual flow', 'Guided tone across key stories', 'Ensured clarity in print layouts'],
+    conclusion: 'Though a limited-run project, it honed my skill in tailoring editorial design.',
+    galleryImages: GROOMS_GUIDE_GALLERY,
   },
   {
     id: 11,
@@ -830,17 +772,50 @@ export const publications: PublicationDetail[] = [
     galleryImages: LITTLE_TREASURES_GALLERY,
   },
   {
-    id: 12,
-    title: 'Beauty Lookbook',
-    subtitle: 'Lookbook',
-    image: BEAUTY_LOOKBOOK_HERO,
-    modalSubtitle: 'Archived seasonal lookbook',
+    id: 5,
+    title: 'SuperLife',
+    subtitle: 'Booklet',
+    image: SUPERLIFE_HERO,
+    modalSubtitle: 'Archived booklet',
     intro:
-      'As Art Director at NZ Weddings, I\u00A0designed the Beauty Look Book, a\u00A0limited guide with Green Cross Health that showcased key trends. Each page used a polished look with a fresh, modern beauty feel.',
-    bullets: ['Shaped clear layout templates', 'Set visual style for all brands', 'Crafted spreads with purpose'],
+      'Designed a Retirement booklet for SuperLife, guiding readers through investment decisions with a calm, clear, and approachable tone.\n\nThe design used natural imagery to support complex financial content.',
+    bullets: [
+      'Curated New Zealand nature photos',
+      'Shaped dense content into clear, readable sections',
+      'Aligned visuals with brand values and real reader needs',
+    ],
+    conclusion: 'This project strengthened my ability to balance warmth, clarity, and structure in print work.',
+    galleryImages: SUPERLIFE_GALLERY,
+  },
+  {
+    id: 1,
+    title: 'New Zealand Weddings',
+    subtitle: 'Magazine',
+    image: NZ_WEDDINGS_HERO,
+    modalSubtitle: 'Archived magazine',
+    intro:
+      "Contributed to the art direction and editorial design of New Zealand Weddings, the country's go-to print magazine for bridal inspiration, fashion, and planning. I worked on:",
+    bullets: [
+      'Designing feature and style page layouts for elegant, cohesive spreads',
+      'Crafting typography and storytelling that enhanced readability and flow',
+      'Collaborating with editors to bring detail and celebration to each page',
+    ],
     conclusion:
-      'The cover featured an Andrea Moore silk scarf in rich colours and bold motifs hinting at new beginnings. It became a sought after keepsake for readers. This project sharpened my print editorial skills for beauty stories.',
-    galleryImages: BEAUTY_LOOKBOOK_GALLERY,
+      'My time on the title sharpened my instincts and still guides how I design for clarity, warmth, balance, and strong visual impact.',
+    galleryImages: NZ_WEDDINGS_GALLERY,
+  },
+  {
+    id: 9,
+    title: 'Architecture New Zealand',
+    subtitle: 'Magazine',
+    image: ARCHITECTURE_NZ_HERO,
+    modalSubtitle: 'Archived magazine',
+    intro:
+      'I freelanced for Architecture New\u00A0Zealand, AGM Publishing’s flagship journal covering built work and design discourse across Aotearoa.\n\nWork focused on layouts for long-form features, project showcases, and editorial articles across issues.',
+    bullets: ['Organised dense content clearly', 'Applied systems to complex imagery', 'Balanced visuals and text for impact'],
+    conclusion:
+      'Collaborated closely with the editor to craft strong, clear visual narratives. The\u00A0project honed skills in adapting systems for image-rich work.',
+    galleryImages: ARCHITECTURE_NZ_GALLERY,
   },
   {
     id: 13,
@@ -859,6 +834,31 @@ export const publications: PublicationDetail[] = [
       'Though a special project rather than a regular magazine, it required care and creative storytelling. The experience strengthened my ability to design high-impact print with clear design.',
     galleryImages: NZ_WEDDINGS_PLANNER_GALLERY,
   },
+  {
+    id: 8,
+    title: 'Houses',
+    subtitle: 'Magazine',
+    image: HOUSES_HERO,
+    modalSubtitle: 'Archived magazine',
+    intro:
+      'I freelanced for Houses magazine, a quarterly title by AGM Publishing showcasing New Zealand homes and interior design across the country.\n\nMy work focused on building clean, precise layout pages that followed the established style guides closely.',
+    bullets: ['Crafted clear architectural layouts', 'Refined imagery and floor plans', 'Supported editors with clean visuals'],
+    conclusion:
+      'This project strengthened my attention to detail, sharpened my design focus, and reinforced solid discipline within structured editorial systems.',
+    galleryImages: HOUSES_GALLERY,
+  },
+  {
+    id: 2,
+    title: 'The Warehouse Toy Guide',
+    subtitle: 'Mailer',
+    image: '/misc/81183903d1a5b39abc75683b7deb5957a7a26ddf.png',
+    modalSubtitle: 'Archived mailer',
+    intro:
+      'Designed the Big Toy Mailer for The\u00A0Warehouse, a 48-page guide of toys, activities, and play. I led art direction with depth, colour, fun.\n\nBrainstormed interactive spreads with playful type and kid-friendly styled images. Action figures dressed up, dice rolled and toy products popped out.',
+    bullets: ['Layered colour across pages', 'Added diverse culture, humour', 'Made simple craft projects'],
+    conclusion: 'Each spread encouraged interaction. Kids and guardians explored toys to play and buy.',
+    galleryImages: Array(16).fill('/misc/81183903d1a5b39abc75683b7deb5957a7a26ddf.png'),
+  }
 ];
 
 export function getPublicationById(id: number): PublicationDetail | undefined {
