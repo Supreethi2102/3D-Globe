@@ -463,7 +463,7 @@ export const CaseStudies: React.FC = () => {
             <CaretLeft
               size={24}
               weight={hoveredFilterNav === 'prev' ? 'bold' : 'regular'}
-              color={hoveredFilterNav === 'prev' ? '#ffffff' : '#7150E5'}
+              color="currentColor"
               aria-hidden="true"
             />
           </button>
@@ -481,7 +481,7 @@ export const CaseStudies: React.FC = () => {
             <CaretRight
               size={24}
               weight={hoveredFilterNav === 'next' ? 'bold' : 'regular'}
-              color={hoveredFilterNav === 'next' ? '#ffffff' : '#7150E5'}
+              color="currentColor"
               aria-hidden="true"
             />
           </button>
@@ -511,7 +511,7 @@ export const CaseStudies: React.FC = () => {
             >
               <div className="category-pill__icon" aria-hidden="true">
                 {cat.Icon ? (
-                  <cat.Icon size={24} weight={getIconWeight(cat.id)} color={hoveredCategory === cat.id ? '#ffffff' : '#7150E5'} />
+                  <cat.Icon size={24} weight={getIconWeight(cat.id)} color="#7150E5" />
                 ) : cat.svgPath ? (
                   <img src={cat.svgPath} alt="" />
                 ) : null}

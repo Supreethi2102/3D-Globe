@@ -254,14 +254,15 @@ export const GravityPlayground: React.FC = () => {
     const y = snap ? Math.round(body.position.y) : body.position.y;
     const renderWidth = el.width * scale;
     const renderHeight = el.height * scale;
-    /* Keep rested angle/position on flip — no upright snap or lift jump */
-    const visualAngle = snap ? Math.round(body.angle * 200) / 200 : body.angle;
+    /* Active (colour mood) cards snap upright so the mood text stays readable */
+    const visualAngle = isActive ? 0 : snap ? Math.round(body.angle * 200) / 200 : body.angle;
+    const liftY = isActive ? 24 * scale : 0;
 
     node.style.width = `${renderWidth}px`;
     node.style.height = `${renderHeight}px`;
     node.style.zIndex = isActive ? '220' : '';
     node.style.opacity = '1';
-    node.style.transform = `translate(${x - renderWidth / 2}px, ${y - renderHeight / 2}px) rotate(${visualAngle}rad)`;
+    node.style.transform = `translate(${x - renderWidth / 2}px, ${y - renderHeight / 2 - liftY}px) rotate(${visualAngle}rad)`;
   };
 
   const setSwatchStatic = (swatchId: string, shouldBeStatic: boolean) => {
@@ -271,7 +272,7 @@ export const GravityPlayground: React.FC = () => {
     if (shouldBeStatic) {
       Matter.Body.setVelocity(body, { x: 0, y: 0 });
       Matter.Body.setAngularVelocity(body, 0);
-      /* Preserve angle so “View colour mood” doesn’t upright-snap the card */
+      Matter.Body.setAngle(body, 0);
     }
   };
 

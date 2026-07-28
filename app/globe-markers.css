@@ -1,7 +1,7 @@
-/* Globe pins + Figma tooltip cards. Keep .main__globe-ring stacking unchanged. */
+/* Globe pins + Figma tooltip cards. Open cards portal above .main__globe-ring. */
 
 .globe-marker {
-  --globe-tooltip-scale: 0.72;
+  --globe-tooltip-scale: 0.88;
   position: relative;
   width: 50px;
   height: 50px;
@@ -10,6 +10,8 @@
 }
 
 .globe-marker__pin {
+  position: relative;
+  z-index: 1;
   display: block;
   width: 50px;
   height: 50px;
@@ -48,13 +50,13 @@
 }
 
 .globe-marker__tooltip--above {
-  bottom: calc(100% + 2px);
+  bottom: calc(100% - 14px);
   transform-origin: 50% 100%;
   transform: translateX(-50%) translateY(-8px) scale(var(--globe-tooltip-scale));
 }
 
 .globe-marker__tooltip--below {
-  top: calc(100% + 2px);
+  top: calc(100% - 14px);
   transform-origin: 50% 0%;
 }
 
@@ -63,6 +65,18 @@
   visibility: visible;
   pointer-events: auto;
   transform: translateX(-50%) translateY(0) scale(var(--globe-tooltip-scale));
+}
+
+/* Portaled to document.body so the globe ring stroke stays behind the card */
+.globe-marker__tooltip--portaled {
+  position: fixed !important;
+  z-index: 10000 !important;
+  margin: 0 !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+  /* No motion while open — position is locked in JS */
+  transition: none !important;
 }
 
 .globe-marker__card {
@@ -265,7 +279,7 @@
 
 @media (max-width: 700px), (max-width: 1024px) and (orientation: portrait) {
   .globe-marker {
-    --globe-tooltip-scale: 0.78;
+    --globe-tooltip-scale: 0.92;
   }
 
   .globe-marker__tooltip {
