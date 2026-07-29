@@ -125,7 +125,7 @@ const HomePage: React.FC = () => {
       {/* Destinations Section */}
       <Destinations />
 
-      {/* Color Swatches Footer */}
+      {/* Colour Swatches Footer */}
       <ColorSwatches />
     </div>
   );

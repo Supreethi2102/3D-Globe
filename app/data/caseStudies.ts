@@ -75,7 +75,7 @@ export const caseStudyDetails: CaseStudyDetail[] = [1, 2, 3].map((id) => ({
       label: 'Solution',
       title: 'Solution',
       body:
-        'The final solution used a modular grid with strong color blocking, practical promotional hierarchy, and reusable art-direction rules. This allowed quick swaps of products and offers without breaking the campaign identity.',
+        'The final solution used a modular grid with strong colour blocking, practical promotional hierarchy, and reusable art-direction rules. This allowed quick swaps of products and offers without breaking the campaign identity.',
       imageUrls: [PLACEHOLDER_IMAGES[5]],
     },
     {

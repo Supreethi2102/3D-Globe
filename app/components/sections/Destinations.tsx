@@ -61,7 +61,7 @@ const destinations = {
     size: 'normal',
     title: 'The Great Sphinx',
     artist: 'The Great Sphinx, built under Pharaoh Khafre',
-    photographer: 'Photo by Dilip Podda',
+    photographer: 'Photo by Dilip Poddar',
     whyCity: 'The Great Sphinx is carved from a single limestone block. Its human head and lion body, combined with scale, reflect the ambition of early Egyptian builders.',
     whatDrawsMe: 'Its lines feel steady and assured. Weathering adds texture, and its placement ties it to the surrounding\u00A0pyramids.',
     howInfluences: 'I explore how form can communicate story and authority. Proportion and balance guide how I structure my own work.',

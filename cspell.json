@@ -1,0 +1,28 @@
+{
+  "version": "0.2",
+  "language": "en-GB",
+  "ignorePaths": [
+    "node_modules",
+    "dist",
+    "build",
+    "public/Images",
+    "public/misc",
+    "src",
+    "package-lock.json",
+    "**/*.{avif,webp,png,jpg,jpeg,svg,gif}"
+  ],
+  "dictionaryDefinitions": [
+    {
+      "name": "maori-words",
+      "path": "./.cspell/maori-words.txt",
+      "addWords": true,
+      "supportNonStrictSearches": true
+    },
+    {
+      "name": "project-words",
+      "path": "./.cspell/project-words.txt",
+      "addWords": true
+    }
+  ],
+  "dictionaries": ["maori-words", "project-words"]
+}

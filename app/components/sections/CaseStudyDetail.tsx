@@ -363,7 +363,7 @@ export const CaseStudyDetail: React.FC = () => {
       ? {
           heroImage: PALE_YELLOW_PLACEHOLDER,
           heroAlt: '',
-          subtitle: isPalmy ? 'UI | UX Design Insitute' : 'UX | UX Design Institute',
+          subtitle: isPalmy ? 'UI | UX Design Institute' : 'UX | UX Design Institute',
           title: isPalmy ? 'Palmy bank' : 'Āmio Airways',
           body:
             isPalmy
@@ -709,7 +709,7 @@ export const CaseStudyDetail: React.FC = () => {
     : isMegaToy
       ? {
           heading: 'Process & Approach',
-          subheading: 'TV commerical concept',
+          subheading: 'TV commercial concept',
           paragraphs: [
             'I contributed to early concept development, drawing on the playful chaos of films like Matilda, where everyday spaces come alive. This shaped “Unleash the Fun”. A high-energy world where opening a Warehouse box sparks a burst of imagination, transforming the home into a space of play.',
             'We explored multiple creative routes, with consumer testing validating “Unleash the Fun” as the strongest direction.',
@@ -1743,7 +1743,7 @@ export const CaseStudyDetail: React.FC = () => {
                 ) : isMegaToy ? (
                   <>
                     <h3>Process &amp; Approach</h3>
-                    <h4>TV commerical concept</h4>
+                    <h4>TV commercial concept</h4>
                     <p>
                       I contributed to early concept development, drawing on the playful chaos of films like Matilda,
                       where everyday spaces come alive. This shaped “Unleash the Fun”. A high-energy world where

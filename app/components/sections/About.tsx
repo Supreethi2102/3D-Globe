@@ -197,7 +197,7 @@ const ColorCard: React.FC<ColorCardProps> = ({
         '--exit-delay': `${exitDelay}ms`,
         zIndex: isFlipped ? FLIPPED_CARD_Z_INDEX : card.zIndex,
       } as React.CSSProperties}
-      aria-label={`Color swatch: ${card.name}`}
+      aria-label={`Colour swatch: ${card.name}`}
       role="listitem"
     >
       <SwatchCard
@@ -278,7 +278,7 @@ const AboutBlock3: React.FC<AboutBlock3Props> = ({ onCollapseClick }) => {
       <div 
         className="about-block3__cards"
         role="list"
-        aria-label="Travel-inspired color swatches"
+        aria-label="Travel-inspired colour swatches"
         ref={cardsRef}
       >
           {colorCards.map((card, index) => (

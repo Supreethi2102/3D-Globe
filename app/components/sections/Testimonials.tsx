@@ -156,7 +156,7 @@ export const Testimonials: React.FC = () => {
         <span className="testimonials__label">Testimonials</span>
 
         <div className="testimonials__content">
-          {/* Mobile only: chevrons centered above the heading */}
+          {/* Mobile only: chevrons centred above the heading */}
           <div className="testimonials__nav-row-mobile" role="group" aria-label="Testimonial navigation">
             <button
               type="button"

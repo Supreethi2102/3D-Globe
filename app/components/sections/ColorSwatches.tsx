@@ -5,7 +5,7 @@ import './ColorSwatches.css';
 
 export const ColorSwatches: React.FC = () => {
   return (
-    <section className="color-swatches" aria-label="Interactive color swatches">
+    <section className="color-swatches" aria-label="Interactive colour swatches">
       {/* Header - Instructions */}
       <header className="color-swatches__header">
         <div className="color-swatches__icons" aria-hidden="true">
@@ -30,7 +30,7 @@ export const ColorSwatches: React.FC = () => {
       <div 
         className="color-swatches__canvas-wrapper"
         role="region"
-        aria-label="Interactive color playground - drag swatches to explore"
+        aria-label="Interactive colour playground - drag swatches to explore"
       >
         <GravityPlayground />
       </div>

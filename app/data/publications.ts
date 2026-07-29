@@ -724,7 +724,7 @@ export const publications: PublicationDetail[] = [
     image: PUMPKIN_PATCH_HERO,
     modalSubtitle: 'Archived catalogue',
     intro:
-      "Pumpkin Patch was a well-loved brand in New Zealand, known for playful kids’s clothing and high-quality, imaginative design. It grew into a household name with a legacy that still resonates today.\n\nI contributed to direction and layout design for the seasonal catalogue, using a forest discovery theme.",
+      "Pumpkin Patch was a well-loved brand in New Zealand, known for playful kids' clothing and high-quality, imaginative design. It grew into a household name with a legacy that still resonates today.\n\nI contributed to direction and layout design for the seasonal catalogue, using a forest discovery theme.",
     bullets: ['shaped cohesive page layouts', 'strengthened the brand story', 'crafted imagery to guide families'],
     conclusion: 'Working closely with the creative team, I refined the look and feel to invite readers to explore and connect.',
     galleryImages: PUMPKIN_PATCH_GALLERY,
