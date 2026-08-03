@@ -1,0 +1,318 @@
+body.intro-splash-open {
+  overflow: hidden;
+}
+
+.intro-splash {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  align-items: center;
+  justify-items: center;
+  padding:
+    max(28px, env(safe-area-inset-top))
+    max(24px, env(safe-area-inset-right))
+    max(32px, env(safe-area-inset-bottom))
+    max(24px, env(safe-area-inset-left));
+  background: #0e0f11;
+  color: #f5f5f6;
+  opacity: 1;
+  overflow: hidden;
+}
+
+.intro-splash--expanding {
+  pointer-events: none;
+  animation: intro-overlay-reveal 1000ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.intro-splash--expanding .intro-splash__logo,
+.intro-splash--expanding .intro-splash__footer {
+  opacity: 0;
+  transition: opacity 280ms ease;
+}
+
+/* Only Kia ora expands to fill the page — tagline stays out of the zoom */
+.intro-splash--expanding .intro-splash__greeting-stack {
+  animation: intro-greeting-fill 1000ms cubic-bezier(0.45, 0, 0.2, 1) forwards;
+}
+
+.intro-splash__tagline--exit {
+  opacity: 0 !important;
+  transform: translateY(0);
+  transition: opacity 280ms ease !important;
+}
+
+@keyframes intro-greeting-fill {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+    filter: blur(0);
+  }
+  58% {
+    transform: scale(6.2);
+    opacity: 1;
+    filter: blur(0.5px);
+  }
+  100% {
+    transform: scale(11);
+    opacity: 0;
+    filter: blur(2px);
+  }
+}
+
+@keyframes intro-overlay-reveal {
+  0%,
+  55% {
+    opacity: 1;
+    background: #0e0f11;
+  }
+  100% {
+    opacity: 0;
+    background: #0e0f11;
+  }
+}
+
+.intro-splash__logo {
+  justify-self: start;
+  align-self: start;
+  width: 56px;
+  height: auto;
+}
+
+.intro-splash__logo-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  filter: brightness(0) invert(0.42);
+  opacity: 0.85;
+}
+
+.intro-splash__stage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 28px;
+  width: min(960px, 100%);
+  text-align: center;
+  min-height: 240px;
+}
+
+.intro-splash__greeting-stack {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  min-height: clamp(4.5rem, 12vw, 7rem);
+  transform-origin: center center;
+  will-change: transform, opacity, filter;
+}
+
+.intro-splash__greeting {
+  grid-area: 1 / 1;
+  margin: 0;
+  width: 100%;
+  font-family: var(--font-family-display);
+  font-size: clamp(2.75rem, 8.5vw, 5.75rem);
+  font-weight: 500;
+  line-height: 1.1;
+  letter-spacing: 0.01em;
+  color: #f5f5f6;
+  will-change: transform, opacity, filter;
+}
+
+/* Mid greetings: fall / zoom in from oversized */
+.intro-splash__greeting--in {
+  animation: intro-fall-in 240ms cubic-bezier(0.2, 0.85, 0.25, 1) both;
+}
+
+/* Mid greetings leave by falling away / zooming out smaller */
+.intro-splash__greeting--out {
+  animation: intro-fall-out 220ms cubic-bezier(0.55, 0.05, 0.9, 0.4) both;
+}
+
+/* Last greeting: zoom in from small, settle, then page reveals */
+.intro-splash__greeting--finale {
+  animation: intro-finale-zoom 560ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes intro-fall-in {
+  0% {
+    opacity: 0;
+    transform: scale(1.9) translateY(-12%);
+    filter: blur(12px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    filter: blur(0);
+  }
+}
+
+@keyframes intro-fall-out {
+  0% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+    filter: blur(0);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.5) translateY(22%);
+    filter: blur(8px);
+  }
+}
+
+@keyframes intro-finale-zoom {
+  0% {
+    opacity: 0;
+    transform: scale(0.48);
+    filter: blur(10px);
+  }
+  62% {
+    opacity: 1;
+    transform: scale(1.08);
+    filter: blur(0);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+    filter: blur(0);
+  }
+}
+
+.intro-splash__tagline {
+  margin: 0;
+  max-width: 36rem;
+  font-family: var(--font-family-ui);
+  font-size: var(--type-atkinson-text-md-size, 1rem);
+  font-weight: 400;
+  line-height: 1.55;
+  color: #9ca0a6;
+  opacity: 0;
+  transform: translateY(10px);
+  transition:
+    opacity 560ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 560ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.intro-splash__tagline--in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.intro-splash__footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding-bottom: 8px;
+}
+
+.intro-splash__cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 48px;
+  padding: 12px 22px;
+  border: none;
+  border-radius: 10px;
+  background: #b8a4f5;
+  color: #111213;
+  font-family: var(--font-family-ui);
+  font-size: var(--type-atkinson-text-md-size, 1rem);
+  font-weight: 600;
+  line-height: 1.2;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+.intro-splash__cta:hover {
+  background: #c4b4f7;
+}
+
+.intro-splash__cta:focus-visible {
+  outline: 2px solid #b8a4f5;
+  outline-offset: 3px;
+}
+
+.intro-splash__cta:active {
+  transform: scale(0.98);
+}
+
+.intro-splash__skip {
+  padding: 4px 8px;
+  border: none;
+  background: transparent;
+  color: #6b6f76;
+  font-family: var(--font-family-ui);
+  font-size: var(--type-atkinson-text-sm-size, 0.875rem);
+  font-weight: 400;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: transparent;
+  transition: color 0.2s ease, text-decoration-color 0.2s ease;
+}
+
+.intro-splash__skip:hover,
+.intro-splash__skip:focus-visible {
+  color: #9ca0a6;
+  text-decoration-color: currentColor;
+}
+
+.intro-splash__skip:focus-visible {
+  outline: 2px solid #6b6f76;
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+@media (max-width: 600px) {
+  .intro-splash__stage {
+    gap: 20px;
+    min-height: 200px;
+  }
+
+  .intro-splash__logo {
+    width: 44px;
+  }
+
+  .intro-splash__greeting {
+    font-size: clamp(2.25rem, 11vw, 3.5rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .intro-splash__tagline,
+  .intro-splash__cta {
+    transition-duration: 0.01ms !important;
+  }
+
+  .intro-splash__greeting--in,
+  .intro-splash__greeting--out,
+  .intro-splash__greeting--finale,
+  .intro-splash--expanding,
+  .intro-splash--expanding .intro-splash__greeting-stack {
+    animation: none !important;
+  }
+
+  .intro-splash--expanding {
+    opacity: 0;
+    transition: opacity 400ms ease;
+  }
+
+  .intro-splash__greeting--in,
+  .intro-splash__greeting--out,
+  .intro-splash__greeting--finale {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+
+  .intro-splash__tagline {
+    transform: none;
+  }
+}

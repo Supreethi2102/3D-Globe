@@ -1,4 +1,6 @@
 export { Header } from './Header';
+export { CaseStudyGate } from './CaseStudyGate';
+export { IntroSplash } from './IntroSplash';
 export {
   Hero,
   Footer,

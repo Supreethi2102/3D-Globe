@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useRef } from 'react';
+import React, { useLayoutEffect, useRef, useState } from 'react';
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import {
   Header,
@@ -14,6 +14,10 @@ import {
   Destinations,
   ColorSwatches,
 } from './components';
+import { CaseStudyGate } from './components/CaseStudyGate';
+import { IntroSplash } from './components/IntroSplash';
+import { isCaseStudiesUnlocked } from './config/caseStudiesAuth';
+import { shouldShowIntro } from './config/introSplash';
 import './App.css';
 import './ButtonStyles.css';
 import './tablet-700-1024.css';
@@ -30,6 +34,7 @@ function scheduleGlobeLayoutResize() {
 const AppRoutes: React.FC = () => {
   const location = useLocation();
   const isHome = location.pathname === '/';
+  const [introOpen, setIntroOpen] = useState(() => shouldShowIntro(location.pathname));
 
   useLayoutEffect(() => {
     const globe = document.getElementById('globe');
@@ -45,13 +50,20 @@ const AppRoutes: React.FC = () => {
     window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
   }, [location.pathname]);
 
+  useLayoutEffect(() => {
+    if (!isHome) setIntroOpen(false);
+  }, [isHome]);
+
   return (
-    <Routes>
-      <Route path="/" element={<HomePage />} />
-      <Route path="/publications/:id" element={<PublicationDetailPage />} />
-      <Route path="/case-studies/:id" element={<CaseStudyDetailPage />} />
-      <Route path="/case-study/:id" element={<CaseStudyDetailPage />} />
-    </Routes>
+    <>
+      {introOpen ? <IntroSplash onComplete={() => setIntroOpen(false)} /> : null}
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/publications/:id" element={<PublicationDetailPage />} />
+        <Route path="/case-studies/:id" element={<CaseStudyDetailPage />} />
+        <Route path="/case-study/:id" element={<CaseStudyDetailPage />} />
+      </Routes>
+    </>
   );
 };
 
@@ -149,10 +161,16 @@ const PublicationDetailPage: React.FC = () => {
 };
 
 const CaseStudyDetailPage: React.FC = () => {
+  const [unlocked, setUnlocked] = useState(() => isCaseStudiesUnlocked());
+
   return (
     <div className="app app--detail">
       <Header />
-      <CaseStudyDetail />
+      {unlocked ? (
+        <CaseStudyDetail />
+      ) : (
+        <CaseStudyGate onUnlock={() => setUnlocked(true)} />
+      )}
     </div>
   );
 };

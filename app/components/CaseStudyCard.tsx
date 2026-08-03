@@ -2,10 +2,7 @@ import React, { useEffect, useMemo, useRef, useState, useId } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   ArrowsClockwise,
-  Ruler,
-  NotePencil,
-  Megaphone,
-  Package,
+  Lock,
   PuzzlePiece,
   Target,
   ChartBar,
@@ -112,23 +109,6 @@ export const CaseStudyCard: React.FC<CaseStudyCardProps> = ({ study }) => {
     const data = backTabs[tab];
     media.style.backgroundImage = data.image ? `url(${data.image})` : 'none';
     media.style.backgroundColor = data.background ?? '#ddd';
-  };
-
-  const renderViewDesignIcon = (isHovered: boolean) => {
-    const weight = isHovered ? 'fill' : 'regular';
-
-    switch (study.id) {
-      case 2:
-        return <Package size={24} weight={weight} color="currentColor" />;
-      case 3:
-      case 4:
-        return <Megaphone size={24} weight={weight} color="currentColor" />;
-      case 5:
-        return <NotePencil size={24} weight={weight} color="currentColor" />;
-      case 1:
-      default:
-        return <Ruler size={24} weight={weight} color="currentColor" />;
-    }
   };
 
   const setLayerBg = (el: HTMLDivElement | null, url: string) => {
@@ -371,21 +351,37 @@ export const CaseStudyCard: React.FC<CaseStudyCardProps> = ({ study }) => {
                 </h3>
                 <p className="case-study-card__description">{currentFrontTab.description}</p>
               </div>
-              <button
-                type="button"
-                className="btn btn--primary btn--icon-left view-design-btn"
-                onMouseEnter={() => {
-                  if (canUseHover()) setHoveredBtn('viewDesign');
+              <div className="case-study-card__cta">
+                <button
+                  type="button"
+                  className="btn btn--primary btn--icon-left view-design-btn"
+                  onMouseEnter={() => {
+                    if (canUseHover()) setHoveredBtn('viewDesign');
                   }}
-                onMouseLeave={() => setHoveredBtn(null)}
-                onClick={() => navigate(`/case-studies/${study.id}`)}
-                aria-label={`View the design for ${study.subtitle}`}
-              >
-                <span className="btn__icon" aria-hidden="true">
-                  {renderViewDesignIcon(hoveredBtn === 'viewDesign')}
-                </span>
-                <span>View the design</span>
-              </button>
+                  onMouseLeave={() => setHoveredBtn(null)}
+                  onClick={() => navigate(`/case-studies/${study.id}`)}
+                  aria-label={`Access ${study.subtitle} with password`}
+                >
+                  <span className="btn__icon" aria-hidden="true">
+                    <Lock
+                      size={24}
+                      weight={hoveredBtn === 'viewDesign' ? 'fill' : 'regular'}
+                      color="currentColor"
+                    />
+                  </span>
+                  <span>Access with password</span>
+                </button>
+                <a
+                  href="#contact"
+                  className="case-study-card__request-password"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+                  }}
+                >
+                  Request password
+                </a>
+              </div>
               <button
                 type="button"
                 className="flip-button flip-button--footer"
@@ -513,21 +509,37 @@ export const CaseStudyCard: React.FC<CaseStudyCardProps> = ({ study }) => {
                 <h3 className="case-study-card__title">{currentBackTab.title}</h3>
                 <p className="case-study-card__description">{currentBackTab.description}</p>
               </div>
-              <button
-                type="button"
-                className="btn btn--primary btn--icon-left view-design-btn"
-                onMouseEnter={() => {
-                  if (canUseHover()) setHoveredBtn('viewDesignBack');
+              <div className="case-study-card__cta">
+                <button
+                  type="button"
+                  className="btn btn--primary btn--icon-left view-design-btn"
+                  onMouseEnter={() => {
+                    if (canUseHover()) setHoveredBtn('viewDesignBack');
                   }}
-                onMouseLeave={() => setHoveredBtn(null)}
-                onClick={() => navigate(`/case-studies/${study.id}`)}
-                aria-label={`View the design for ${study.subtitle}`}
-              >
-                <span className="btn__icon" aria-hidden="true">
-                  {renderViewDesignIcon(hoveredBtn === 'viewDesignBack')}
-                </span>
-                <span>View the design</span>
-              </button>
+                  onMouseLeave={() => setHoveredBtn(null)}
+                  onClick={() => navigate(`/case-studies/${study.id}`)}
+                  aria-label={`Access ${study.subtitle} with password`}
+                >
+                  <span className="btn__icon" aria-hidden="true">
+                    <Lock
+                      size={24}
+                      weight={hoveredBtn === 'viewDesignBack' ? 'fill' : 'regular'}
+                      color="currentColor"
+                    />
+                  </span>
+                  <span>Access with password</span>
+                </button>
+                <a
+                  href="#contact"
+                  className="case-study-card__request-password"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+                  }}
+                >
+                  Request password
+                </a>
+              </div>
               <button
                 type="button"
                 className="flip-button flip-button--footer"
