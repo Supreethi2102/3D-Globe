@@ -197,13 +197,16 @@ const caseStudies: CaseStudyCardStudy[] = [
       'Booking a flight should be quick, but time-poor users are slowed by cluttered flows, hidden trade-offs, and comparison overload. This project rethinks the journey to reduce friction, support flexible decisions, and enable fast, confident choices.',
     duration: '4 weeks',
     category: 'ux',
-    image: '/misc/amio-airways-tab-challenge.png',
+    image: '/misc/amio-airways-card.avif',
+    challengeVideo: {
+      vimeoId: '1214953286',
+    },
     frontTabs: {
       challenge: {
         title: 'Why is booking a flight so hard to navigate?',
         description:
           'Booking a flight should be quick, but time-poor users are slowed by cluttered flows, hidden trade-offs, and comparison overload. This project rethinks the journey to reduce friction, support flexible decisions, and enable fast, confident choices.',
-        image: '/misc/amio-airways-tab-challenge.png',
+        image: '/misc/amio-airways-card.avif',
       },
       focus: {
         title: 'What helps people book a flight with confidence?',

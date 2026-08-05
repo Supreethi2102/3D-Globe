@@ -12,6 +12,7 @@ import {
 } from '@phosphor-icons/react';
 import { gsap } from 'gsap';
 import { canUseHover } from '../utils/canUseHover';
+import { CaseStudyMockupVideo } from './CaseStudyMockupVideo';
 import './sections/CaseStudies.css';
 
 export type CaseStudyCardStudy = {
@@ -22,6 +23,9 @@ export type CaseStudyCardStudy = {
   duration: string;
   category: string;
   image: string;
+  challengeVideo?: {
+    vimeoId: string;
+  };
   frontTabs?: {
     challenge: { title: string; description: string; image: string };
     focus: { title: string; description: string; image: string };
@@ -405,7 +409,13 @@ export const CaseStudyCard: React.FC<CaseStudyCardProps> = ({ study }) => {
             </div>
           </div>
 
-          <figure className="case-study-card__image">
+          <figure
+            className={`case-study-card__image${
+              study.challengeVideo && contentTab === 'challenge' && !prefersReducedMotion
+                ? ' case-study-card__image--motion'
+                : ''
+            }`}
+          >
             <div className="case-study-card__duration" aria-label={`Project duration: ${study.duration}`}>
               Duration: {study.duration}
             </div>
@@ -416,6 +426,13 @@ export const CaseStudyCard: React.FC<CaseStudyCardProps> = ({ study }) => {
               <div ref={imgBRef} className="case-study-card__image-layer" aria-hidden="true">
                 <div className="case-study-card__image-media" aria-hidden="true" />
               </div>
+              {study.challengeVideo && contentTab === 'challenge' && !isFlipped && !prefersReducedMotion ? (
+                <CaseStudyMockupVideo
+                  vimeoId={study.challengeVideo.vimeoId}
+                  mockupSrc={study.image}
+                  label={study.subtitle}
+                />
+              ) : null}
             </div>
           </figure>
         </div>

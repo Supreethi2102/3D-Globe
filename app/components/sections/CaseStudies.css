@@ -667,6 +667,7 @@
   position: absolute;
   inset: 0;
   overflow: hidden;
+  container-type: size;
 }
 
 .case-study-card__image-layer {
@@ -688,9 +689,165 @@
   will-change: transform;
 }
 
+.case-study-mockup-video {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.case-study-mockup-video__stage {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  /* Match background-size: cover for the 16/11 mockup */
+  width: max(100cqw, calc(100cqh * 16 / 11));
+  height: max(100cqh, calc(100cqw * 11 / 16));
+  transform: translate(-50%, -50%);
+}
+
+.case-study-mockup-video__screen {
+  position: absolute;
+  /* Slightly oversized into the black bezel so Vimeo letterboxing never shows as a white rim */
+  top: 19.35%;
+  left: 18.3%;
+  width: 63.45%;
+  height: 52.15%;
+  overflow: hidden;
+  border: 0;
+  border-radius: 1px;
+  background: #050505;
+  box-shadow: none;
+  outline: none;
+  pointer-events: auto;
+}
+
+.case-study-mockup-video__screen iframe {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 106%;
+  height: 106%;
+  border: 0;
+  outline: none;
+  background: #050505;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.case-study-mockup-video__controls {
+  position: absolute;
+  z-index: 3;
+  right: 10px;
+  bottom: 10px;
+  display: flex;
+  gap: 8px;
+  pointer-events: auto;
+}
+
+.case-study-mockup-video__control {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  margin: 0;
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  border-radius: 999px;
+  background: rgba(17, 17, 17, 0.72);
+  color: #fbfbfb;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+.case-study-mockup-video__control:hover,
+.case-study-mockup-video__control:focus-visible {
+  background: rgba(17, 17, 17, 0.9);
+  border-color: rgba(255, 255, 255, 0.5);
+  outline: none;
+}
+
+.case-study-mockup-video__control:active {
+  transform: scale(0.96);
+}
+
+.case-study-mockup-video__lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 1200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(16px, 4vw, 40px);
+  background: rgba(10, 12, 14, 0.72);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.case-study-mockup-video__lightbox-panel {
+  position: relative;
+  width: min(1120px, 100%);
+  max-height: calc(100vh - 32px);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.case-study-mockup-video__lightbox-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.case-study-mockup-video__lightbox-title {
+  margin: 0;
+  color: #fbfbfb;
+  font-family: var(--font-atkinson, inherit);
+  font-size: var(--type-atkinson-text-sm-size, 0.95rem);
+  line-height: 1.3;
+}
+
+.case-study-mockup-video__lightbox-stage {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 11;
+  max-height: calc(100vh - 96px);
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.case-study-mockup-video__lightbox-mockup {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  user-select: none;
+  pointer-events: none;
+}
+
+.case-study-mockup-video__lightbox-stage .case-study-mockup-video__screen {
+  top: 19.35%;
+  left: 18.3%;
+  width: 63.45%;
+  height: 52.15%;
+}
+
+.case-study-mockup-video__control--close {
+  flex: 0 0 auto;
+}
+
 @media (min-width: 1025px) and (hover: hover) and (pointer: fine) {
   .case-study-card__image:hover .case-study-card__image-media {
     transform: scale(1.08);
+  }
+
+  .case-study-card__image--motion:hover .case-study-card__image-media {
+    transform: scale(1);
   }
 }
 
@@ -699,19 +856,26 @@
     transition: none;
   }
 
-  
-@media (min-width: 1025px) and (hover: hover) and (pointer: fine) {
-.case-study-card__image:hover .case-study-card__image-media {
-    transform: scale(1);
+  .case-study-mockup-video {
+    display: none;
   }
-}
 
+  .case-study-mockup-video__control {
+    transition: none;
+  }
+
+  @media (min-width: 1025px) and (hover: hover) and (pointer: fine) {
+    .case-study-card__image:hover .case-study-card__image-media {
+      transform: scale(1);
+    }
+  }
 }
 
 .case-study-card__duration {
   position: absolute;
   top: 0;
   right: 24px;
+  z-index: 4;
   background: #f7f8f9;
   border: 1px solid #b0b3b8;
   border-top: none;
