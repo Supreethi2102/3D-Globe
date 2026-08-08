@@ -626,6 +626,14 @@
   color: #111213;
 }
 
+/*
+ * Pull the first paragraph up against its heading: the 16px column gap reads the same
+ * as the gap between paragraphs, so headings float free of the copy they introduce.
+ */
+.about-block3__title + p {
+  margin-top: -12px;
+}
+
 .about-block3__spacer {
   display: none;
 }

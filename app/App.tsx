@@ -1,5 +1,5 @@
 import React, { useLayoutEffect, useRef, useState } from 'react';
-import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useLocation, useParams } from 'react-router-dom';
 import {
   Header,
   Hero,
@@ -18,6 +18,8 @@ import { CaseStudyGate } from './components/CaseStudyGate';
 import { IntroSplash } from './components/IntroSplash';
 import { isCaseStudiesUnlocked } from './config/caseStudiesAuth';
 import { shouldShowIntro } from './config/introSplash';
+import { getCaseStudyHeroImage } from './components/sections/CaseStudyDetail';
+import { preloadImage } from './utils/preloadImage';
 import './App.css';
 import './ButtonStyles.css';
 import './tablet-700-1024.css';
@@ -161,16 +163,19 @@ const PublicationDetailPage: React.FC = () => {
 };
 
 const CaseStudyDetailPage: React.FC = () => {
+  const { id } = useParams();
   const [unlocked, setUnlocked] = useState(() => isCaseStudiesUnlocked());
+
+  /** Decode the hero first so the page doesn't mount, measure, then jump when the image lands. */
+  const handleUnlock = async () => {
+    await preloadImage(getCaseStudyHeroImage(id));
+    setUnlocked(true);
+  };
 
   return (
     <div className="app app--detail">
       <Header />
-      {unlocked ? (
-        <CaseStudyDetail />
-      ) : (
-        <CaseStudyGate onUnlock={() => setUnlocked(true)} />
-      )}
+      {unlocked ? <CaseStudyDetail /> : <CaseStudyGate onUnlock={handleUnlock} />}
     </div>
   );
 };

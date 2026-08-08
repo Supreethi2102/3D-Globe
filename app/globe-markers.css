@@ -1,7 +1,7 @@
 /* Globe pins + Figma tooltip cards. Open cards portal above .main__globe-ring. */
 
 .globe-marker {
-  --globe-tooltip-scale: 0.88;
+  --globe-tooltip-scale: 1;
   position: relative;
   width: 50px;
   height: 50px;
@@ -21,6 +21,39 @@
   background: transparent;
   cursor: pointer;
   line-height: 0;
+}
+
+/*
+ * Pins breathe so they read as interactive. The old rule targeted `.myMarker svg`
+ * (index.html), a class the globe no longer applies to the marker wrapper.
+ */
+.globe-marker__pin svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  transform-origin: center center;
+  animation: globe-marker-pulse 2.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes globe-marker-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.15);
+  }
+}
+
+/* Settle under the cursor and while the card is open */
+.globe-marker__pin:hover svg {
+  animation-play-state: paused;
+  transform: scale(1.2);
+}
+
+.globe-marker.is-open .globe-marker__pin svg {
+  animation-play-state: paused;
+  transform: scale(1.2);
 }
 
 .globe-marker__pin:focus {
@@ -279,7 +312,7 @@
 
 @media (max-width: 700px), (max-width: 1024px) and (orientation: portrait) {
   .globe-marker {
-    --globe-tooltip-scale: 0.92;
+    --globe-tooltip-scale: 0.82;
   }
 
   .globe-marker__tooltip {
@@ -395,5 +428,9 @@
 @media (prefers-reduced-motion: reduce) {
   .globe-marker__tooltip {
     transition: none;
+  }
+
+  .globe-marker__pin svg {
+    animation: none;
   }
 }

@@ -118,6 +118,11 @@
   border-color: #7150e5;
 }
 
+.case-study-gate__input:disabled {
+  opacity: 0.7;
+  cursor: default;
+}
+
 .case-study-gate__field--error .case-study-gate__input {
   border-color: #c91435;
 }

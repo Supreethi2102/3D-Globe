@@ -807,7 +807,10 @@ export const Destinations: React.FC = () => {
             if (canUseHover()) setIsShareHovered(true);
           }}
           onMouseLeave={() => setIsShareHovered(false)}
-          aria-label="Share your design inspiration with me"
+          onClick={() => {
+            document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+          }}
+          aria-label="Share your design inspiration with me — opens the contact form"
         >
           <span className="btn__icon" aria-hidden="true">
             <ArrowSquareOut size={24} weight={isShareHovered ? 'fill' : 'regular'} color="currentColor" />

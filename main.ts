@@ -107,7 +107,7 @@ function scheduleClose() {
 function getTooltipScale(markerRoot: HTMLElement): number {
   const raw = getComputedStyle(markerRoot).getPropertyValue('--globe-tooltip-scale').trim();
   const value = Number.parseFloat(raw);
-  return Number.isFinite(value) ? value : 0.88;
+  return Number.isFinite(value) ? value : 1;
 }
 
 /** Fixed once to the viewport so the card stacks above .main__globe-ring — no per-frame follow. */

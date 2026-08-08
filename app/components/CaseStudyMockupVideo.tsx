@@ -189,14 +189,16 @@ export const CaseStudyMockupVideo: React.FC<CaseStudyMockupVideoProps> = ({
                   </button>
                 </div>
                 <div className="case-study-mockup-video__lightbox-stage">
-                  <img
-                    className="case-study-mockup-video__lightbox-mockup"
-                    src={mockupSrc}
-                    alt=""
-                    aria-hidden="true"
-                    draggable={false}
-                  />
-                  {renderScreen(expandedIframeRef, 'expanded')}
+                  <div className="case-study-mockup-video__lightbox-zoom">
+                    <img
+                      className="case-study-mockup-video__lightbox-mockup"
+                      src={mockupSrc}
+                      alt=""
+                      aria-hidden="true"
+                      draggable={false}
+                    />
+                    {renderScreen(expandedIframeRef, 'expanded')}
+                  </div>
                 </div>
               </div>
             </div>,

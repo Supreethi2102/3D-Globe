@@ -389,7 +389,11 @@
   background: var(--btn-secondary-surface-bg);
   border: 1px solid var(--btn-secondary-border);
   border-radius: var(--btn-radius);
-  transition: background 0.2s ease, border-color 0.2s ease;
+  transform: var(--btn-motion-rest, none);
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform var(--btn-motion-duration, 180ms) var(--btn-motion-ease, ease-out);
 }
 
 .flip-button__icon img {
@@ -406,6 +410,7 @@
   width: 24px;
   height: 24px;
   color: var(--btn-primary, #7150e5);
+  transition: color 0.2s ease;
 }
 
 .flip-button__text {
@@ -427,20 +432,38 @@
 }
 
 
+/*
+ * Hover matches the category filter pills (pale purple wash, darker border), but the
+ * lift stays on the icon tile only — the label must not shift under the cursor.
+ */
 @media (min-width: 1025px) and (hover: hover) and (pointer: fine) {
-.flip-button:not(.flip-button--footer):hover .flip-button__icon {
-  background: var(--btn-primary);
-  border-color: var(--btn-primary);
-}
+  .flip-button:not(.flip-button--footer):hover .flip-button__icon {
+    background: var(--btn-purple-100-bg, #eee8fe);
+    border-color: var(--btn-secondary-hover-border, #5e3ec9);
+    transform: var(--btn-motion-hover, translateY(-2px));
+  }
+
+  .flip-button:not(.flip-button--footer):hover .flip-button__icon svg,
+  .flip-button:not(.flip-button--footer):hover .flip-button__text {
+    color: var(--btn-purple-100-text, #4c3cac);
+  }
 }
 
-
-@media (min-width: 1025px) and (hover: hover) and (pointer: fine) {
-.flip-button:not(.flip-button--footer):hover .flip-button__icon img,
-.flip-button:not(.flip-button--footer):hover .flip-button__icon svg {
-  filter: brightness(0) invert(1);
-  color: #fbfbfb;
+.flip-button:not(.flip-button--footer):active .flip-button__icon {
+  transform: var(--btn-motion-active, scale(0.98));
+  transition-duration: var(--btn-motion-duration-press, 90ms);
 }
+
+.flip-button:not(.flip-button--footer):focus-visible {
+  outline: var(--btn-focus-outline, 2px solid #5340c4);
+  outline-offset: var(--btn-focus-offset, 4px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flip-button__icon {
+    transition: background 0.2s ease, border-color 0.2s ease;
+    transform: none !important;
+  }
 }
 
 
@@ -568,7 +591,8 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  max-width: 320px;
+  /* Widest measured description wraps to six lines at 352px; below that it spills to seven */
+  max-width: 352px;
 }
 
 .case-study-card__copy {
@@ -789,8 +813,7 @@
 
 .case-study-mockup-video__lightbox-panel {
   position: relative;
-  width: min(1120px, 100%);
-  max-height: calc(100vh - 32px);
+  width: min(1440px, 100%);
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -813,11 +836,29 @@
 
 .case-study-mockup-video__lightbox-stage {
   position: relative;
-  width: 100%;
+  --mockup-zoom: 1.26;
+  /* Width follows the height the viewport allows so the 16/11 crop stays exact */
+  width: min(100%, calc((100vh - 128px) * 16 / 11));
   aspect-ratio: 16 / 11;
-  max-height: calc(100vh - 96px);
   margin: 0 auto;
   overflow: hidden;
+}
+
+/*
+ * The mockup sits in a lot of sky and desk. Scaling image + screen together crops that
+ * back, so the display reads larger. Origin follows the device centre (50% / 54%).
+ */
+.case-study-mockup-video__lightbox-zoom {
+  position: absolute;
+  inset: 0;
+  transform: scale(var(--mockup-zoom));
+  transform-origin: 50% 54%;
+}
+
+/* Keep the controls at their intended size inside the zoomed stage */
+.case-study-mockup-video__lightbox-zoom .case-study-mockup-video__controls {
+  transform: scale(calc(1 / var(--mockup-zoom)));
+  transform-origin: 100% 100%;
 }
 
 .case-study-mockup-video__lightbox-mockup {
@@ -1465,6 +1506,13 @@
   .case-study-card__content {
     padding: clamp(40px, 5vw, 56px) clamp(52px, 8vw, 96px);
     gap: clamp(40px, 5vw, 64px);
+  }
+}
+
+/* Wide desktop three-column card: body copy occupies a steady six-line band across tabs */
+@media (min-width: 1367px) {
+  .case-study-card__description {
+    min-height: calc(6 * var(--type-atkinson-text-md-lh));
   }
 }
 

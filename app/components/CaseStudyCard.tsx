@@ -2,7 +2,10 @@ import React, { useEffect, useMemo, useRef, useState, useId } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   ArrowsClockwise,
-  Lock,
+  Ruler,
+  NotePencil,
+  Megaphone,
+  Package,
   PuzzlePiece,
   Target,
   ChartBar,
@@ -113,6 +116,23 @@ export const CaseStudyCard: React.FC<CaseStudyCardProps> = ({ study }) => {
     const data = backTabs[tab];
     media.style.backgroundImage = data.image ? `url(${data.image})` : 'none';
     media.style.backgroundColor = data.background ?? '#ddd';
+  };
+
+  const renderViewDesignIcon = (isHovered: boolean) => {
+    const weight = isHovered ? 'fill' : 'regular';
+
+    switch (study.id) {
+      case 2:
+        return <Package size={24} weight={weight} color="currentColor" />;
+      case 3:
+      case 4:
+        return <Megaphone size={24} weight={weight} color="currentColor" />;
+      case 5:
+        return <NotePencil size={24} weight={weight} color="currentColor" />;
+      case 1:
+      default:
+        return <Ruler size={24} weight={weight} color="currentColor" />;
+    }
   };
 
   const setLayerBg = (el: HTMLDivElement | null, url: string) => {
@@ -267,8 +287,8 @@ export const CaseStudyCard: React.FC<CaseStudyCardProps> = ({ study }) => {
                 <div className="flip-button__icon">
                   <ArrowsClockwise
                     size={24}
-                    weight={hoveredBtn === 'flip' ? 'fill' : 'regular'}
-                    color={hoveredBtn === 'flip' ? '#fbfbfb' : 'currentColor'}
+                    weight="regular"
+                    color="currentColor"
                     aria-hidden="true"
                   />
                 </div>
@@ -364,27 +384,13 @@ export const CaseStudyCard: React.FC<CaseStudyCardProps> = ({ study }) => {
                   }}
                   onMouseLeave={() => setHoveredBtn(null)}
                   onClick={() => navigate(`/case-studies/${study.id}`)}
-                  aria-label={`Access ${study.subtitle} with password`}
+                  aria-label={`View the design for ${study.subtitle}`}
                 >
                   <span className="btn__icon" aria-hidden="true">
-                    <Lock
-                      size={24}
-                      weight={hoveredBtn === 'viewDesign' ? 'fill' : 'regular'}
-                      color="currentColor"
-                    />
+                    {renderViewDesignIcon(hoveredBtn === 'viewDesign')}
                   </span>
-                  <span>Access with password</span>
+                  <span>View the design</span>
                 </button>
-                <a
-                  href="#contact"
-                  className="case-study-card__request-password"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
-                  }}
-                >
-                  Request password
-                </a>
               </div>
               <button
                 type="button"
@@ -453,8 +459,8 @@ export const CaseStudyCard: React.FC<CaseStudyCardProps> = ({ study }) => {
                 <div className="flip-button__icon">
                   <ArrowsClockwise
                     size={24}
-                    weight={hoveredBtn === 'flipBack' ? 'fill' : 'regular'}
-                    color={hoveredBtn === 'flipBack' ? '#fbfbfb' : 'currentColor'}
+                    weight="regular"
+                    color="currentColor"
                     aria-hidden="true"
                   />
                 </div>
@@ -535,27 +541,13 @@ export const CaseStudyCard: React.FC<CaseStudyCardProps> = ({ study }) => {
                   }}
                   onMouseLeave={() => setHoveredBtn(null)}
                   onClick={() => navigate(`/case-studies/${study.id}`)}
-                  aria-label={`Access ${study.subtitle} with password`}
+                  aria-label={`View the design for ${study.subtitle}`}
                 >
                   <span className="btn__icon" aria-hidden="true">
-                    <Lock
-                      size={24}
-                      weight={hoveredBtn === 'viewDesignBack' ? 'fill' : 'regular'}
-                      color="currentColor"
-                    />
+                    {renderViewDesignIcon(hoveredBtn === 'viewDesignBack')}
                   </span>
-                  <span>Access with password</span>
+                  <span>View the design</span>
                 </button>
-                <a
-                  href="#contact"
-                  className="case-study-card__request-password"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
-                  }}
-                >
-                  Request password
-                </a>
               </div>
               <button
                 type="button"

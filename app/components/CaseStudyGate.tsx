@@ -8,7 +8,8 @@ import {
 import './CaseStudyGate.css';
 
 interface CaseStudyGateProps {
-  onUnlock: () => void;
+  /** May return a promise (e.g. preloading the hero); the gate stays up until it settles. */
+  onUnlock: () => void | Promise<void>;
 }
 
 export const CaseStudyGate: React.FC<CaseStudyGateProps> = ({ onUnlock }) => {
@@ -18,16 +19,19 @@ export const CaseStudyGate: React.FC<CaseStudyGateProps> = ({ onUnlock }) => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const [isOpening, setIsOpening] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (verifyCaseStudiesPassword(password)) {
-      unlockCaseStudies();
-      setError('');
-      onUnlock();
+    if (isOpening) return;
+    if (!verifyCaseStudiesPassword(password)) {
+      setError('Incorrect password. Please try again.');
       return;
     }
-    setError('Incorrect password. Please try again.');
+    unlockCaseStudies();
+    setError('');
+    setIsOpening(true);
+    Promise.resolve(onUnlock()).catch(() => setIsOpening(false));
   };
 
   return (
@@ -74,6 +78,7 @@ export const CaseStudyGate: React.FC<CaseStudyGateProps> = ({ onUnlock }) => {
                 aria-required="true"
                 aria-invalid={error ? 'true' : 'false'}
                 aria-describedby={error ? errorId : undefined}
+                disabled={isOpening}
                 autoFocus
               />
               <button
@@ -97,8 +102,8 @@ export const CaseStudyGate: React.FC<CaseStudyGateProps> = ({ onUnlock }) => {
             ) : null}
           </div>
 
-          <button type="submit" className="btn btn--primary">
-            Continue
+          <button type="submit" className="btn btn--primary" disabled={isOpening} aria-busy={isOpening}>
+            {isOpening ? 'Opening…' : 'Continue'}
           </button>
         </form>
       </div>

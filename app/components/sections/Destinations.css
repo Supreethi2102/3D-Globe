@@ -119,6 +119,9 @@
   position: relative;
   outline: 0 !important;
   background: #f7f9fa; /* Match section background */
+  /* Lift on hover matches .publication-card__image-container */
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  transition: box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .destination-card__image-wrapper::before,
@@ -139,6 +142,10 @@
 @media (min-width: 1025px) and (hover: hover) and (pointer: fine) {
   .destination-card:hover .destination-card__image {
     transform: scale(1.05);
+  }
+
+  .destination-card:hover .destination-card__image-wrapper {
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.15), 0 10px 10px -5px rgba(0, 0, 0, 0.08);
   }
 }
 
@@ -412,7 +419,8 @@
 .destination-expanded__header {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  /* Card title and its location read as one unit, same as the Q&A blocks below */
+  gap: 4px;
   overflow: visible;
 }
 
@@ -464,7 +472,8 @@
 .destination-expanded__section {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  /* Matches About: heading sits tight to its answer, sections stay 24px apart */
+  gap: 4px;
   overflow: visible;
 }
 
@@ -533,6 +542,8 @@
   border-radius: 12px;
   overflow: hidden;
   aspect-ratio: 368 / 228;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  transition: box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .destination-small__image {
@@ -546,6 +557,10 @@
 @media (min-width: 1025px) and (hover: hover) and (pointer: fine) {
   .destination-small:hover .destination-small__image {
     transform: scale(1.05);
+  }
+
+  .destination-small:hover .destination-small__image-wrapper {
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.15), 0 10px 10px -5px rgba(0, 0, 0, 0.08);
   }
 }
 

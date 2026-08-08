@@ -149,6 +149,18 @@ const TOY_ACTIVITY_STILLS: Array<{ src: string; alt: string; width: number; heig
   },
 ];
 
+/**
+ * Hero source per case study id. Exported so the password gate can decode the hero
+ * before the page mounts — the hero runs a full-bleed layout measurement on mount,
+ * which flashes if the image is still loading.
+ */
+export function getCaseStudyHeroImage(id?: string): string {
+  if (id === '2') return GCH_IMG.hero;
+  if (id === '4') return TOY_IMG.hero;
+  if (id === '1' || id === '5') return PALE_YELLOW_PLACEHOLDER;
+  return IMG.hero;
+}
+
 const TOY_JAYDEN_QUOTE_LINE_1 =
   'The kaleidoscope was the coolest one. When you spin it all the colours ';
 const TOY_JAYDEN_QUOTE_LINE_2 = 'move. I watched the video and then made it with my dad.';
@@ -339,9 +351,10 @@ export const CaseStudyDetail: React.FC = () => {
   const isAmioLayout = isAmio || isPalmy;
   /** Pale-yellow frames + mobile min-heights (shared split-card layout). */
   const usesPlaceholderMedia = isSummer || isGreenCross || isMegaToy || isAmioLayout;
+  const heroImage = getCaseStudyHeroImage(id);
   const overview = isGreenCross
     ? {
-        heroImage: '/case-study-gch/9912d40ae739a7575ec4a7abed1a19cf05d03244.png',
+        heroImage,
         heroAlt: 'Brown paper retail bags in warm sunlight',
         subtitle: 'Packaging | Green Cross Health',
         title: 'More than a carry bag',
@@ -351,7 +364,7 @@ export const CaseStudyDetail: React.FC = () => {
       }
     : isMegaToy
       ? {
-          heroImage: TOY_IMG.hero,
+          heroImage,
           heroAlt: 'Kids holding Warehouse toy campaign sign',
           subtitle: 'Campaign | The Warehouse',
           title: 'Mega Toy Month',
@@ -361,7 +374,7 @@ export const CaseStudyDetail: React.FC = () => {
         }
     : isAmioLayout
       ? {
-          heroImage: PALE_YELLOW_PLACEHOLDER,
+          heroImage,
           heroAlt: '',
           subtitle: isPalmy ? 'UI | UX Design Institute' : 'UX | UX Design Institute',
           title: isPalmy ? 'Palmy bank' : 'Āmio Airways',
@@ -372,7 +385,7 @@ export const CaseStudyDetail: React.FC = () => {
           meta: isPalmy ? 'Estimated read time: 3 minutes | Duration: 9 months' : 'Estimated read time: 3 minutes | Duration: 12 months',
         }
     : {
-        heroImage: IMG.hero,
+        heroImage,
         heroAlt: 'Summer campaign hero visual',
         subtitle: 'Campaign | The Warehouse',
         title: 'Summer Season',
@@ -1344,6 +1357,8 @@ export const CaseStudyDetail: React.FC = () => {
                     }`}
                     src={overview.heroImage}
                     alt={overview.heroAlt}
+                    fetchPriority="high"
+                    decoding="sync"
                   />
                 </figure>
                 <div className="case-study-detail__hero-copy">

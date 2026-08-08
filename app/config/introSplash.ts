@@ -32,8 +32,8 @@ export const INTRO_TAGLINE =
 
 /** How long a mid greeting stays readable before the next fall. */
 export const GREETING_HOLD_MS = 260;
-/** Fall / zoom transition duration for mid greetings. */
-export const GREETING_SLAM_MS = 240;
+/** Fall / zoom transition duration for mid greetings. Keep in sync with intro-fall-in/out. */
+export const GREETING_SLAM_MS = 340;
 /** Final greeting zoom-in duration. */
 export const FINALE_ZOOM_MS = 560;
 /** Brief pause on Kia ora + tagline before the full-page zoom. */
