@@ -732,7 +732,7 @@ export const publications: PublicationDetail[] = [
   {
     id: 12,
     title: 'Beauty Lookbook',
-    subtitle: 'Lookbook',
+    subtitle: 'Booklet',
     image: BEAUTY_LOOKBOOK_HERO,
     modalSubtitle: 'Archived seasonal lookbook',
     intro:
