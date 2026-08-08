@@ -1,12 +1,11 @@
 const STORAGE_KEY = 'case-studies-unlocked';
 
-/** Used when VITE_CASE_STUDIES_PASSWORD is not set, so hosted builds stay protected. */
-const FALLBACK_PASSWORD = 'Twistnz99';
-
-/** Password from Vite env, falling back to the built-in one. */
+/**
+ * Opt-in: the gate only appears when VITE_CASE_STUDIES_PASSWORD is set (locally in .env,
+ * or in the host's environment variables). Unset means case studies are open.
+ */
 export function getCaseStudiesPassword(): string {
-  const fromEnv = (import.meta.env.VITE_CASE_STUDIES_PASSWORD as string | undefined)?.trim();
-  return fromEnv && fromEnv.length > 0 ? fromEnv : FALLBACK_PASSWORD;
+  return (import.meta.env.VITE_CASE_STUDIES_PASSWORD as string | undefined)?.trim() ?? '';
 }
 
 export function isCaseStudiesPasswordRequired(): boolean {
