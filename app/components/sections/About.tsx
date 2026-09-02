@@ -1,6 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { SwatchCard, type SwatchCardMood } from './SwatchCard';
+import { ResponsivePicture } from '../ResponsivePicture';
 import './About.css';
+
+const ABOUT_PORTRAIT = {
+  avif: '/about/samantha-smith-portrait.avif',
+  webp: '/about/samantha-smith-portrait.webp',
+  alt: 'Portrait of Samantha seated in the studio',
+};
 
 /* =========================================
    BLOCK 1: Top Section - A World of Ideas
@@ -13,38 +20,40 @@ interface AboutBlock1Props {
 const AboutBlock1: React.FC<AboutBlock1Props> = ({ onMoreClick, isExpanded }) => {
   return (
     <article className="about-block1" aria-labelledby="about-title-1">
-      <div className="about-block1__illustration">
-        <img src="/about/Illustration-Sam.png" alt="Illustrated portrait of Samantha holding design tools" />
-      </div>
+      <div className="about-block1__pair">
+        <div className="about-block1__illustration">
+          <ResponsivePicture image={ABOUT_PORTRAIT} loading="eager" width={392} height={523} />
+        </div>
 
-      <div className="about-block1__content">
-        <h2 id="about-title-1" className="about-block1__title">A world of ideas</h2>
-        
-        <div className="about-block1__text">
-          <p>I&apos;m an Art Director and UX/UI designer based in Aotearoa New Zealand. My background spans campaign concepts, art-directed photoshoots, print mailers, editorial layouts, and digital experiences. Working across disciplines has taught me how to shape ideas and stories for different audiences. I aim to create work that feels clear, thoughtful, and genuinely useful.</p>
-          <p className="about-block1__spacer" aria-hidden="true">&nbsp;</p>
-          <p>I'm drawn to work that:</p>
-          <ul className="about-block1__list">
-            <li>helps people feel informed, confident, and understood</li>
-            <li>combines clarity with character</li>
-            <li>takes inspiration from the people, places, and stories behind it</li>
-          </ul>
-          <p>I'm steadily building my accessibility practice. I care about designing for everyone and know there's always more to learn. I want to approach accessibility with intention, not box-ticking.</p>
-          <p className="about-block1__spacer" aria-hidden="true">&nbsp;</p>
-          <p>Most of my time is spent in Figma and InDesign, sketching flows, building design systems, refining typographic hierarchy, exploring AI-assisted workflows, or nudging layouts until everything clicks. Whether solo or collaborating with developers, marketers, or writers, I bring curiosity, empathy, and a careful eye for the details that matter.</p>
-          
-          {!isExpanded && (
-            <button 
-              type="button"
-              className="about-block1__more-link"
-              onClick={onMoreClick}
-              aria-expanded={isExpanded}
-            >
-              More about me
-            </button>
-          )}
+        <div className="about-block1__content">
+          <h2 id="about-title-1" className="about-block1__title">A world of ideas</h2>
+
+          <div className="about-block1__text">
+            <p>I&apos;m an Art Director and UX/UI designer based in Aotearoa New Zealand. My background spans campaign concepts, art-directed photoshoots, print mailers, editorial layouts, and digital experiences. Working across disciplines has taught me how to shape ideas and stories for different audiences. I aim to create work that feels clear, thoughtful, and genuinely useful.</p>
+            <p className="about-block1__spacer" aria-hidden="true">&nbsp;</p>
+            <p>I'm drawn to work that:</p>
+            <ul className="about-block1__list">
+              <li>helps people feel informed, confident, and understood</li>
+              <li>combines clarity with character</li>
+              <li>takes inspiration from the people, places, and stories behind it</li>
+            </ul>
+            <p>I'm steadily building my accessibility practice. I care about designing for everyone and know there's always more to learn. I want to approach accessibility with intention, not box-ticking.</p>
+            <p className="about-block1__spacer" aria-hidden="true">&nbsp;</p>
+            <p>Most of my time is spent in Figma and InDesign, sketching flows, building design systems, refining typographic hierarchy, exploring AI-assisted workflows, or nudging layouts until everything clicks. Whether solo or collaborating with developers, marketers, or writers, I bring curiosity, empathy, and a careful eye for the details that matter.</p>
+          </div>
         </div>
       </div>
+
+      {!isExpanded && (
+        <button
+          type="button"
+          className="about-block1__more-link"
+          onClick={onMoreClick}
+          aria-expanded={isExpanded}
+        >
+          More about me
+        </button>
+      )}
     </article>
   );
 };

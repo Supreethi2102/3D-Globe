@@ -27,7 +27,8 @@ export type CaseStudyCardStudy = {
   category: string;
   image: string;
   challengeVideo?: {
-    vimeoId: string;
+    src?: string;
+    vimeoId?: string;
   };
   frontTabs?: {
     challenge: { title: string; description: string; image: string };
@@ -434,6 +435,7 @@ export const CaseStudyCard: React.FC<CaseStudyCardProps> = ({ study }) => {
               </div>
               {study.challengeVideo && contentTab === 'challenge' && !isFlipped && !prefersReducedMotion ? (
                 <CaseStudyMockupVideo
+                  src={study.challengeVideo.src}
                   vimeoId={study.challengeVideo.vimeoId}
                   mockupSrc={study.image}
                   label={study.subtitle}
