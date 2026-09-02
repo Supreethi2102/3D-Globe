@@ -31,9 +31,9 @@ export const INTRO_TAGLINE =
   'From kia ora to konnichiwa, every hello has a story. Welcome to mine.';
 
 /** How long a mid greeting stays readable before the next fall. */
-export const GREETING_HOLD_MS = 260;
+export const GREETING_HOLD_MS = 420;
 /** Fall / zoom transition duration for mid greetings. Keep in sync with intro-fall-in/out. */
-export const GREETING_SLAM_MS = 340;
+export const GREETING_SLAM_MS = 460;
 /** Final greeting zoom-in duration. */
 export const FINALE_ZOOM_MS = 560;
 /** Brief pause on Kia ora + tagline before the full-page zoom. */
@@ -41,7 +41,7 @@ export const FINALE_HOLD_MS = 700;
 /** Kia ora expands to cover the page, then reveal home. */
 export const FINALE_EXPAND_MS = 1000;
 /** Safety auto-dismiss if sequencing stalls. */
-export const INTRO_AUTO_DISMISS_MS = 16000;
+export const INTRO_AUTO_DISMISS_MS = 22000;
 
 export function hasSeenIntro(): boolean {
   try {
